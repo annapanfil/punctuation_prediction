@@ -82,5 +82,5 @@ if __name__ == "__main__":
     text = " ".join(lines) #TODO: treat each line as a separate example
 
     elements, punctuation_mask = split_words_and_punctuation(text)
-    elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING)
+    elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING, verb=True)
     save_to_file(file_path, elements, punctuation_mask, PUNCT_NAMES)
