@@ -44,8 +44,9 @@ def save_to_file(file_path: str, elements: list, punctuation_mask: list, punct_n
     # @param punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
     # @param punct_names – dictionary with punctuation signs and their names
 
-    file_n, ext = os.path.splitext(file_path)
-    out_fname = file_n + "_prepared" + ext
+    os.makedirs("data/pl", exist_ok=True)
+    norm_path = os.path.normpath(file_path)
+    out_fname = os.path.join("data", "pl", norm_path.split(os.sep)[1])
     with open(out_fname, 'w') as f:
         for i in range(len(elements)):
             if punctuation_mask[i] == 1:
@@ -75,12 +76,11 @@ PUNCT_NAMES = {'.': "PERIOD",
                '?': "QUESTION"}
 
 if __name__ == "__main__":
-    file_path = "data/train/expected.tsv"
+    for file_path in ["data_raw/train/expected.tsv", "data_raw/dev-0/expected.tsv"]: 
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = [line for line in f.read().split('\n') if line.strip()]
+        text = " ".join(lines) #TODO: treat each line as a separate example
 
-    with open(file_path, 'r', encoding='utf-8') as f:
-        lines = [line for line in f.read().split('\n') if line.strip()]
-    text = " ".join(lines) #TODO: treat each line as a separate example
-
-    elements, punctuation_mask = split_words_and_punctuation(text)
-    elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING, verb=True)
-    save_to_file(file_path, elements, punctuation_mask, PUNCT_NAMES)
+        elements, punctuation_mask = split_words_and_punctuation(text)
+        elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING, verb=True)
+        save_to_file(file_path, elements, punctuation_mask, PUNCT_NAMES)
