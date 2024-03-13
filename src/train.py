@@ -47,27 +47,9 @@ if args.language == 'english':
 elif args.language == 'polish':
     train_set = Dataset(os.path.join(args.data_path, 'pl/train'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=True, augment_rate=ar, augment_type=aug_type)
-    val_set = Dataset(os.path.join(args.data_path, 'pl/dev'), tokenizer=tokenizer, sequence_len=sequence_len,
+    val_set = Dataset(os.path.join(args.data_path, 'pl/dev-0'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=False)
-    test_set = Dataset(os.path.join(args.data_path, 'pl/test'), tokenizer=tokenizer, sequence_len=sequence_len,
-                        token_style=token_style, is_train=False)
-# elif args.language == 'english-bangla':
-#     train_set = Dataset([os.path.join(args.data_path, 'en/train2012'), os.path.join(args.data_path, 'bn/train_bn')],
-#                         tokenizer=tokenizer, sequence_len=sequence_len, token_style=token_style, is_train=True,
-#                         augment_rate=ar, augment_type=aug_type)
-#     val_set = Dataset([os.path.join(args.data_path, 'en/dev2012'), os.path.join(args.data_path, 'bn/dev_bn')],
-#                       tokenizer=tokenizer, sequence_len=sequence_len, token_style=token_style, is_train=False)
-#     test_set_ref = Dataset(os.path.join(args.data_path, 'en/test2011'), tokenizer=tokenizer, sequence_len=sequence_len,
-#                            token_style=token_style, is_train=False)
-#     test_set_asr = Dataset(os.path.join(args.data_path, 'en/test2011asr'), tokenizer=tokenizer, sequence_len=sequence_len,
-#                            token_style=token_style, is_train=False)
-#     test_set_news = Dataset(os.path.join(args.data_path, 'bn/test_news'), tokenizer=tokenizer, sequence_len=sequence_len,
-#                             token_style=token_style, is_train=False)
-#     test_bn_ref = Dataset(os.path.join(args.data_path, 'bn/test_ref'), tokenizer=tokenizer, sequence_len=sequence_len,
-#                           token_style=token_style, is_train=False)
-#     test_bn_asr = Dataset(os.path.join(args.data_path, 'bn/test_asr'), tokenizer=tokenizer, sequence_len=sequence_len,
-#                           token_style=token_style, is_train=False)
-#     test_set = [val_set, test_set_ref, test_set_asr, test_set_news, test_bn_ref, test_bn_asr]
+    test_set = [val_set]
 else:
     raise ValueError('Incorrect language argument for Dataset')
 
@@ -137,10 +119,10 @@ def test(data_loader):
     num_iteration = 0
     deep_punctuation.eval()
     # +1 for overall result
-    tp = np.zeros(1+len(punctuation_dict), dtype=np.int)
-    fp = np.zeros(1+len(punctuation_dict), dtype=np.int)
-    fn = np.zeros(1+len(punctuation_dict), dtype=np.int)
-    cm = np.zeros((len(punctuation_dict), len(punctuation_dict)), dtype=np.int)
+    tp = np.zeros(1+len(punctuation_dict), dtype=int)
+    fp = np.zeros(1+len(punctuation_dict), dtype=int)
+    fn = np.zeros(1+len(punctuation_dict), dtype=int)
+    cm = np.zeros((len(punctuation_dict), len(punctuation_dict)), dtype=int)
     correct = 0
     total = 0
     with torch.no_grad():
