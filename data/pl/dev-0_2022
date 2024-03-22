@@ -9,8 +9,7 @@ pana	COMMA
 na	O
 szczepienie	O
 przeciwko	O
-covid	O
-19	O
+covid-19	O
 chciałem	O
 się	O
 spróbować	O
@@ -128,7 +127,8 @@ jak	O
 rafał	O
 i	O
 bre	PERIOD
-interia	O
+@	O
+interia	PERIOD
 pl	PERIOD
 jasne	PERIOD
 jasne	PERIOD
@@ -396,8 +396,7 @@ więc	O
 informację	O
 otrzyma	O
 pan	O
-sms	O
-em	O
+sms-em	O
 na	O
 początku	COMMA
 przepraszam	COMMA
@@ -408,8 +407,7 @@ tygodnia	O
 otrzyma	O
 pan	O
 informację	O
-sms	O
-em	O
+sms-em	O
 o	O
 dacie	COMMA
 dacie	O
@@ -824,8 +822,7 @@ poproszę	O
 o	O
 ten	O
 adres	O
-e	O
-mail	COMMA
+e-mail	COMMA
 to	COMMA
 to	COMMA
 to	O
@@ -886,8 +883,7 @@ jak	O
 już	O
 otrzyma	O
 pan	O
-sms	O
-a	O
+sms-a	O
 z	O
 potwierdzeniem	COMMA
 to	O
@@ -1101,8 +1097,7 @@ szczepienia	PERIOD
 po	O
 prostu	O
 wysyłając	O
-sms	O
-a	COMMA
+sms-a	COMMA
 dostanie	O
 pan	O
 ten	O
@@ -1251,8 +1246,7 @@ to	O
 zaczniemy	O
 wysyłać	O
 te	O
-sms	O
-y	O
+sms-y	O
 z	O
 zaproszeniami	O
 szybciej	PERIOD
@@ -2089,8 +2083,7 @@ ale	O
 po	O
 prostu	O
 tej	O
-e	O
-mailowo	O
+e-mailowo	O
 nie	O
 dostałam	O
 i	O
@@ -3407,8 +3400,7 @@ z	O
 tego	O
 samego	O
 adresu	O
-e	O
-mail	COMMA
+e-mail	COMMA
 na	O
 który	O
 logowałam	O
@@ -4088,4 +4080,4 @@ miłego	O
 dnia	O
 i	O
 do	O
-usłyszenia	O
+usłyszenia	PERIOD

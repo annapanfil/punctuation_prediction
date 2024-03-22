@@ -6,12 +6,15 @@ def split_words_and_punctuation(text: str) -> tuple:
     # @return elements – list of words and punctuation signs
     # @return punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
 
-    elements = re.compile(r"(\w+|\W\s)").findall(text) # alfanumeric or non-alphanumeric characters (punctuation)
+    excluded_signs = '\%\+\"\-\*\/\\=$€\(\)\[\]\':@·'
+    word_signs = f"[\w{excluded_signs}]+"
+    punctuation_signs = f"(?![\s\%\+\"\-\*\/\\=$€])\W"
+    elements = re.compile(rf"{punctuation_signs}|{word_signs}").findall(text) # alfanumeric or non-alphanumeric characters (punctuation)
     elements = [element for element in elements if element.strip()] # discard empty strings
 
     punctuation_mask = []
     for i, element in enumerate(elements):
-        if re.match(r"\w+", element):
+        if re.match(rf"{word_signs}", element):
             punctuation_mask.append(0)
         else:
             elements[i] = elements[i].replace(" ", "")
@@ -36,17 +39,14 @@ def limit_punctuation_signs(elements: list, punctuation_mask: list, punct_mappin
     return elements
 
 
-def save_to_file(file_path: str, elements: list, punctuation_mask: list, punct_names: dict):
+def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_names: dict):
     ### save in format of the alam-etal-2020-punctuation code
     ### i.e. word in lowercase, tab, punctuation sign name (e.g. "PERIOD" or "O")
-    # @param file_path – path of the original file
+    # @param out_fname – path of the output file
     # @param elements – list of words and punctuation signs
     # @param punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
     # @param punct_names – dictionary with punctuation signs and their names
 
-    os.makedirs("data/pl", exist_ok=True)
-    norm_path = os.path.normpath(file_path)
-    out_fname = os.path.join("data", "pl", norm_path.split(os.sep)[1])
     with open(out_fname, 'w') as f:
         for i in range(len(elements)):
             if punctuation_mask[i] == 1:
@@ -68,7 +68,9 @@ PUNCT_MAPPING = {'?': '?',
  
                  '!': '.',
                  '…': '.',
-                 '-': ','
+                 '-': ',',
+                 ':': ",",
+                 ';': '.',
                  } # default is a dot
 
 PUNCT_NAMES = {'.': "PERIOD",
@@ -76,11 +78,18 @@ PUNCT_NAMES = {'.': "PERIOD",
                '?': "QUESTION"}
 
 if __name__ == "__main__":
-    for file_path in ["data_raw/train/expected.tsv", "data_raw/dev-0/expected.tsv"]: 
-        with open(file_path, 'r', encoding='utf-8') as f:
+    # train and dev data
+    for file_path in ["poleval2021/train", "poleval2021/test-A", "poleval2022/train", "poleval2022/dev-0"]: 
+        with open(os.path.join("data", "raw", file_path, "expected.tsv"), 'r', encoding='utf-8') as f:
             lines = [line for line in f.read().split('\n') if line.strip()]
         text = " ".join(lines) #TODO: treat each line as a separate example
 
         elements, punctuation_mask = split_words_and_punctuation(text)
         elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING, verb=True)
-        save_to_file(file_path, elements, punctuation_mask, PUNCT_NAMES)
+
+        os.makedirs("data/pl", exist_ok=True)
+        norm_path = os.path.normpath(file_path)
+        out_fname = os.path.join("data", "pl", norm_path.split(os.sep)[1] + "_" + norm_path.split(os.sep)[0][-4:])
+        save_to_file(out_fname, elements, punctuation_mask, PUNCT_NAMES)
+    
+    

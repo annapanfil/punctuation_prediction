@@ -58,10 +58,9 @@ XLM-RoBERTa-large model with augmentation for Bangla can be found [here](https:/
 You can run inference on unprocessed text file to produce punctuated text using `inference` module. Note that if the 
 text already contains punctuation they are removed before inference. 
 
-Example script for English:
+Example script for Polish:
 ```bash
-python inference.py --pretrained-model=roberta-large --weight-path=roberta-large-en.pt --language=en 
---in-file=data/test_en.txt --out-file=data/test_en_out.txt
+python src/inference.py --pretrained-model=herbert-base --weight-path=out/weights.pt --language=pl --in-file=data/test_pl.txt --out-file=data/test_pl_out.txt
 ```
 This should create the text file with following output:
 ```text
