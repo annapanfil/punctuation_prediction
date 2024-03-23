@@ -9,7 +9,7 @@ Model for punctuation restoration in Polish language.
 English datasets are provided in `data/en` directory. These are collected from [here](https://drive.google.com/file/d/0B13Cc1a7ebTuMElFWGlYcUlVZ0k/view).
 
 #### Polish
-Polish dataset was taken from [Poleval 2022 competition](https://github.com/poleval/2022-punctuation-prediction) and it's available in `data_raw` directory. The dataset was later processed with `dataset_creation.py` script to match the format of the English dataset and is stored in this format in `data/pl` directory.
+Polish dataset was taken from [Poleval 2022](https://github.com/poleval/2022-punctuation-prediction) and [Poleval 2021 competition](https://github.com/poleval/2021-punctuation-restoration) and it's available in `data/raw` directory. The dataset was later processed with `dataset_creation.py` script to match the format of the English dataset and is stored in this format in `data/pl` directory.
 
 
 ## Model Architecture
