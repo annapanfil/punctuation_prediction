@@ -77,12 +77,26 @@ PUNCT_NAMES = {'.': "PERIOD",
                ',': "COMMA",
                '?': "QUESTION"}
 
+
+def merge_files(filenames, out_filename):
+    if os.path.exists(out_filename):
+        print(f"removing {out_filename}")
+        os.remove(out_filename)
+
+    for filename in filenames:
+        with open(filename, 'r') as f:
+            content = f.read()
+        with open(out_filename, 'a') as f:
+            f.write(content)
+        
+
+
 if __name__ == "__main__":
     # train and dev data
     for file_path in ["poleval2021/train", "poleval2021/test-A", "poleval2022/train", "poleval2022/dev-0"]: 
         with open(os.path.join("data", "raw", file_path, "expected.tsv"), 'r', encoding='utf-8') as f:
             lines = [line for line in f.read().split('\n') if line.strip()]
-        text = " ".join(lines) #TODO: treat each line as a separate example
+        text = " ".join(lines)
 
         elements, punctuation_mask = split_words_and_punctuation(text)
         elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING, verb=True)
@@ -92,4 +106,5 @@ if __name__ == "__main__":
         out_fname = os.path.join("data", "pl", norm_path.split(os.sep)[1] + "_" + norm_path.split(os.sep)[0][-4:])
         save_to_file(out_fname, elements, punctuation_mask, PUNCT_NAMES)
     
-    
+    merge_files(["data/pl/train_2021", "data/pl/train_2022"], "data/pl/train")
+    merge_files(["data/pl/test-A_2021", "data/pl/dev-0_2022"], "data/pl/val")
