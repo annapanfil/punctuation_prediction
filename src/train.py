@@ -1,20 +1,26 @@
 import os
 import torch
-import torch.nn as nn
 import numpy as np
+import mlflow
+import seaborn as sns
 from torch.utils import data
+import torch.nn as nn
 import torch.multiprocessing
 from tqdm import tqdm
 
 from argparser import parse_arguments
 from dataset import Dataset
+import datetime
 from model import DeepPunctuation, DeepPunctuationCRF
 from config import *
 import augmentation
 
+
 torch.multiprocessing.set_sharing_strategy('file_system')   # https://github.com/pytorch/pytorch/issues/11201
 
 args = parse_arguments()
+
+ml_log = args.log
 
 # for reproducibility
 torch.manual_seed(args.seed)
@@ -45,9 +51,9 @@ if args.language == 'english':
                            token_style=token_style, is_train=False)
     test_set = [val_set, test_set_ref, test_set_asr]
 elif args.language == 'polish':
-    train_set = Dataset(os.path.join(args.data_path, 'pl/train'), tokenizer=tokenizer, sequence_len=sequence_len,
+    train_set = Dataset(os.path.join(args.data_path, 'pl/train_small'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=True, augment_rate=ar, augment_type=aug_type)
-    val_set = Dataset(os.path.join(args.data_path, 'pl/dev-0'), tokenizer=tokenizer, sequence_len=sequence_len,
+    val_set = Dataset(os.path.join(args.data_path, 'pl/test_small'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=False)
     test_set = [val_set]
 else:
@@ -63,12 +69,6 @@ train_loader = torch.utils.data.DataLoader(train_set, **data_loader_params)
 val_loader = torch.utils.data.DataLoader(val_set, **data_loader_params)
 test_loaders = [torch.utils.data.DataLoader(x, **data_loader_params) for x in test_set]
 
-# logs
-os.makedirs(args.save_path, exist_ok=True)
-model_save_path = os.path.join(args.save_path, 'weights.pt')
-log_path = os.path.join(args.save_path, args.name + '_logs.txt')
-
-
 # Model
 device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
 if args.use_crf:
@@ -78,6 +78,12 @@ else:
 deep_punctuation.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(deep_punctuation.parameters(), lr=args.lr, weight_decay=args.decay)
+
+# logs
+os.makedirs(args.save_path, exist_ok=True)
+run_name = f"{args.language}_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}"
+model_save_path = os.path.join(args.save_path, f'{run_name}.pt')
+log_path = os.path.join(args.save_path, args.name + '_logs.txt')
 
 
 def validate(data_loader):
@@ -170,71 +176,106 @@ def train():
     with open(log_path, 'a') as f:
         f.write(str(args)+'\n')
     best_val_acc = 0
-    for epoch in range(args.epoch):
-        train_loss = 0.0
-        train_iteration = 0
-        correct = 0
-        total = 0
-        deep_punctuation.train()
-        for x, y, att, y_mask in tqdm(train_loader, desc='train'):
-            x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
-            y_mask = y_mask.view(-1)
-            if args.use_crf:
-                loss = deep_punctuation.log_likelihood(x, att, y)
-                # y_predict = deep_punctuation(x, att, y)
-                # y_predict = y_predict.view(-1)
-                y = y.view(-1)
-            else:
-                y_predict = deep_punctuation(x, att)
-                y_predict = y_predict.view(-1, y_predict.shape[2])
-                y = y.view(-1)
-                loss = criterion(y_predict, y)
-                y_predict = torch.argmax(y_predict, dim=1).view(-1)
+  
+    # mlflow.set_tracking_uri("http://localhost:5000")  # Change to your MLflow tracking server
+    mlflow.set_experiment("Punctuation Prediction")
 
-                correct += torch.sum(y_mask * (y_predict == y).long()).item()
+    with mlflow.start_run():
+        if ml_log:
+            mlflow.set_tag('mlflow.runName', run_name)
+            mlflow.log_param("Number of Epochs", args.epoch)
+            mlflow.log_param("Learning Rate", args.lr)
+            mlflow.log_param("Batch Size", args.batch_size)
+            mlflow.log_param("Language", args.language)
+            mlflow.log_param("Decay", args.decay)
+            mlflow.log_param("Use CRF", args.use_crf)
+            # Model
+            mlflow.pytorch.log_model(deep_punctuation, "models")
 
-            optimizer.zero_grad()
-            train_loss += loss.item()
-            train_iteration += 1
-            loss.backward()
+        for epoch in range(args.epoch):
+            train_loss = 0.0
+            train_iteration = 0
+            correct = 0
+            total = 0
+            deep_punctuation.train()
+            for x, y, att, y_mask in tqdm(train_loader, desc='train'):
+                x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
+                y_mask = y_mask.view(-1)
+                if args.use_crf:
+                    loss = deep_punctuation.log_likelihood(x, att, y)
+                    # y_predict = deep_punctuation(x, att, y)
+                    # y_predict = y_predict.view(-1)
+                    y = y.view(-1)
+                else:
+                    y_predict = deep_punctuation(x, att)
+                    y_predict = y_predict.view(-1, y_predict.shape[2])
+                    y = y.view(-1)
+                    loss = criterion(y_predict, y)
+                    y_predict = torch.argmax(y_predict, dim=1).view(-1)
 
-            if args.gradient_clip > 0:
-                torch.nn.utils.clip_grad_norm_(deep_punctuation.parameters(), args.gradient_clip)
-            optimizer.step()
+                    correct += torch.sum(y_mask * (y_predict == y).long()).item()
 
-            y_mask = y_mask.view(-1)
+                optimizer.zero_grad()
+                train_loss += loss.item()
+                train_iteration += 1
+                loss.backward()
 
-            total += torch.sum(y_mask).item()
+                if args.gradient_clip > 0:
+                    torch.nn.utils.clip_grad_norm_(deep_punctuation.parameters(), args.gradient_clip)
+                optimizer.step()
 
-        train_loss /= train_iteration
-        log = 'epoch: {}, Train loss: {}, Train accuracy: {}'.format(epoch, train_loss, correct / total)
-        with open(log_path, 'a') as f:
-            f.write(log + '\n')
-        print(log)
+                y_mask = y_mask.view(-1)
 
-        val_acc, val_loss = validate(val_loader)
-        log = 'epoch: {}, Val loss: {}, Val accuracy: {}'.format(epoch, val_loss, val_acc)
-        with open(log_path, 'a') as f:
-            f.write(log + '\n')
-        print(log)
-        if val_acc > best_val_acc:
-            best_val_acc = val_acc
-            torch.save(deep_punctuation.state_dict(), model_save_path)
+                total += torch.sum(y_mask).item()
 
-    print('Best validation Acc:', best_val_acc)
-    deep_punctuation.load_state_dict(torch.load(model_save_path))
-    for loader in test_loaders:
-        precision, recall, f1, accuracy, cm = test(loader)
-        log = 'Precision: ' + str(precision) + '\n' + 'Recall: ' + str(recall) + '\n' + 'F1 score: ' + str(f1) + \
-              '\n' + 'Accuracy:' + str(accuracy) + '\n' + 'Confusion Matrix' + str(cm) + '\n'
-        print(log)
-        with open(log_path, 'a') as f:
-            f.write(log)
-        log_text = ''
-        for i in range(1, 5):
-            log_text += str(precision[i] * 100) + ' ' + str(recall[i] * 100) + ' ' + str(f1[i] * 100) + ' '
-        with open(log_path, 'a') as f:
-            f.write(log_text[:-1] + '\n\n')
+            train_loss /= train_iteration
+            log = 'epoch: {}, Train loss: {}, Train accuracy: {}'.format(epoch, train_loss, correct / total)
+            with open(log_path, 'a') as f:
+                f.write(log + '\n')
+            print(log)
+
+            val_acc, val_loss = validate(val_loader)
+            log = 'epoch: {}, Val loss: {}, Val accuracy: {}'.format(epoch, val_loss, val_acc)
+            with open(log_path, 'a') as f:
+                f.write(log + '\n')
+            print(log)
+            if val_acc > best_val_acc:
+                best_val_acc = val_acc
+                torch.save(deep_punctuation.state_dict(), model_save_path)
+
+            if ml_log:
+                mlflow.log_metric("Validation Accuracy", val_acc, step=epoch)
+                mlflow.log_metric("Validation Loss", val_loss, step=epoch)
+
+
+        print('Best validation Acc:', best_val_acc)
+        deep_punctuation.load_state_dict(torch.load(model_save_path))
+        for loader in test_loaders:
+            precision, recall, f1, accuracy, cm = test(loader)
+            log = 'Precision: ' + str(precision) + '\n' + 'Recall: ' + str(recall) + '\n' + 'F1 score: ' + str(f1) + \
+                '\n' + 'Accuracy:' + str(accuracy) + '\n' + 'Confusion Matrix' + str(cm) + '\n'
+            print(log)
+            with open(log_path, 'a') as f:
+                f.write(log)
+            log_text = ''
+            for i in range(1, 5):
+                log_text += str(precision[i] * 100) + ' ' + str(recall[i] * 100) + ' ' + str(f1[i] * 100) + ' '
+            with open(log_path, 'a') as f:
+                f.write(log_text[:-1] + '\n\n')
+
+            # Po każdym teście w pętli treningowej, dodaj to:
+
+            if ml_log:
+                mlflow.log_metric("Test Accuracy", accuracy, step=epoch)
+                mlflow.log_metric("Test F1-Score", np.nanmean(f1), step=epoch)
+                mlflow.log_metric("Test Precision", np.nanmean(precision), step=epoch)
+                mlflow.log_metric("Test Recall", np.nanmean(recall), step=epoch)
+                # plot 
+                cm_img = sns.heatmap(cm, annot=True, cmap="coolwarm", xticklabels=punctuation_dict.keys(), yticklabels=punctuation_dict.keys())
+                cm_img.set_xlabel("correct")
+                cm_img.set_ylabel("predicted")
+                mlflow.log_figure(cm_img.get_figure(), "confusion_matrix.png")
+                
 
 
 if __name__ == '__main__':

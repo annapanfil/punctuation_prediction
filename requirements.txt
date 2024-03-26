@@ -1,3 +1,6 @@
 transformers
 pytorch-crf
 sacremoses
+torch
+mlflow
+
