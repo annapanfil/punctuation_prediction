@@ -167,9 +167,18 @@ def test(data_loader):
 
 def train():
     best_val_acc = 0
-  
-    # mlflow.set_tracking_uri("http://localhost:5000")  # Change to your MLflow tracking server
-    mlflow.set_experiment("Punctuation Prediction")
+
+    try:
+        _ = os.environ['MLFLOW_TRACKING_USERNAME']
+        _ = os.environ['MLFLOW_TRACKING_PASSWORD']
+        mlflow.set_tracking_uri('https://dagshub.com/annapanfil/punctuation_prediction.mlflow')
+        print("Using DagsHub MLflow server https://dagshub.com/annapanfil/punctuation_prediction.mlflow")
+    except KeyError:
+        mlflow.set_tracking_uri("http://localhost:5000")
+        print("Using local MLflow server http://localhost:5000")
+        
+    
+    mlflow.set_experiment("PunctuationPrediction")
 
     with mlflow.start_run():
         if ml_log:
