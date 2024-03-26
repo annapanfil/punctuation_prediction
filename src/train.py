@@ -79,13 +79,6 @@ deep_punctuation.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(deep_punctuation.parameters(), lr=args.lr, weight_decay=args.decay)
 
-# logs
-os.makedirs(args.save_path, exist_ok=True)
-run_name = f"{args.language}_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}"
-model_save_path = os.path.join(args.save_path, f'{run_name}.pt')
-log_path = os.path.join(args.save_path, args.name + '_logs.txt')
-
-
 def validate(data_loader):
     """
     :return: validation accuracy, validation loss
@@ -173,8 +166,6 @@ def test(data_loader):
 
 
 def train():
-    with open(log_path, 'a') as f:
-        f.write(str(args)+'\n')
     best_val_acc = 0
   
     # mlflow.set_tracking_uri("http://localhost:5000")  # Change to your MLflow tracking server
@@ -182,21 +173,20 @@ def train():
 
     with mlflow.start_run():
         if ml_log:
-            mlflow.set_tag('mlflow.runName', run_name)
+            mlflow.set_tag('mlflow.runName', f"{args.language}_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}")
             mlflow.log_param("Number of Epochs", args.epoch)
             mlflow.log_param("Learning Rate", args.lr)
             mlflow.log_param("Batch Size", args.batch_size)
             mlflow.log_param("Language", args.language)
             mlflow.log_param("Decay", args.decay)
             mlflow.log_param("Use CRF", args.use_crf)
-            # Model
-            mlflow.pytorch.log_model(deep_punctuation, "models")
 
         for epoch in range(args.epoch):
             train_loss = 0.0
             train_iteration = 0
             correct = 0
             total = 0
+            best_model_state = deep_punctuation.state_dict()
             deep_punctuation.train()
             for x, y, att, y_mask in tqdm(train_loader, desc='train'):
                 x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
@@ -229,19 +219,14 @@ def train():
                 total += torch.sum(y_mask).item()
 
             train_loss /= train_iteration
-            log = 'epoch: {}, Train loss: {}, Train accuracy: {}'.format(epoch, train_loss, correct / total)
-            with open(log_path, 'a') as f:
-                f.write(log + '\n')
-            print(log)
+            print('epoch: {}, Train loss: {}, Train accuracy: {}'.format(epoch, train_loss, correct / total))
 
             val_acc, val_loss = validate(val_loader)
-            log = 'epoch: {}, Val loss: {}, Val accuracy: {}'.format(epoch, val_loss, val_acc)
-            with open(log_path, 'a') as f:
-                f.write(log + '\n')
-            print(log)
+
+            print('epoch: {}, Val loss: {}, Val accuracy: {}'.format(epoch, val_loss, val_acc))
             if val_acc > best_val_acc:
                 best_val_acc = val_acc
-                torch.save(deep_punctuation.state_dict(), model_save_path)
+                best_model_state = deep_punctuation.state_dict()
 
             if ml_log:
                 mlflow.log_metric("Validation Accuracy", val_acc, step=epoch)
@@ -249,19 +234,14 @@ def train():
 
 
         print('Best validation Acc:', best_val_acc)
-        deep_punctuation.load_state_dict(torch.load(model_save_path))
+        deep_punctuation.load_state_dict(best_model_state)
+        if ml_log:
+            mlflow.pytorch.log_model(deep_punctuation, "models")
+
         for loader in test_loaders:
             precision, recall, f1, accuracy, cm = test(loader)
-            log = 'Precision: ' + str(precision) + '\n' + 'Recall: ' + str(recall) + '\n' + 'F1 score: ' + str(f1) + \
-                '\n' + 'Accuracy:' + str(accuracy) + '\n' + 'Confusion Matrix' + str(cm) + '\n'
-            print(log)
-            with open(log_path, 'a') as f:
-                f.write(log)
-            log_text = ''
-            for i in range(1, 5):
-                log_text += str(precision[i] * 100) + ' ' + str(recall[i] * 100) + ' ' + str(f1[i] * 100) + ' '
-            with open(log_path, 'a') as f:
-                f.write(log_text[:-1] + '\n\n')
+            print('Precision: ' + str(precision) + '\n' + 'Recall: ' + str(recall) + '\n' + 'F1 score: ' + str(f1) + \
+                '\n' + 'Accuracy:' + str(accuracy) + '\n' + 'Confusion Matrix' + str(cm) + '\n')
 
             # Po każdym teście w pętli treningowej, dodaj to:
 
