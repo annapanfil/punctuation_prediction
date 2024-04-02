@@ -114,6 +114,8 @@ def validate(data_loader):
 def test(data_loader):
     """
     :return: precision[numpy array], recall[numpy array], f1 score [numpy array], accuracy, confusion matrix
+    length of arrays is 1 + n_punctuation, in format e.g. 
+    [1. → for no punct   0.1 → for period    0.02325581 → for comma    0.04651163 → for question mark    0.04166667 → for all punctuation signs (excluding no punctuation)]
     """
     num_iteration = 0
     deep_punctuation.eval()
@@ -122,6 +124,7 @@ def test(data_loader):
     fp = np.zeros(1+len(punctuation_dict), dtype=int)
     fn = np.zeros(1+len(punctuation_dict), dtype=int)
     cm = np.zeros((len(punctuation_dict), len(punctuation_dict)), dtype=int)
+    support = np.zeros(len(punctuation_dict), dtype=int)
     correct = 0
     total = 0
     with torch.no_grad():
@@ -154,6 +157,7 @@ def test(data_loader):
                     fn[cor] += 1
                     fp[prd] += 1
                 cm[cor][prd] += 1
+                support[cor] += 1
     # ignore first index which is for no punctuation
     tp[-1] = np.sum(tp[1:])
     fp[-1] = np.sum(fp[1:])
@@ -162,7 +166,7 @@ def test(data_loader):
     recall = tp/(tp+fn)
     f1 = 2 * precision * recall / (precision + recall)
 
-    return precision, recall, f1, correct/total, cm
+    return precision, recall, f1, correct/total, cm, support
 
 
 def train():
@@ -178,7 +182,7 @@ def train():
         print("Using local MLflow server http://localhost:5000")
         
     
-    mlflow.set_experiment("PunctuationPrediction")
+    mlflow.set_experiment("FirstIteration")
 
     with mlflow.start_run():
         if ml_log:
@@ -248,23 +252,29 @@ def train():
             mlflow.pytorch.log_model(deep_punctuation, "models")
 
         for loader in test_loaders:
-            precision, recall, f1, accuracy, cm = test(loader)
-            print('Precision: ' + str(precision) + '\n' + 'Recall: ' + str(recall) + '\n' + 'F1 score: ' + str(f1) + \
-                '\n' + 'Accuracy:' + str(accuracy) + '\n' + 'Confusion Matrix' + str(cm) + '\n')
-
-            # Po każdym teście w pętli treningowej, dodaj to:
+            precision, recall, f1, accuracy, cm, support = test(loader)
+            final_scoring = 0
+            for punct, i in punctuation_dict.items():
+                final_scoring += support[i] * f1[i]
+                
+            final_scoring /= sum(support)
 
             if ml_log:
-                mlflow.log_metric("Test Accuracy", accuracy, step=epoch)
-                mlflow.log_metric("Test F1-Score", np.nanmean(f1), step=epoch)
-                mlflow.log_metric("Test Precision", np.nanmean(precision), step=epoch)
-                mlflow.log_metric("Test Recall", np.nanmean(recall), step=epoch)
+                for punct, i in punctuation_dict.items():
+                    mlflow.log_metric(f"Precision_{punct}", precision[i])
+                    mlflow.log_metric(f"Recall_{punct}", recall[i])
+
+                mlflow.log_metric("Final Scoring", final_scoring, step=epoch)
+
                 # plot 
                 cm_img = sns.heatmap(cm, annot=True, cmap="coolwarm", xticklabels=punctuation_dict.keys(), yticklabels=punctuation_dict.keys())
                 cm_img.set_xlabel("correct")
                 cm_img.set_ylabel("predicted")
                 mlflow.log_figure(cm_img.get_figure(), "confusion_matrix.png")
                 
+            print(f"\t\t{punctuation_dict.values()} all_punctuation\nPrecision: {precision}\nRecall: {recall}\nF1 score: {f1}")
+            print("Final score:", final_scoring)
+            print('Confusion Matrix', str(cm))
 
 
 if __name__ == '__main__':

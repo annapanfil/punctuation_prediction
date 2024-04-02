@@ -115,7 +115,7 @@ def test(data_loader):
 def run():
     deep_punctuation.load_state_dict(torch.load(model_save_path))
     for i in range(len(test_loaders)):
-        precision, recall, f1, accuracy, cm = test(test_loaders[i])
+        precision, recall, f1, accuracy, cm, support = test(test_loaders[i])
         log = test_files[i] + '\n' + 'Precision: ' + str(precision) + '\n' + 'Recall: ' + str(recall) + '\n' + \
             'F1 score: ' + str(f1) + '\n' + 'Accuracy:' + str(accuracy) + '\n' + 'Confusion Matrix' + str(cm) + '\n'
         print(log)
