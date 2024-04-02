@@ -193,6 +193,7 @@ def train():
             mlflow.log_param("Language", args.language)
             mlflow.log_param("Decay", args.decay)
             mlflow.log_param("Use CRF", args.use_crf)
+            mlflow.log_param("Base model", args.pretrained_model)
 
         for epoch in range(args.epoch):
             train_loss = 0.0
@@ -255,7 +256,7 @@ def train():
             precision, recall, f1, accuracy, cm, support = test(loader)
             final_scoring = 0
             for punct, i in punctuation_dict.items():
-                final_scoring += support[i] * f1[i]
+                final_scoring += np.nan_to_num(support[i] * f1[i])
                 
             final_scoring /= sum(support)
 
