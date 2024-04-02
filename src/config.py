@@ -41,5 +41,19 @@ MODELS = {
     'herbert-base':  {"model_name": 'allegro/herbert-klej-cased-v1', 
                           "tokenizer_name": 'allegro/herbert-klej-cased-tokenizer-v1', 
                           "output_dimension": 768, 
-                          "token_style": 'xlm'}
+                          "token_style": 'xlm'},
+    'bert-multiling-uncased': {"model_name": "bert-base-multilingual-uncased",
+                               "tokenizer_name": "bert-base-multilingual-uncased",
+                               "output_dimension": 768,
+                               "token_style": 'bert'},
+    'roberta-multiling': {"model_name": "xlm-roberta-base",
+                          "tokenizer_name": "xlm-roberta-base",
+                          "output_dimension": 768,
+                          "token_style": 'roberta'},
+    'polish-roberta': {"model_name": "dkleczek/Polish_RoBERTa_large_OPI",
+                        "tokenizer_name": "dkleczek/Polish_RoBERTa_large_OPI",
+                        "output_dimension": 1024,
+                        "token_style": 'roberta'},
+
+
 }

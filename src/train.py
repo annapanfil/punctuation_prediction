@@ -182,7 +182,7 @@ def train():
 
     with mlflow.start_run():
         if ml_log:
-            mlflow.set_tag('mlflow.runName', f"{args.language}_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}")
+            mlflow.set_tag('mlflow.runName', f'{args.language}_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}')
             mlflow.log_param("Number of Epochs", args.epoch)
             mlflow.log_param("Learning Rate", args.lr)
             mlflow.log_param("Batch Size", args.batch_size)
