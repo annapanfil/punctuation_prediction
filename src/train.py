@@ -51,9 +51,9 @@ if args.language == 'english':
                            token_style=token_style, is_train=False)
     test_set = [val_set, test_set_ref, test_set_asr]
 elif args.language == 'polish':
-    train_set = Dataset(os.path.join(args.data_path, 'pl/train'), tokenizer=tokenizer, sequence_len=sequence_len,
+    train_set = Dataset(os.path.join(args.data_path, 'pl/train_allpunct'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=True, augment_rate=ar, augment_type=aug_type)
-    val_set = Dataset(os.path.join(args.data_path, 'pl/val'), tokenizer=tokenizer, sequence_len=sequence_len,
+    val_set = Dataset(os.path.join(args.data_path, 'pl/val_allpunct'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=False)
     test_set = [val_set]
 else:
@@ -186,7 +186,7 @@ def train():
 
     with mlflow.start_run():
         if ml_log:
-            mlflow.set_tag('mlflow.runName', f'{args.language}_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}')
+            mlflow.set_tag('mlflow.runName', f'{args.pretrained_model}_allpunct_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}')
             mlflow.log_param("Number of Epochs", args.epoch)
             mlflow.log_param("Learning Rate", args.lr)
             mlflow.log_param("Batch Size", args.batch_size)
@@ -255,15 +255,16 @@ def train():
         for loader in test_loaders:
             precision, recall, f1, accuracy, cm, support = test(loader)
             final_scoring = 0
-            for punct, i in punctuation_dict.items():
+            for punct, i in list(punctuation_dict.items())[1:]: # skip no punctuation
                 final_scoring += np.nan_to_num(support[i] * f1[i])
                 
-            final_scoring /= sum(support)
+            final_scoring /= sum(support[1:])
 
             if ml_log:
                 for punct, i in punctuation_dict.items():
                     mlflow.log_metric(f"Precision_{punct}", precision[i])
                     mlflow.log_metric(f"Recall_{punct}", recall[i])
+                    mlflow.log_metric(f"F1_{punct}", f1[i])
 
                 mlflow.log_metric("Final Scoring", final_scoring, step=epoch)
 

@@ -6,9 +6,9 @@ def split_words_and_punctuation(text: str) -> tuple:
     # @return elements – list of words and punctuation signs
     # @return punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
 
-    excluded_signs = '\%\+\"\-\*\/\\=$€\(\)\[\]\':@·'
+    excluded_signs = '\%\+\"\*\/\\=$€\(\)\[\]\'@·;'
     word_signs = f"[\w{excluded_signs}]+"
-    punctuation_signs = f"(?![\s\%\+\"\-\*\/\\=$€])\W"
+    punctuation_signs = f"(?![\s{excluded_signs}])\W|…"
     elements = re.compile(rf"{punctuation_signs}|{word_signs}").findall(text) # alfanumeric or non-alphanumeric characters (punctuation)
     elements = [element for element in elements if element.strip()] # discard empty strings
 
@@ -66,16 +66,20 @@ PUNCT_MAPPING = {'?': '?',
                  '.': '.',
                  ',': ',',
  
-                 '!': '.',
-                 '…': '.',
-                 '-': ',',
-                 ':': ",",
+                 '!': '!',
+                 '…': '…',
+                 '-': '-',
+                 ':': ":",
                  ';': '.',
                  } # default is a dot
 
 PUNCT_NAMES = {'.': "PERIOD",
                ',': "COMMA",
-               '?': "QUESTION"}
+               '?': "QUESTION",
+               "!": "EXCLAMATION",
+               "-": "DASH",
+               ":": "COLON",
+               "…": "ELLIPSIS"}
 
 
 def merge_files(filenames, out_filename):
@@ -88,6 +92,7 @@ def merge_files(filenames, out_filename):
             content = f.read()
         with open(out_filename, 'a') as f:
             f.write(content)
+    print(f"merged {filenames} into {out_filename}")
         
 
 
@@ -97,14 +102,15 @@ if __name__ == "__main__":
         with open(os.path.join("data", "raw", file_path, "expected.tsv"), 'r', encoding='utf-8') as f:
             lines = [line for line in f.read().split('\n') if line.strip()]
         text = " ".join(lines)
+        text = text.replace("...", "…")
 
         elements, punctuation_mask = split_words_and_punctuation(text)
         elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING, verb=True)
 
         os.makedirs("data/pl", exist_ok=True)
         norm_path = os.path.normpath(file_path)
-        out_fname = os.path.join("data", "pl", norm_path.split(os.sep)[1] + "_" + norm_path.split(os.sep)[0][-4:])
+        out_fname = os.path.join("data", "pl", norm_path.split(os.sep)[1] + "_" + norm_path.split(os.sep)[0][-4:]+"_allpunct")
         save_to_file(out_fname, elements, punctuation_mask, PUNCT_NAMES)
     
-    merge_files(["data/pl/train_2021", "data/pl/train_2022"], "data/pl/train")
-    merge_files(["data/pl/test-A_2021", "data/pl/dev-0_2022"], "data/pl/val")
+    merge_files(["data/pl/train_2021_allpunct", "data/pl/train_2022_allpunct"], "data/pl/train_allpunct")
+    merge_files(["data/pl/test-A_2021_allpunct", "data/pl/dev-0_2022_allpunct"], "data/pl/val_allpunct")
