@@ -10,79 +10,69 @@ from tqdm import tqdm
 
 from argparser import parse_arguments
 from dataset import Dataset
-import datetime
 from model import DeepPunctuation, DeepPunctuationCRF
 from config import *
 import augmentation
 from test import test
 
 
-torch.multiprocessing.set_sharing_strategy('file_system')   # https://github.com/pytorch/pytorch/issues/11201
+def get_data_loaders(args, tokenizer):
+    token_style = MODELS[args.pretrained_model]["token_style"]
 
-args = parse_arguments()
+    if args.language == 'english':
+        train_set = Dataset(os.path.join(args.data_path, 'en/train2012'), 
+                            tokenizer=tokenizer, 
+                            sequence_len=args.sequence_length,
+                            token_style=token_style, 
+                            is_train=True, 
+                            augment_rate=args.augment_rate, 
+                            augment_type=args.augment_type)
+        val_set = Dataset(os.path.join(args.data_path, 'en/dev2012'), 
+                          tokenizer=tokenizer, 
+                          sequence_len=args.sequence_length,
+                          token_style=token_style,
+                          is_train=False)
+        test_set_ref = Dataset(os.path.join(args.data_path, 'en/test2011'), 
+                               tokenizer=tokenizer, 
+                               sequence_len=args.sequence_length,
+                               token_style=token_style,
+                               is_train=False)
+        test_set_asr = Dataset(os.path.join(args.data_path, 'en/test2011asr'), 
+                               tokenizer=tokenizer, 
+                               sequence_len=args.sequence_length,
+                               token_style=token_style, 
+                               is_train=False)
+        test_set = [val_set, test_set_ref, test_set_asr]
 
-ml_log = args.log
+    elif args.language == 'polish':
+        train_set = Dataset(os.path.join(args.data_path, f'pl/train{"_" + args.data_variation if args.data_variation != "" else ""}'),
+                            tokenizer=tokenizer, 
+                            sequence_len=args.sequence_length,
+                            token_style=token_style, 
+                            is_train=True,
+                            augment_rate=args.augment_rate,
+                            augment_type=args.augment_type)
+        val_set = Dataset(os.path.join(args.data_path, f'pl/val{"_" + args.data_variation if args.data_variation != "" else ""}'),
+                            tokenizer=tokenizer,
+                            sequence_len=args.sequence_length,
+                            token_style=token_style,
+                            is_train=False)
+        test_set = [val_set]
+    else:
+        raise ValueError('Incorrect language argument for Dataset')
 
-# for reproducibility
-torch.manual_seed(args.seed)
-torch.backends.cudnn.deterministic = True
-torch.backends.cudnn.benchmark = False
-np.random.seed(args.seed)
+    # Data Loaders
+    data_loader_params = {
+        'batch_size': args.batch_size,
+        'shuffle': True,
+        'num_workers': 1
+    }
+    train_loader = torch.utils.data.DataLoader(train_set, **data_loader_params)
+    val_loader = torch.utils.data.DataLoader(val_set, **data_loader_params)
+    test_loaders = [torch.utils.data.DataLoader(x, **data_loader_params) for x in test_set]
 
-# tokenizer
-tokenizer = AutoTokenizer.from_pretrained(MODELS[args.pretrained_model]["tokenizer_name"])
-augmentation.tokenizer = tokenizer
-augmentation.sub_style = args.sub_style
-augmentation.alpha_sub = args.alpha_sub
-augmentation.alpha_del = args.alpha_del
-token_style = MODELS[args.pretrained_model]["token_style"]
-ar = args.augment_rate
-sequence_len = args.sequence_length
-aug_type = args.augment_type
+    return train_loader, val_loader, test_loaders
 
-# Datasets
-if args.language == 'english':
-    train_set = Dataset(os.path.join(args.data_path, 'en/train2012'), tokenizer=tokenizer, sequence_len=sequence_len,
-                        token_style=token_style, is_train=True, augment_rate=ar, augment_type=aug_type)
-    val_set = Dataset(os.path.join(args.data_path, 'en/dev2012'), tokenizer=tokenizer, sequence_len=sequence_len,
-                      token_style=token_style, is_train=False)
-    test_set_ref = Dataset(os.path.join(args.data_path, 'en/test2011'), tokenizer=tokenizer, sequence_len=sequence_len,
-                           token_style=token_style, is_train=False)
-    test_set_asr = Dataset(os.path.join(args.data_path, 'en/test2011asr'), tokenizer=tokenizer, sequence_len=sequence_len,
-                           token_style=token_style, is_train=False)
-    test_set = [val_set, test_set_ref, test_set_asr]
-elif args.language == 'polish':
-    train_set = Dataset(os.path.join(args.data_path, 'pl/train_small'), tokenizer=tokenizer, sequence_len=sequence_len,
-                        token_style=token_style, is_train=True, augment_rate=ar, augment_type=aug_type)
-    val_set = Dataset(os.path.join(args.data_path, 'pl/val_small'), tokenizer=tokenizer, sequence_len=sequence_len,
-                        token_style=token_style, is_train=False)
-    test_set = [val_set]
-else:
-    raise ValueError('Incorrect language argument for Dataset')
-
-# Data Loaders
-data_loader_params = {
-    'batch_size': args.batch_size,
-    'shuffle': True,
-    'num_workers': 1
-}
-train_loader = torch.utils.data.DataLoader(train_set, **data_loader_params)
-val_loader = torch.utils.data.DataLoader(val_set, **data_loader_params)
-test_loaders = [torch.utils.data.DataLoader(x, **data_loader_params) for x in test_set]
-
-print("Dataloaders created")
-
-# Model
-device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
-if args.use_crf:
-    deep_punctuation = DeepPunctuationCRF(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
-else:
-    deep_punctuation = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
-deep_punctuation.to(device)
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(deep_punctuation.parameters(), lr=args.lr, weight_decay=args.decay)
-
-print("Model created")
 
 def validate(data_loader):
     """
@@ -116,25 +106,12 @@ def validate(data_loader):
     return correct/total, val_loss/num_iteration
 
 
-def train():
+def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders):
     best_val_acc = 0
 
-    if ml_log:
-        try:
-            _ = os.environ['MLFLOW_TRACKING_USERNAME']
-            _ = os.environ['MLFLOW_TRACKING_PASSWORD']
-            mlflow.set_tracking_uri('https://dagshub.com/annapanfil/punctuation_prediction.mlflow')
-            print("Using DagsHub MLflow server https://dagshub.com/annapanfil/punctuation_prediction.mlflow")
-        except KeyError:
-            mlflow.set_tracking_uri("http://localhost:5000")
-            print("Using local MLflow server http://localhost:5000")
-        
-    
-    mlflow.set_experiment("FirstIteration")
-
     with mlflow.start_run():
-        if ml_log:
-            mlflow.set_tag('mlflow.runName', f'{args.pretrained_model}_allpunct_{datetime.datetime.now().strftime("%Y.%m.%d_%H:%M:%S")}')
+        if args.log:
+            mlflow.set_tag('mlflow.runName', f'{args.pretrained_model}_{args.data_variation}_{args.name}')
             mlflow.log_param("Number of Epochs", args.epoch)
             mlflow.log_param("Learning Rate", args.lr)
             mlflow.log_param("Batch Size", args.batch_size)
@@ -190,14 +167,14 @@ def train():
                 best_val_acc = val_acc
                 best_model_state = deep_punctuation.state_dict()
 
-            if ml_log:
+            if args.log:
                 mlflow.log_metric("Validation Accuracy", val_acc, step=epoch)
                 mlflow.log_metric("Validation Loss", val_loss, step=epoch)
 
 
         print('Best validation Acc:', best_val_acc)
         deep_punctuation.load_state_dict(best_model_state)
-        if ml_log:
+        if args.log:
             mlflow.pytorch.log_model(deep_punctuation, "models")
 
         for loader in test_loaders:
@@ -208,7 +185,7 @@ def train():
                 
             final_scoring /= sum(support[1:])
 
-            if ml_log:
+            if args.log:
                 for punct, i in punctuation_dict.items():
                     mlflow.log_metric(f"Precision_{punct}", precision[i])
                     mlflow.log_metric(f"Recall_{punct}", recall[i])
@@ -228,4 +205,53 @@ def train():
 
 
 if __name__ == '__main__':
-    train()
+
+    torch.multiprocessing.set_sharing_strategy('file_system')   # https://github.com/pytorch/pytorch/issues/11201
+
+    args = parse_arguments()
+
+    # for reproducibility
+    torch.manual_seed(args.seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    np.random.seed(args.seed)
+
+    # tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(MODELS[args.pretrained_model]["tokenizer_name"])
+    
+    augmentation.tokenizer = tokenizer
+    augmentation.sub_style = args.sub_style
+    augmentation.alpha_sub = args.alpha_sub
+    augmentation.alpha_del = args.alpha_del
+
+    # data loaders
+    train_loader, val_loader, test_loaders = get_data_loaders(args, tokenizer)
+    print("Data loaders created")
+
+    # Model
+    device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
+    if args.use_crf:
+        deep_punctuation = DeepPunctuationCRF(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
+    else:
+        deep_punctuation = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
+    deep_punctuation.to(device)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(deep_punctuation.parameters(), lr=args.lr, weight_decay=args.decay)
+
+    print("Model created")
+
+    # setup mlflow server
+    if args.log:
+        try:
+            _ = os.environ['MLFLOW_TRACKING_USERNAME']
+            _ = os.environ['MLFLOW_TRACKING_PASSWORD']
+            mlflow.set_tracking_uri('https://dagshub.com/annapanfil/punctuation_prediction.mlflow')
+            print("Using DagsHub MLflow server https://dagshub.com/annapanfil/punctuation_prediction.mlflow")
+        except KeyError:
+            mlflow.set_tracking_uri("http://localhost:8080")
+            print("Using local MLflow server http://localhost:8080.\nMake sure you have mlflow server running (mlflow server --host 127.0.0.1 --port 8080).")
+        
+    mlflow.set_experiment("FirstIteration")
+
+    print(f"training {args.pretrained_model}_{args.data_variation}_{args.name}")
+    train(args, deep_punctuation, device, train_loader, val_loader, test_loaders)
