@@ -9,12 +9,12 @@ def split_words_and_punctuation(text: str) -> tuple:
     excluded_signs = '\%\+\"\*\/\\=$€\(\)\[\]\'@·;'
     word_signs = f"[\w{excluded_signs}]+"
     punctuation_signs = f"(?![\s{excluded_signs}])\W|…"
-    elements = re.compile(rf"{punctuation_signs}|{word_signs}").findall(text) # alfanumeric or non-alphanumeric characters (punctuation)
-    elements = [element for element in elements if element.strip()] # discard empty strings
+    elements = re.compile(rf"{punctuation_signs}|{word_signs}|\n").findall(text) # alfanumeric or non-alphanumeric characters (punctuation)
+    elements = [element for element in elements if element.strip(" ")] # discard empty strings
 
     punctuation_mask = []
     for i, element in enumerate(elements):
-        if re.match(rf"{word_signs}", element):
+        if re.match(rf"{word_signs}|\n", element):
             punctuation_mask.append(0)
         else:
             elements[i] = elements[i].replace(" ", "")
@@ -51,13 +51,18 @@ def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_n
         for i in range(len(elements)):
             if punctuation_mask[i] == 1:
                 continue
-            
+            elif elements[i] == "\n":
+                f.write("\n")
+                continue
+
             # write a word and its punctuation sign
             f.write(elements[i].lower() + '\t')
             if i+1 < len(elements) and punctuation_mask[i+1] == 1:
                 f.write(punct_names[elements[i+1]] + "\n")
             else:
                 f.write("O\n")
+        
+        f.write("\n")
 
     print("Saved to " + out_fname)
 
@@ -101,7 +106,7 @@ if __name__ == "__main__":
     for file_path in ["poleval2021/train", "poleval2021/test-A", "poleval2022/train", "poleval2022/dev-0"]: 
         with open(os.path.join("data", "raw", file_path, "expected.tsv"), 'r', encoding='utf-8') as f:
             lines = [line for line in f.read().split('\n') if line.strip()]
-        text = " ".join(lines)
+        text = "\n".join(lines)
         text = text.replace("...", "…")
 
         elements, punctuation_mask = split_words_and_punctuation(text)

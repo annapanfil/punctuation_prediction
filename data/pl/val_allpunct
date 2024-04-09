@@ -17,7 +17,7 @@ informacja	O
 o	O
 50	O
 spalonych	O
-waldensach	PERIOD
+waldensach;	O
 po	O
 co	O
 w	O
@@ -287,6 +287,7 @@ autorskich	QUESTION
 słowo	O
 w	O
 słowo	COLON
+
 fundacja	O
 mozilla	O
 jest	O
@@ -450,6 +451,7 @@ problem	O
 zostanie	O
 niebawem	O
 rozwiązany	PERIOD
+
 phoenix	O
 mars	O
 lander	O
@@ -717,6 +719,7 @@ nie	O
 zużywać	O
 niepotrzebnie	O
 energii	PERIOD
+
 boże	O
 widzisz	O
 takie	O
@@ -955,6 +958,7 @@ kasecie	O
 jest	O
 przez	O
 trzy	PERIOD
+
 39	O
 letni	COMMA
 szkocki	O
@@ -1150,6 +1154,7 @@ z	O
 członków	O
 zespołu	O
 mcrae	PERIOD
+
 lider	O
 pucharu	O
 świata	O
@@ -1330,6 +1335,7 @@ piątek	O
 skończył	O
 50	O
 lat	PERIOD
+
 "	O
 discovery	O
 "	O
@@ -1633,6 +1639,7 @@ stałe	O
 przyłączony	O
 do	O
 iss	PERIOD
+
 27	O
 grudnia	O
 izrael	COMMA
@@ -1876,6 +1883,7 @@ z	O
 gazy	O
 w	O
 wikinews	O
+
 w	O
 stanach	O
 zjednoczonych	O
@@ -2045,6 +2053,7 @@ uznano	O
 za	O
 zjawiska	O
 naturalne	PERIOD
+
 przeciętnie	O
 grająca	O
 sparta	O
@@ -2318,6 +2327,7 @@ sergiej	O
 kriwiec	DASH
 artur	O
 wichniarek	PERIOD
+
 jak	O
 poinformowała	O
 pap	COMMA
@@ -2503,6 +2513,7 @@ albo	O
 mieszkają	O
 za	O
 granicą	PERIOD
+
 w	O
 sądzie	O
 w	O
@@ -2707,6 +2718,7 @@ będący	O
 imitacją	O
 chevroleta	O
 spark	PERIOD
+
 prezydent	O
 usa	O
 george	O
@@ -2952,6 +2964,7 @@ wiele	O
 rafinerii	O
 oraz	O
 rurociągów	PERIOD
+
 minister	O
 edukacji	O
 roman	O
@@ -3113,6 +3126,7 @@ s	PERIOD
 lewisa	DASH
 powiedział	O
 wicepremier	PERIOD
+
 9	O
 maja	O
 na	O
@@ -3310,6 +3324,7 @@ przeniesiono	O
 pomnik	O
 żołnierzy	O
 radzieckich	PERIOD
+
 w	O
 domu	O
 kultury	O
@@ -3495,6 +3510,7 @@ bandosza	O
 listopada	O
 1991	O
 r	PERIOD
+
 koło	O
 miasta	O
 richland	COMMA
@@ -3754,6 +3770,7 @@ do	O
 których	O
 się	O
 podkopywały	PERIOD
+
 prezes	O
 urzędu	O
 komunikacji	O
@@ -3948,6 +3965,7 @@ istotnych	O
 nowych	O
 inwestycji	DASH
 dodała	PERIOD
+
 to	O
 jak	O
 to	O
@@ -4144,6 +4162,7 @@ ich	O
 prawdziwość	PERIOD
 tomasz	O
 bladyniec	O
+
 w	O
 2019	O
 roku	O
@@ -4305,6 +4324,7 @@ i	O
 leadiant	O
 z	O
 włoch	PERIOD
+
 były	O
 asystent	O
 przewodniczącego	O
@@ -4498,6 +4518,7 @@ z	O
 tzw	PERIOD
 mafią	O
 paliwową	PERIOD
+
 ani	O
 słowa	O
 o	O
@@ -4715,6 +4736,7 @@ czy	O
 slask	O
 przestal	O
 istniec	QUESTION
+
 około	O
 godziny	O
 11	COLON
@@ -4908,6 +4930,7 @@ rzecznik	O
 mazowieckiej	O
 spółki	O
 gazownictwa	PERIOD
+
 gdy	O
 jeden	O
 z	O
@@ -5139,6 +5162,7 @@ oprogramowanie	O
 open	DASH
 source	PERIOD
 "	DASH
+
 potrzeba	O
 zaproszenia	O
 armii	O
@@ -5366,6 +5390,7 @@ dziesięciu	O
 dywizji	O
 "	DASH
 podkreślił	PERIOD
+
 nasa	O
 ogłosiła	O
 konkurs	O
@@ -5536,6 +5561,7 @@ cbk	O
 pan	O
 i	O
 nasa	PERIOD
+
 szef	O
 unii	O
 chrześcijańsko	DASH
@@ -5693,6 +5719,7 @@ partii	O
 i	O
 mandatu	O
 senatora	PERIOD
+
 w	O
 poniedziałek	O
 w	O
@@ -5844,6 +5871,7 @@ spalonego	O
 dopiero	O
 w	O
 dogrywce	PERIOD
+
 sławomir	O
 radoń	COMMA
 szef	O
@@ -6046,6 +6074,7 @@ historię	O
 piszą	O
 ubeckie	O
 dokumenty	PERIOD
+
 w	O
 kilku	O
 miastach	O
@@ -6246,6 +6275,7 @@ z	O
 oddziałem	O
 nokia	O
 poland	PERIOD
+
 rozbudowałem	O
 znacząco	O
 w	O
@@ -6533,6 +6563,7 @@ niuniek	O
 20	O
 paź	O
 2015	O
+
 covid	DASH
 19	O
 22	O
@@ -6705,6 +6736,7 @@ policji	O
 insp	PERIOD
 mariusz	O
 ciarka	O
+
 tygodnik	O
 gala	O
 już	O
@@ -6874,6 +6906,7 @@ statuetki	O
 róże	O
 gali	O
 2009	O
+
 kolego	O
 gregul	COMMA
 sprawa	O
@@ -7149,6 +7182,7 @@ się	O
 10	O
 lut	O
 2010	O
+
 w	O
 dniach	O
 9	DASH
@@ -7304,6 +7338,7 @@ imprezy	O
 www	PERIOD
 tolkfolk	PERIOD
 pl	PERIOD
+
 wiceminister	O
 zdrowia	O
 bolesław	O
@@ -7603,6 +7638,7 @@ do	O
 momentu	O
 zakończenia	O
 przesłuchań	PERIOD
+
 polactwo	O
 zbiorem	O
 felietonów	DASH
@@ -7781,6 +7817,7 @@ w	O
 trwam	O
 lub	O
 rm	QUESTION
+
 usterka	O
 przyrządów	O
 mierniczych	O
@@ -7964,6 +8001,7 @@ km	O
 pozostaje	O
 w	O
 mocy	PERIOD
+
 francuzka	O
 amelie	O
 mauresmo	COMMA
@@ -8221,6 +8259,7 @@ woskobojewą	O
 4	O
 6	O
 4	O
+
 w	O
 czwartek	O
 w	O
@@ -8398,6 +8437,7 @@ wyścig	O
 w	O
 sezonie	O
 2007	O
+
 franco	O
 frattini	COMMA
 komisarz	O
@@ -8595,6 +8635,7 @@ terroryzmowi	O
 na	O
 europejskim	O
 poziomie	PERIOD
+
 rosyjska	O
 agencja	O
 kosmiczna	COMMA
@@ -8760,6 +8801,7 @@ mającej	O
 wystartować	O
 w	O
 2008	O
+
 nie	O
 zmieniłem	O
 tego	COMMA
@@ -8975,6 +9017,7 @@ etyka	O
 to	O
 filozofia	O
 moralności	PERIOD
+
 25	O
 maja	O
 rząd	O
@@ -9181,6 +9224,7 @@ przeciwko	O
 nie	O
 ma	O
 zdania	O
+
 "	O
 ars	O
 ante	O
@@ -9424,6 +9468,7 @@ zbigniew	O
 wąsiel	COMMA
 magda	O
 zięba	PERIOD
+
 w	O
 słowenii	O
 trwa	O
@@ -9643,6 +9688,7 @@ ok	PERIOD
 godz	PERIOD
 20	O
 30	O
+
 prace	O
 budowlane	O
 kanału	O
@@ -9836,6 +9882,7 @@ wiślany	O
 "	DASH
 podkreślił	O
 minister	PERIOD
+
 bogdan	O
 rymanowski	O
 odszedł	O
@@ -10021,6 +10068,7 @@ w	O
 radiu	O
 rmf	O
 fm	PERIOD
+
 zgromadzenie	O
 parlamentarne	O
 rady	O
@@ -10177,6 +10225,7 @@ pokojowy	COMMA
 bez	O
 ingerencji	O
 zagranicy	PERIOD
+
 o	O
 ile	O
 mnie	O
@@ -10369,6 +10418,7 @@ andrzej	O
 baczyński	COMMA
 tarnów	O
 bacz	O
+
 zarząd	O
 dróg	O
 i	O
@@ -10542,6 +10592,7 @@ na	O
 widzewie	O
 i	O
 olechowie	PERIOD
+
 talibowie	O
 grożą	O
 wojskom	O
@@ -10710,6 +10761,7 @@ zaczęły	O
 z	O
 nimi	O
 rozmawiać	PERIOD
+
 o	O
 niespełna	O
 cztery	O
@@ -10872,6 +10924,7 @@ peerelowskiej	O
 w	O
 monitorze	O
 polskim	PERIOD
+
 polska	O
 odrzuciła	O
 możliwość	O
@@ -11062,6 +11115,7 @@ imieniu	O
 polski	O
 nie	O
 podpisał	PERIOD
+
 co	O
 za	O
 bzdura	O
@@ -11317,6 +11371,7 @@ ludziom83	O
 87	O
 90	O
 7	O
+
 a	O
 co	O
 z	O
@@ -11474,6 +11529,7 @@ jednemu	DASH
 john	O
 belushi	O
 komentarz	O
+
 jak	O
 poinformowała	O
 telewizja	O
@@ -11653,6 +11709,7 @@ ma	O
 miejsce	O
 również	O
 tutaj	PERIOD
+
 zgłoszenie	O
 zostało	O
 przeniesione	O
@@ -11952,6 +12009,7 @@ w	O
 wikipedii	PERIOD
 tomasz	O
 bladyniec	O
+
 w	O
 hondurasie	O
 wojsko	O
@@ -12144,6 +12202,7 @@ wojska	O
 na	O
 pałac	O
 prezydenta	PERIOD
+
 "	O
 dlaczego	O
 ścigano	O
@@ -12422,6 +12481,7 @@ nie	O
 sformułowano	O
 takiego	O
 wniosku	PERIOD
+
 świat	O
 obiegła	O
 informacja	COMMA
@@ -12525,7 +12585,7 @@ w	O
 ankarze	O
 w	O
 przyszłym	O
-tygodniu	PERIOD
+tygodniu;	O
 dostarczy	O
 go	O
 pełnomocnik	O
@@ -12591,6 +12651,7 @@ więzieniu	O
 powiedział	O
 piotr	O
 paszkowski	PERIOD
+
 na	O
 terenach	O
 wystawowych	O
@@ -12883,6 +12944,7 @@ knihy	O
 s	PERIOD
 r	PERIOD
 o	PERIOD
+
 klęska	O
 żywiołowa	O
 nowego	O
@@ -13082,6 +13144,7 @@ z	O
 wiadomościami	O
 niewiadomego	O
 pochodzenia	PERIOD
+
 "	O
 poczuj	O
 się	O
@@ -13245,6 +13308,7 @@ godziny	O
 do	O
 18	COLON
 00	O
+
 z	O
 informacji	O
 rządu	O
@@ -13427,6 +13491,7 @@ pory	O
 zachorowały	O
 153	O
 osoby	PERIOD
+
 od	O
 soboty	O
 na	O
@@ -13581,6 +13646,7 @@ być	O
 trzy	O
 razy	O
 droższa	PERIOD
+
 o	O
 godzinie	O
 12	COLON
@@ -13749,6 +13815,7 @@ wiadomości	O
 państwowych	COMMA
 cctv	DASH
 9	O
+
 mamy	O
 najgorsze	O
 przedmieścia	O
@@ -13916,6 +13983,7 @@ i	O
 zatrzymano	O
 253	O
 osoby	PERIOD
+
 o	O
 godzinie	O
 15	COLON
@@ -14106,6 +14174,7 @@ ciągu	O
 jednego	O
 roku	PERIOD
 "	O
+
 armia	O
 pakistańska	O
 rozpoczęła	O
@@ -14294,6 +14363,7 @@ oraz	O
 128	O
 żołnierzy	O
 pakistanu	PERIOD
+
 mam	O
 wątpliwość	O
 czy	O
@@ -14557,6 +14627,7 @@ kaboldy	O
 13	O
 paź	O
 2014	O
+
 w	O
 samobójczym	O
 zamachu	O
@@ -14726,6 +14797,7 @@ ok	PERIOD
 7	O
 tysięcy	O
 osób	PERIOD
+
 telewizja	O
 puls	O
 jeszcze	O
@@ -14976,6 +15048,7 @@ odświeżona	O
 ramówka	O
 telewizji	O
 puls	PERIOD
+
 zyta	O
 gilowska	O
 planuje	O
@@ -15159,6 +15232,7 @@ prasowy	O
 ministerstwa	O
 skarbu	O
 państwa	PERIOD
+
 w	O
 mszczonowie	O
 ruszyła	O
@@ -15372,6 +15446,7 @@ jest	O
 na	O
 2019	O
 rok	PERIOD
+
 8	O
 września	O
 na	O
@@ -15542,6 +15617,7 @@ informacji	O
 na	O
 stronie	O
 organizatorów	COLON
+
 o	O
 godzinie	O
 9	COLON
@@ -15760,6 +15836,7 @@ zawodziły	O
 w	O
 ten	O
 sposób	PERIOD
+
 44	DASH
 letni	O
 ali	O
@@ -15924,6 +16001,7 @@ wojskowej	O
 w	O
 południowej	O
 karolinie	PERIOD
+
 dziewiąta	O
 edycja	O
 festiwalu	O
@@ -16164,6 +16242,7 @@ pobrania	O
 na	O
 stronie	O
 organizatora	PERIOD
+
 od	O
 25	O
 stycznia	O
@@ -16418,6 +16497,7 @@ m	PERIOD
 in	PERIOD
 rolnictwo	O
 ekologiczne	PERIOD
+
 ani	O
 słowa	O
 o	O
@@ -16630,6 +16710,7 @@ o	O
 wiele	O
 bardziej	O
 wiarygodne	PERIOD
+
 link	O
 do	O
 "	O
@@ -16817,7 +16898,7 @@ dodatkowe	O
 wiadomości	COLON
 grupa	O
 wirtualna	O
-polska	PERIOD
+polska;	O
 udział	COLON
 68	O
 %	O
@@ -16837,6 +16918,7 @@ aktualnie	DASH
 data	O
 wyjścia	O
 2016r	PERIOD
+
 skąd	O
 informacja	COMMA
 że	O
@@ -17014,6 +17096,7 @@ piastu	O
 βy	O
 język	O
 giętki	PERIOD
+
 w	O
 obliczu	O
 coraz	O
@@ -17060,7 +17143,7 @@ jest	O
 data	COMMA
 taka	O
 dość	O
-twarda	PERIOD
+twarda;	O
 26	O
 marca	O
 staje	O
@@ -17183,6 +17266,7 @@ dynamikę	DASH
 ocenił	O
 szef	O
 po	PERIOD
+
 ministerstwo	O
 spraw	O
 wewnętrznych	O
@@ -17462,6 +17546,7 @@ nożnej	O
 w	O
 2012	O
 roku	PERIOD
+
 28	O
 lipca	O
 odbędą	O
@@ -17666,6 +17751,7 @@ z	O
 doświadczeniem	O
 w	O
 programowaniu	PERIOD
+
 microsoft	O
 przez	O
 wiele	O
@@ -17859,6 +17945,7 @@ podczas	O
 styczniowej	O
 konferencji	O
 microsoftu	PERIOD
+
 białoruska	O
 milicja	O
 otoczyła	O
@@ -18092,6 +18179,7 @@ zostaną	O
 wybrane	O
 nowe	O
 władze	PERIOD
+
 między	O
 15	O
 a	O
@@ -18264,6 +18352,7 @@ powietrznych	O
 vandenberg	O
 w	O
 kalifornii	PERIOD
+
 rosja	O
 całkowicie	O
 odrzuciła	O
@@ -18435,6 +18524,7 @@ do	O
 przestrzegania	O
 zasad	O
 konkurencji	PERIOD
+
 reprezentacja	O
 polskich	O
 siatkarek	O
@@ -18677,6 +18767,7 @@ polska	DASH
 holandia	O
 3	COLON
 1	O
+
 w	O
 sejmie	O
 trwała	O
@@ -18853,6 +18944,7 @@ utworzenia	O
 urzędu	O
 komunikacji	O
 elektronicznej	PERIOD
+
 "	O
 armia	O
 pakistańska	O
@@ -19112,6 +19204,7 @@ napisał	O
 co	O
 wiedział	PERIOD
 "	O
+
 "	O
 kościół	O
 zawsze	O
@@ -19283,6 +19376,7 @@ do	O
 przeprosin	O
 "	DASH
 dodał	PERIOD
+
 choć	O
 niemcy	O
 borykają	O
@@ -19485,6 +19579,7 @@ województwa	O
 zachodnie	O
 "	DASH
 powiedzieli	PERIOD
+
 awesome	O
 to	O
 menedżer	O
@@ -19725,6 +19820,7 @@ i	O
 do	O
 opanowania	O
 składni	PERIOD
+
 jutro	O
 były	O
 prezydent	O
@@ -19902,6 +19998,7 @@ i	O
 demokracji	O
 w	O
 polsce	PERIOD
+
 posłowie	O
 lewicy	O
 chcą	O
@@ -20077,6 +20174,7 @@ sięgnięcie	O
 po	O
 mocniejsze	O
 środki	PERIOD
+
 wydano	O
 peazip	O
 4	O
@@ -20299,6 +20397,7 @@ oraz	O
 w	O
 interfejsie	O
 tworzenia	O
+
 ciekawe	O
 wyrażenie	O
 arytmetyczne	COMMA
@@ -20471,6 +20570,7 @@ koalicyjne	DASH
 dobrze	O
 napisane	PERIOD
 pawmak	O
+
 nadal	O
 nie	O
 wiadomo	O
@@ -20624,6 +20724,7 @@ informuje	O
 serwis	O
 tvp	PERIOD
 info	PERIOD
+
 w	O
 czasie	O
 "	O
@@ -20787,6 +20888,7 @@ prezes	O
 pis	DASH
 powiedział	O
 chlebowski	PERIOD
+
 apelem	O
 o	O
 jak	O
@@ -20965,6 +21067,7 @@ kilka	O
 tysięcy	O
 przeciwników	O
 konferencji	PERIOD
+
 najważniejsze	O
 światowe	O
 agencje	O
@@ -21160,6 +21263,7 @@ wskazywały	O
 na	O
 zwycięstwo	O
 kwaśniewskiego	PERIOD
+
 ivo	O
 josipović	O
 zdobył	O
@@ -21321,6 +21425,7 @@ odbędzie	O
 się	O
 10	O
 stycznia	PERIOD
+
 podczas	O
 wczorajszego	O
 nabożeństwa	O
@@ -21471,6 +21576,7 @@ dochodziło	O
 w	O
 2007	O
 roku	PERIOD
+
 zgromadzenie	O
 ogólne	O
 narodów	O
@@ -21734,6 +21840,7 @@ iranie	O
 i	O
 arabii	O
 saudyjskiej	PERIOD
+
 armia	O
 pakistańska	COMMA
 która	O
@@ -21944,6 +22051,7 @@ takich	O
 rodzin	O
 było	O
 4477	O
+
 microsoft	O
 oficjalnie	O
 zapowiedział	COMMA
@@ -22118,6 +22226,7 @@ będą	O
 mogli	O
 4	O
 gracze	PERIOD
+
 dziś	O
 tuż	O
 przed	O
@@ -22343,6 +22452,7 @@ o	O
 godz	PERIOD
 17	O
 0	O
+
 "	O
 uroczyście	O
 ogłaszam	O
@@ -22585,6 +22695,7 @@ beenhakkerowi	O
 oraz	O
 polskim	O
 piłkarzom	PERIOD
+
 na	O
 podlasiu	O
 rozpoczęły	O
@@ -22747,6 +22858,7 @@ odbywać	O
 się	O
 będą	O
 osobno	PERIOD
+
 żaden	O
 obserwator	O
 z	O
@@ -22947,6 +23059,7 @@ spraw	O
 zagranicznych	O
 parlamentu	O
 europejskiego	PERIOD
+
 na	O
 dzień	O
 otwarty	O
@@ -23125,6 +23238,7 @@ co	O
 najmniej	O
 2600	O
 zł	PERIOD
+
 dlaczego	O
 data	O
 wejścia	O
@@ -23272,6 +23386,7 @@ federalizm	O
 czy	O
 swobody	O
 obywatelskie	QUESTION
+
 zbrojnik	O
 niebieski	O
 to	O
@@ -23539,6 +23654,7 @@ od	O
 23	DASH
 27	O
 stopni	PERIOD
+
 piotr	O
 kosmala	O
 ogłosił	O
@@ -23734,6 +23850,7 @@ kiedyś	O
 z	O
 jego	O
 ekipą	PERIOD
+
 lech	O
 kaczyński	O
 i	O
@@ -23901,6 +24018,7 @@ próbie	O
 958	O
 dorosłych	O
 polaków	PERIOD
+
 chcę	O
 stworzyć	O
 ramy	O
@@ -24063,6 +24181,7 @@ prace	O
 w	O
 grupach	O
 roboczych	PERIOD
+
 83	DASH
 letni	O
 były	O
@@ -24228,6 +24347,7 @@ ograniczenia	O
 dla	O
 sprawiedliwości	PERIOD
 "	O
+
 polska	O
 edycja	O
 wikinews	DASH
@@ -24478,6 +24598,7 @@ konsensusu	O
 nie	O
 powiodła	O
 się	PERIOD
+
 wkrótce	O
 ze	O
 sprzedaży	O
@@ -24730,6 +24851,7 @@ o	O
 mniejszym	O
 zużyciu	O
 prądu	PERIOD
+
 4	O
 października	O
 w	O
@@ -24917,6 +25039,7 @@ po	O
 japońsku	O
 i	O
 duńsku	O
+
 od	O
 16	O
 lipca	O
@@ -25096,6 +25219,7 @@ przeważnie	O
 odpowiedzialni	O
 kontrahenci	PERIOD
 "	O
+
 w	O
 czwartek	COMMA
 19	O
@@ -25256,6 +25380,7 @@ sądzę	COMMA
 mogę	O
 spać	O
 spokojnie	PERIOD
+
 stanisław	O
 łyżwiński	O
 w	O
@@ -25474,6 +25599,7 @@ były	O
 naciski	O
 polityczne	PERIOD
 "	O
+
 inaugurujący	O
 ten	O
 sezon	O
@@ -25650,6 +25776,7 @@ ramach	O
 ruka	O
 triple	PERIOD
 "	O
+
 polskie	O
 siatkarki	O
 pokonały	O
@@ -25918,6 +26045,7 @@ radzuweit	COMMA
 mollers	COMMA
 petrausch	COMMA
 matthes	O
+
 prezes	O
 nbp	COMMA
 leszek	O
@@ -26077,6 +26205,7 @@ buty	O
 "	O
 szefa	O
 nbp	PERIOD
+
 braka	O
 została	O
 wyznaczona	O
@@ -26330,6 +26459,7 @@ odstępach	O
 od	O
 tegoż	O
 roku	PERIOD
+
 izraelska	O
 rakieta	O
 uderzyła	O
@@ -26515,6 +26645,7 @@ być	O
 zniszczony	O
 ubocznie	PERIOD
 "	O
+
 co	O
 to	O
 są	O
@@ -26740,6 +26871,7 @@ in	PERIOD
 praw	O
 autorskich	PERIOD
 "	O
+
 prezydent	O
 francji	O
 jacques	O
@@ -26924,6 +27056,7 @@ referendum	O
 konstytucji	O
 unii	O
 europejskiej	PERIOD
+
 po	O
 wygranej	O
 z	O
@@ -27210,6 +27343,7 @@ awansowała	O
 z	O
 pierwszego	O
 miejsca	PERIOD
+
 artykuł	O
 miesza	O
 tezy	O
@@ -27373,6 +27507,7 @@ jakiś	O
 dowód	QUESTION
 źródło	QUESTION
 cokolwiek	QUESTION
+
 pochodząca	O
 z	O
 korsyki	O
@@ -27543,6 +27678,7 @@ filmów	O
 o	O
 jamesie	O
 bondzie	PERIOD
+
 pół	O
 roku	O
 po	O
@@ -27784,6 +27920,7 @@ nie	O
 dotrze	O
 do	O
 adresata	PERIOD
+
 dziś	O
 na	O
 biatlonowych	O
@@ -28035,6 +28172,7 @@ ziemianin	O
 na	O
 30	O
 miejscu	PERIOD
+
 dlaczego	O
 eurocopter	O
 ec725	O
@@ -28191,6 +28329,7 @@ obie	QUESTION
 13	O
 mar	O
 2017	O
+
 po	O
 wyborach	O
 do	O
@@ -28391,6 +28530,7 @@ o	O
 przeprowadzenie	O
 powtórnych	O
 wyborów	PERIOD
+
 w	O
 wczorajszym	O
 wybuchu	O
@@ -28602,6 +28742,7 @@ najnowszych	O
 danych	O
 73	O
 osoby	PERIOD
+
 francuska	O
 areva	O
 zaprzeczyła	O
@@ -28855,6 +28996,7 @@ udziału	O
 człowieku	O
 czy	O
 zasilania	PERIOD
+
 nasa	O
 ogłosiła	O
 w	O
@@ -29006,6 +29148,7 @@ ramach	O
 misji	O
 apollo	O
 17	O
+
 "	O
 niech	O
 cba	O
@@ -29191,6 +29334,7 @@ nie	O
 mówił	O
 lider	O
 samoobrony	PERIOD
+
 z	O
 sondażu	O
 gfk	O
@@ -29384,6 +29528,7 @@ uważa	COMMA
 raczej	O
 nie	O
 dobrze	O
+
 opublikowane	O
 rano	O
 wstępne	O
@@ -29552,6 +29697,7 @@ także	O
 o	O
 sześć	O
 mandatów	PERIOD
+
 z	O
 powodu	O
 wykrycia	O
@@ -29707,6 +29853,7 @@ nie	O
 ma	O
 zagrożenia	PERIOD
 "	O
+
 portal	O
 nasza	DASH
 klasa	PERIOD
@@ -29913,6 +30060,7 @@ się	O
 z	O
 rozszerzoną	O
 opcją	PERIOD
+
 aleksander	O
 łukaszenka	COMMA
 który	O
@@ -30088,6 +30236,7 @@ demokratycznej	O
 jest	O
 aleksander	O
 milinkiewicz	PERIOD
+
 28	O
 i	O
 29	O
@@ -30325,6 +30474,7 @@ sportowców	O
 z	O
 11	O
 państw	PERIOD
+
 od	O
 kiedy	O
 death	O
@@ -30529,6 +30679,7 @@ ile	O
 ludzi	O
 tyle	O
 opini	PERIOD
+
 hiszpan	O
 rafael	O
 nadal	COMMA
@@ -30867,6 +31018,7 @@ roitman	O
 4	COMMA
 6	COLON
 0	O
+
 dlaczego	O
 w	O
 histori	O
@@ -31060,6 +31212,7 @@ o	O
 nazwiska	O
 i	O
 zyciorysach	PERIOD
+
 medialny	O
 magnat	COMMA
 rupert	O
@@ -31237,6 +31390,7 @@ ale	O
 występowali	O
 przeciwko	O
 patriotyzmowi	PERIOD
+
 rada	O
 wojewódzka	O
 samoobrony	O
@@ -31435,6 +31589,7 @@ w	O
 sobotę	O
 krzysztof	O
 filipek	PERIOD
+
 2	O
 listopada	O
 w	O
@@ -31679,6 +31834,7 @@ zmianą	O
 polskiego	O
 kontyngentu	O
 wojskowego	PERIOD
+
 w	O
 gdańsku	O
 zgodnie	O
@@ -31865,6 +32021,7 @@ gdańska	PERIOD
 źródło	O
 informacja	O
 własna	O
+
 wnioskuję	O
 o	O
 usunięcie	O
@@ -31962,7 +32119,7 @@ ma	O
 nic	O
 wspólnego	O
 z	O
-bibliografią	PERIOD
+bibliografią;	O
 więc	O
 w	O
 tym	O
@@ -32008,7 +32165,7 @@ angielskim	O
 artykułem	O
 'carl	O
 jung	O
-publications'	PERIOD
+publications';	O
 natomiast	O
 poprawniejsze	O
 by	O
@@ -32064,6 +32221,7 @@ sobie	PERIOD
 problem	O
 rozwiązany	PERIOD
 bkwg	O
+
 to	O
 pierwszy	O
 w	O
@@ -32279,6 +32437,7 @@ przekazem	O
 do	O
 szerszej	O
 publiczności	PERIOD
+
 prawybory	O
 do	O
 parlamentu	O
@@ -32504,6 +32663,7 @@ tanecznych	COMMA
 teatr	O
 dla	O
 dzieci	PERIOD
+
 sejm	O
 przyjął	O
 dziś	O
@@ -32697,6 +32857,7 @@ w	O
 żadnej	O
 z	O
 izb	PERIOD
+
 po	O
 obaleniu	O
 w	O
@@ -32900,6 +33061,7 @@ co	O
 najmniej	O
 83	O
 ludzi	PERIOD
+
 w	O
 minionym	O
 tygodniu	O
@@ -33133,6 +33295,7 @@ obecnie	O
 24	O
 reaktory	O
 jądrowe	PERIOD
+
 w	O
 odniesieniu	O
 do	O
@@ -33149,7 +33312,7 @@ widzę	O
 nie	O
 szukając	O
 daleko	DASH
-finezyjne	PERIOD
+finezyjne;	O
 jak	O
 to	O
 napisać	QUESTION
@@ -33440,6 +33603,7 @@ mennonicki	O
 w	O
 stogach	PERIOD
 montignac	O
+
 dzisiaj	O
 na	O
 terenie	O
@@ -33598,6 +33762,7 @@ gdzie	O
 przeżył	O
 wypadek	O
 śmigłowca	PERIOD
+
 ruch	O
 chrześcijańsko	O
 demokratyczny	O
@@ -33766,6 +33931,7 @@ lub	O
 czerwcu	O
 2006	O
 roku	PERIOD
+
 24	O
 maja	O
 sejm	O
@@ -33965,6 +34131,7 @@ dniach	O
 trafi	O
 do	O
 senatu	PERIOD
+
 1	O
 listopada	COMMA
 jak	O
@@ -34126,6 +34293,7 @@ w	O
 zwiedzaniu	O
 starego	O
 cmentarza	PERIOD
+
 tajski	O
 parlament	O
 ostatecznie	O
@@ -34286,6 +34454,7 @@ starcia	O
 są	O
 kwestią	O
 czasu	PERIOD
+
 koldo	O
 gil	COMMA
 który	O
@@ -34506,6 +34675,7 @@ vuelta	O
 al	O
 pais	O
 vasco	O
+
 "	O
 lechu	O
 wałęso	COMMA
@@ -34667,6 +34837,7 @@ polska	O
 potrzebuje	O
 europy	PERIOD
 "	O
+
 o	O
 co	O
 chodzi	O
@@ -34901,6 +35072,7 @@ w	O
 takim	O
 stopniu	PERIOD
 lus	O
+
 szef	O
 urzędu	O
 komitetu	O
@@ -35107,6 +35279,7 @@ placówce	O
 dyplomatycznej	O
 w	O
 brukseli	PERIOD
+
 ustalono	O
 już	O
 termin	O
@@ -35305,6 +35478,7 @@ napiętymi	O
 kalendarzami	O
 obu	O
 polityków	PERIOD
+
 do	O
 czego	O
 władze	O
@@ -35526,6 +35700,7 @@ oprogramowania	O
 w	O
 administracji	O
 publicznej	PERIOD
+
 zwiększa	O
 się	O
 liczba	O
@@ -35715,6 +35890,7 @@ wyjątkami	O
 objęte	O
 zakazem	O
 handlu	PERIOD
+
 200	O
 kilometrów	O
 na	O
@@ -35934,6 +36110,7 @@ jednak	O
 nie	O
 ewakuują	O
 ludności	PERIOD
+
 na	O
 5	COMMA
 5	O
@@ -36173,6 +36350,7 @@ z	O
 düsseldorfu	O
 do	O
 bielefeldu	PERIOD
+
 a	O
 dlaczego	O
 dane	O
@@ -36362,7 +36540,7 @@ jest	O
 dobrym	O
 źródłem	O
 danych	O
-demograficznych	PERIOD
+demograficznych;	O
 odpowiednie	O
 są	O
 instytucje	O
@@ -36438,6 +36616,7 @@ zamieszkiwało	O
 antarktydę	COMMA
 ew	PERIOD
 atlantydę	PERIOD
+
 sławomir	O
 cenckiewicz	COMMA
 współautor	O
@@ -36612,6 +36791,7 @@ jeden	O
 z	O
 pracowników	O
 ipn	PERIOD
+
 druga	O
 z	O
 pomorskich	O
@@ -36683,7 +36863,7 @@ jednym	O
 ciągiem	COMMA
 to	O
 co	O
-jest	PERIOD
+jest;	O
 bez	O
 dzielenia	O
 na	O
@@ -36894,6 +37074,7 @@ nazwą	O
 związaną	O
 z	O
 fizykąyusek	O
+
 klub	O
 azs	O
 zakopane	O
@@ -37134,6 +37315,7 @@ odbędzie	O
 się	O
 konkurs	O
 indywidualny	PERIOD
+
 covid	DASH
 19	O
 24	O
@@ -37324,6 +37506,7 @@ pracować	O
 tylko	O
 na	O
 wynos	O
+
 zgłoszenie	O
 zostało	O
 przeniesione	O
@@ -37548,6 +37731,7 @@ z	O
 zaniewską	O
 są	O
 kłopoty	PERIOD
+
 przewodniczący	O
 klubu	O
 pis	O
@@ -37766,6 +37950,7 @@ służby	O
 i	O
 organy	O
 państwowe	PERIOD
+
 echem	O
 odbił	O
 się	O
@@ -38013,6 +38198,7 @@ biernat	COMMA
 szef	O
 łódzkiej	O
 po	PERIOD
+
 15	O
 kwietnia	O
 2013	O
@@ -38204,6 +38390,7 @@ spadły	O
 o	O
 24	O
 proc	PERIOD
+
 we	O
 wtorek	O
 rano	O
@@ -38359,6 +38546,7 @@ wyborów	O
 wprowadzają	O
 zawieszenie	O
 broni	PERIOD
+
 bratysława	COLON
 odbywający	O
 się	O
@@ -38577,6 +38765,7 @@ i	O
 pokazywać	O
 takie	O
 wydarzenia	PERIOD
+
 "	O
 european	O
 passion	O
@@ -38747,6 +38936,7 @@ instrumentalistę	O
 zespołu	O
 tuomasa	O
 holopainena	PERIOD
+
 doceniam	O
 to	COMMA
 że	O
@@ -38891,7 +39081,7 @@ jesteśmy	O
 polakami	O
 na	O
 południowym	O
-kaukazie	PERIOD
+kaukazie;	O
 tak	O
 samo	O
 polacy	O
@@ -38929,6 +39119,7 @@ zawsze	DASH
 dodał	O
 gruziński	O
 prezydent	PERIOD
+
 w	O
 dniach	O
 4	DASH
@@ -39210,6 +39401,7 @@ i	O
 wiele	O
 innych	O
 atrakcji	PERIOD
+
 zastanowiłbym	O
 się	COMMA
 czy	O
@@ -39460,6 +39652,7 @@ a	O
 nie	O
 2009	O
 roku	O
+
 drugiego	O
 maja	O
 wchodzi	O
@@ -39626,6 +39819,7 @@ znakami	O
 "	O
 pl	PERIOD
 "	O
+
 "	O
 wizyta	O
 premiera	O
@@ -39896,6 +40090,7 @@ zdanie	O
 "	DASH
 powiedział	O
 olejniczak	PERIOD
+
 telewizja	O
 polska	O
 już	O
@@ -40117,6 +40312,7 @@ produkcja	O
 tvp1	O
 jest	O
 promocją	PERIOD
+
 brytyjska	O
 policja	O
 aresztowała	O
@@ -40275,6 +40471,7 @@ zostały	O
 zabrane	O
 do	O
 zbadania	PERIOD
+
 w	O
 dniach	O
 11	DASH
@@ -40496,6 +40693,7 @@ i	O
 z	O
 gminy	O
 baranowo	PERIOD
+
 dzisiaj	O
 zakończyły	O
 się	O
@@ -40654,7 +40852,7 @@ głównego	COMMA
 zgodnie	O
 z	O
 podanym	O
-planem	PERIOD
+planem;	O
 drabinka	O
 kwalifikacji	O
 gry	O
@@ -40663,6 +40861,7 @@ turnieju	O
 katowice	O
 open	O
 2015	COLON
+
 w	O
 przypadku	O
 nowych	O
@@ -40840,6 +41039,7 @@ nie	O
 z	O
 radiem	O
 maryja	PERIOD
+
 kłaniam	O
 się	PERIOD
 dzień	O
@@ -40860,25 +41060,33 @@ umówić	O
 z	O
 pana	O
 pomocą	PERIOD
+
 czterdzieści	O
 siedem	PERIOD
+
 mhm	PERIOD
+
 tak	PERIOD
+
 już	O
 momencik	PERIOD
 siedem	COMMA
 trzy	COMMA
 zero	COMMA
 dziewięć	PERIOD
+
 dwa	COMMA
 cztery	PERIOD
+
 dwanaście	PERIOD
 trzysta	O
 czterdzieści	O
 pięć	PERIOD
+
 wie	O
 pan	O
 co	ELLIPSIS
+
 przepraszam	COMMA
 ale	COMMA
 ale	O
@@ -40904,6 +41112,7 @@ już	O
 teraz	O
 ustalić	O
 termin	QUESTION
+
 proszę	O
 pana	COMMA
 im	O
@@ -40913,7 +41122,9 @@ lepiej	PERIOD
 jeżeli	O
 mogę	O
 prosić	PERIOD
+
 jasne	PERIOD
+
 proszę	O
 pana	COMMA
 a	O
@@ -40921,6 +41132,7 @@ co	O
 powinienem	O
 ze	O
 sobą	ELLIPSIS
+
 tak	COMMA
 co	O
 powinienem	O
@@ -40930,7 +41142,9 @@ wziąć	O
 na	O
 te	O
 szczepienia	QUESTION
+
 tak	PERIOD
+
 proszę	O
 pana	COMMA
 skąd	O
@@ -40938,6 +41152,7 @@ wezmę	O
 te	COMMA
 te	O
 dokumenty	QUESTION
+
 wie	O
 pan	O
 co	COMMA
@@ -40963,6 +41178,7 @@ na	O
 mój	O
 adres	O
 mailowy	QUESTION
+
 dyktuję	PERIOD
 raf	O
 bre	COMMA
@@ -40970,9 +41186,12 @@ jak	O
 rafał	O
 i	O
 bre	PERIOD
+
 @interia	PERIOD
 pl	PERIOD
+
 jasne	PERIOD
+
 jasne	PERIOD
 proszę	O
 pana	COMMA
@@ -40995,6 +41214,7 @@ o	O
 informacje	O
 dotyczące	O
 przeciwwskazań	QUESTION
+
 wszystko	O
 rozumiem	PERIOD
 z	O
@@ -41028,6 +41248,7 @@ już	O
 terminu	O
 szczepienia	COMMA
 tak	QUESTION
+
 wszystko	O
 jasne	PERIOD
 bardzo	O
@@ -41035,9 +41256,11 @@ dziękuję	O
 w	O
 takim	O
 razie	PERIOD
+
 dziękuję	PERIOD
 do	O
 widzenia	PERIOD
+
 dzień	O
 dobry	PERIOD
 andrzej	O
@@ -41046,6 +41269,7 @@ w	O
 czym	O
 mogę	O
 pomóc	QUESTION
+
 oczywiście	COMMA
 jak	O
 najbardziej	PERIOD
@@ -41072,6 +41296,7 @@ lat	O
 w	O
 tym	O
 momencie	PERIOD
+
 czterdzieści	O
 siedem	PERIOD
 dziękuję	O
@@ -41119,9 +41344,11 @@ pana	O
 danych	O
 osobowych	COMMA
 dobrze	QUESTION
+
 tak	O
 więc	O
 poproszę	ELLIPSIS
+
 imię	COMMA
 pana	O
 imię	O
@@ -41135,9 +41362,13 @@ o	O
 pana	O
 numer	O
 pesel	PERIOD
+
 tak	PERIOD
+
 tak	PERIOD
+
 tak	PERIOD
+
 dziękuję	O
 bardzo	PERIOD
 już	O
@@ -41260,7 +41491,9 @@ szczepienia	O
 szczepionką	COMMA
 którą	O
 będzie	ELLIPSIS
+
 mhm	QUESTION
+
 na	O
 ten	O
 moment	O
@@ -41335,6 +41568,7 @@ interesujący	PERIOD
 powtórzę	COMMA
 raz	O
 jeszcze	ELLIPSIS
+
 dobrze	COMMA
 to	O
 zapiszę	O
@@ -41452,11 +41686,14 @@ do	COMMA
 jakby	COMMA
 pana	O
 rejestracji	PERIOD
+
 czy	O
 ma	O
 pan	O
 jakieś	ELLIPSIS
+
 mhm	QUESTION
+
 już	O
 tłumaczę	PERIOD
 przede	O
@@ -41485,6 +41722,7 @@ kwestionariusz	O
 wstępnego	O
 wywiadu	O
 przesiewowego	PERIOD
+
 czyli	O
 należy	O
 taki	O
@@ -41528,6 +41766,7 @@ ciągłe	COMMA
 tak	O
 się	O
 wyrażę	PERIOD
+
 już	O
 tłumaczę	PERIOD
 formularze	O
@@ -41615,6 +41854,7 @@ przyjmiemy	O
 ten	COMMA
 ten	O
 formularz	PERIOD
+
 standardowo	O
 nie	O
 mamy	O
@@ -41676,8 +41916,11 @@ się	O
 coś	O
 takiego	O
 wysłać	PERIOD
+
 tak	PERIOD
+
 tak	PERIOD
+
 dziękuję	O
 bardzo	PERIOD
 dobrze	PERIOD
@@ -41777,6 +42020,7 @@ zakrywającą	O
 nos	O
 i	O
 usta	PERIOD
+
 to	O
 będzie	O
 konieczne	PERIOD
@@ -41798,6 +42042,7 @@ nie	O
 ma	O
 żadnych	O
 przeciwwskazań	PERIOD
+
 tak	PERIOD
 oczywiście	O
 jak	O
@@ -41983,6 +42228,7 @@ która	O
 by	O
 pan	O
 dyskwalifikowała	PERIOD
+
 to	O
 znaczy	COMMA
 jeżeliby	O
@@ -42098,6 +42344,7 @@ y	O
 z	O
 zaproszeniami	O
 szybciej	PERIOD
+
 w	O
 takim	O
 razie	O
@@ -42115,12 +42362,14 @@ placówki	O
 w	O
 wyznaczonym	O
 terminie	PERIOD
+
 dziękuję	O
 serdecznie	PERIOD
 do	O
 usłyszenia	PERIOD
 do	O
 widzenia	PERIOD
+
 dzień	O
 dobry	COMMA
 joanna	O
@@ -42142,7 +42391,9 @@ i	O
 siedzę	O
 przy	O
 świeczkach	PERIOD
+
 no	EXCLAMATION
+
 co	O
 się	O
 dzieje	QUESTION
@@ -42164,15 +42415,19 @@ wiem	COMMA
 o	O
 co	O
 chodzi	PERIOD
+
 numer	O
 klienta	O
 to	O
 dwa	COMMA
 dwa	ELLIPSIS
+
 cztery	COMMA
 pięć	COMMA
+
 sześć	COMMA
 trzy	PERIOD
+
 pesel	O
 dziewięćdziesiąt	O
 jeden	COMMA
@@ -42186,13 +42441,16 @@ osiem	COMMA
 pięć	O
 i	O
 cztery	PERIOD
+
 i	O
 co	O
 jeszcze	QUESTION
+
 a	O
 właśnie	O
 to	O
 mój	PERIOD
+
 dziewięćdziesiąt	COMMA
 zero	O
 osiem	COMMA
@@ -42203,9 +42461,11 @@ siedem	COMMA
 osiem	O
 pięć	O
 cztery	PERIOD
+
 tak	COMMA
 tak	COMMA
 tak	PERIOD
+
 tak	EXCLAMATION
 no	O
 ja	O
@@ -42224,6 +42484,7 @@ i	O
 mimo	O
 wszystko	O
 mam	ELLIPSIS
+
 oczywiście	O
 siedzę	O
 przy	O
@@ -42240,6 +42501,7 @@ nie	O
 jest	O
 śmieszna	O
 sytuacja	EXCLAMATION
+
 nie	O
 no	COMMA
 nie	ELLIPSIS
@@ -42250,6 +42512,7 @@ było	O
 niby	O
 to	O
 nieopłacenie	QUESTION
+
 o	O
 matko	EXCLAMATION
 to	O
@@ -42260,6 +42523,7 @@ tyle	O
 na	O
 ten	O
 miesiąc	PERIOD
+
 cztery	ELLIPSIS
 ale	O
 dlaczego	O
@@ -42282,6 +42546,7 @@ się	O
 tak	O
 wszystko	O
 wzięło	QUESTION
+
 to	ELLIPSIS
 ale	COMMA
 no	O
@@ -42300,6 +42565,7 @@ powinno	O
 się	O
 naliczać	COMMA
 nie	QUESTION
+
 to	O
 co	O
 to	O
@@ -42309,6 +42575,7 @@ jakiego	O
 tytułu	O
 jest	O
 ta	ELLIPSIS
+
 ta	COMMA
 ta	COMMA
 ta	COMMA
@@ -42317,8 +42584,11 @@ kwota	O
 czterysta	O
 ponad	O
 złotych	QUESTION
+
 mhm	PERIOD
+
 aha	PERIOD
+
 o	O
 boże	PERIOD
 no	O
@@ -42346,8 +42616,10 @@ nagle	O
 się	O
 czterysta	O
 wzięło	QUESTION
+
 no	O
 ja	ELLIPSIS
+
 jakie	O
 odsetki	QUESTION
 przecież	O
@@ -42366,6 +42638,7 @@ rzeczywiście	O
 poślizgnęłam	COMMA
 ale	O
 przecież	ELLIPSIS
+
 przecież	O
 potem	O
 to	O
@@ -42378,8 +42651,10 @@ wzięły	O
 w	O
 takim	O
 razie	QUESTION
+
 o	O
 boże	PERIOD
+
 no	O
 dobrze	COMMA
 to	O
@@ -42388,6 +42663,7 @@ ja	O
 mam	O
 teraz	O
 zrobić	ELLIPSIS
+
 żebyście	O
 państwo	O
 znowu	O
@@ -42404,13 +42680,16 @@ po	O
 prostu	COMMA
 jak	O
 dostanę	ELLIPSIS
+
 pensję	PERIOD
+
 czyli	O
 dostanę	O
 ją	ELLIPSIS
 zaraz	O
 pani	O
 powiem	PERIOD
+
 w	O
 ponie	ELLIPSIS
 we	O
@@ -42424,6 +42703,7 @@ pierwszego	O
 czerwca	O
 dostanę	O
 pensję	PERIOD
+
 a	O
 możecie	O
 już	O
@@ -42435,13 +42715,16 @@ energię	O
 do	O
 tej	O
 pory	QUESTION
+
 o	O
 jezu	PERIOD
+
 czyli	O
 co	O
 ja	O
 mam	O
 zrobić	QUESTION
+
 muszę	O
 tylko	ELLIPSIS
 mam	O
@@ -42459,6 +42742,7 @@ jeszcze	O
 to	O
 znowu	O
 rozłożyli	QUESTION
+
 i	O
 po	O
 prostu	O
@@ -42474,6 +42758,7 @@ prostu	COMMA
 teraz	O
 środków	COMMA
 nie	QUESTION
+
 mogę	COMMA
 mogę	COMMA
 mogę	O
@@ -42487,13 +42772,16 @@ ale	O
 nie	O
 czterysta	O
 nagle	PERIOD
+
 o	O
 boże	PERIOD
 czyli	ELLIPSIS
+
 będę	O
 musiała	O
 siedzieć	O
 rzeczywiście	O
+
 w	O
 tej	O
 ciemności	COMMA
@@ -42503,7 +42791,9 @@ spłacę	QUESTION
 no	O
 to	O
 masakra	EXCLAMATION
+
 mhm	PERIOD
+
 no	O
 dobrze	COMMA
 no	O
@@ -42513,6 +42803,7 @@ się	O
 zapożyczyć	O
 takim	O
 razie	PERIOD
+
 dobra	COMMA
 no	O
 to	COMMA
@@ -42531,8 +42822,10 @@ włączacie	O
 z	O
 powrotem	O
 prawda	QUESTION
+
 dobra	COMMA
 dobra	PERIOD
+
 o	COMMA
 o	PERIOD
 to	O
@@ -42540,11 +42833,14 @@ zrobię	PERIOD
 poproszę	O
 syna	COMMA
 dobrze	PERIOD
+
 dobra	COMMA
 to	O
 dziękuję	O
 bardzo	PERIOD
+
 no	PERIOD
+
 nie	COMMA
 nie	PERIOD
 no	O
@@ -42561,6 +42857,7 @@ zadziałać	COMMA
 żeby	O
 to	O
 się	COMMA
+
 że	O
 tak	O
 powiem	COMMA
@@ -42572,9 +42869,12 @@ no	O
 to	O
 dziękuję	COMMA
 no	PERIOD
+
 do	O
 widzenia	PERIOD
+
 dziękuję	PERIOD
+
 dzień	O
 dobry	PERIOD
 energetyka	O
@@ -42585,11 +42885,14 @@ w	O
 czym	O
 mogę	O
 pomóc	QUESTION
+
 aha	PERIOD
+
 to	O
 dobrze	COMMA
 już	O
 poproszę	ELLIPSIS
+
 nie	O
 no	COMMA
 jasne	COMMA
@@ -42600,6 +42903,7 @@ już	O
 to	O
 zaraz	O
 sprawdzamy	PERIOD
+
 prosiłabym	O
 o	O
 numer	O
@@ -42609,9 +42913,13 @@ numer	O
 pesel	O
 właściciela	O
 umowy	PERIOD
+
 tak	PERIOD
+
 tak	PERIOD
+
 tak	PERIOD
+
 pesel	PERIOD
 prosiłabym	O
 jeszcze	O
@@ -42619,9 +42927,11 @@ o	O
 pesel	O
 właściciela	O
 umowy	PERIOD
+
 tak	QUESTION
 to	O
 poproszę	PERIOD
+
 i	O
 to	O
 pani	O
@@ -42629,12 +42939,16 @@ jest	O
 właścicielem	O
 umowy	COMMA
 tak	QUESTION
+
 pani	O
 joanna	O
 darkowska	PERIOD
 dobrze	PERIOD
+
 mhm	PERIOD
+
 ta	ELLIPSIS
+
 ja	O
 rozumiem	PERIOD
 ale	O
@@ -42654,6 +42968,7 @@ nieopłacony	O
 rachunek	COMMA
 na	O
 zadłużenie	PERIOD
+
 czterysta	O
 dwadzieścia	O
 osiem	O
@@ -42662,20 +42977,26 @@ mam	O
 tu	O
 do	O
 płacenia	PERIOD
+
 z	O
 tego	COMMA
 co	O
 widzę	COMMA
+
 to	ELLIPSIS
+
 faktura	O
+
 jest	O
 z	O
 dnia	O
 dwudziestego	O
 maja	PERIOD
+
 termin	O
 płatności	O
 minął	ELLIPSIS
+
 wie	O
 pani	O
 co	QUESTION
@@ -42697,6 +43018,7 @@ plan	O
 spłaty	O
 został	O
 zerwany	PERIOD
+
 to	O
 ze	O
 względu	O
@@ -42708,8 +43030,10 @@ bo	O
 tutaj	O
 mieliśmy	O
 dwieście	ELLIPSIS
+
 wartość	O
 samej	ELLIPSIS
+
 faktury	O
 była	O
 na	O
@@ -42717,6 +43041,7 @@ dwieście	O
 dwadzieścia	O
 złotych	COMMA
 tak	QUESTION
+
 dwieście	O
 dwadzieścia	O
 osiem	O
@@ -42725,6 +43050,7 @@ ta	COMMA
 ta	O
 nota	O
 odsetkowa	PERIOD
+
 wie	O
 pani	O
 co	QUESTION
@@ -42744,10 +43070,13 @@ tak	O
 ta	O
 płatność	O
 była	O
+
 rozłożona	O
 na	O
 raty	PERIOD
+
 no	ELLIPSIS
+
 i	O
 ja	O
 rozumiem	COMMA
@@ -42766,8 +43095,10 @@ nie	O
 jesteśmy	O
 w	O
 stanie	ELLIPSIS
+
 podłączyć	O
 energii	PERIOD
+
 no	O
 ja	O
 nie	O
@@ -42786,10 +43117,12 @@ bardzo	O
 bym	O
 chciała	COMMA
 ale	ELLIPSIS
+
 nie	O
 mam	O
 innej	O
 możliwości	PERIOD
+
 tak	COMMA
 tak	PERIOD
 oczywiście	PERIOD
@@ -42808,9 +43141,11 @@ jeszcze	O
 przesłać	O
 potwierdzenie	O
 przelewu	PERIOD
+
 no	PERIOD
 to	O
 wtedy	ELLIPSIS
+
 wtedy	COMMA
 to	O
 będzie	O
@@ -42822,6 +43157,7 @@ jeszcze	O
 pani	O
 jakoś	O
 pomóc	QUESTION
+
 dobrze	PERIOD
 w	O
 takim	O
@@ -42837,8 +43173,10 @@ dnia	PERIOD
 pozdrawiam	COMMA
 do	O
 usłyszenia	PERIOD
+
 dzień	O
 dobry	PERIOD
+
 ja	O
 nazywam	O
 się	O
@@ -42856,6 +43194,7 @@ od	O
 państwa	O
 ostatniej	O
 faktury	PERIOD
+
 i	O
 nie	O
 mogę	O
@@ -42864,7 +43203,9 @@ po	O
 prostu	O
 za	O
 telefon	PERIOD
+
 mhm	PERIOD
+
 tak	COMMA
 tak	COMMA
 ja	O
@@ -42874,15 +43215,22 @@ to	O
 jest	O
 sześć	COMMA
 sześć	PERIOD
+
 siedem	COMMA
 siedem	COMMA
+
 jeden	PERIOD
+
 tak	PERIOD
+
 mhm	PERIOD
+
 nie	PERIOD
+
 nie	COMMA
 nie	COMMA
 nie	PERIOD
+
 ale	O
 wysłali	O
 mi	O
@@ -42897,7 +43245,9 @@ sam	O
 adres	O
 mailowy	COMMA
 tak	QUESTION
+
 mhm	PERIOD
+
 tak	COMMA
 skrzynkę	O
 sprawdzam	COMMA
@@ -42917,6 +43267,7 @@ je	O
 jakby	O
 podwójnie	O
 dostawałam	PERIOD
+
 i	O
 tam	O
 na	O
@@ -42941,6 +43292,7 @@ spamie	O
 też	O
 nie	O
 mam	COMMA
+
 więc	O
 się	O
 zastanawiam	O
@@ -42949,7 +43301,9 @@ prostu	COMMA
 co	O
 się	O
 stało	PERIOD
+
 mhm	PERIOD
+
 tak	COMMA
 tak	COMMA
 tak	COMMA
@@ -42962,8 +43316,11 @@ cały	O
 czas	O
 faktury	O
 przychodziły	PERIOD
+
 mhm	PERIOD
+
 dobrze	PERIOD
+
 dobrze	PERIOD
 to	O
 na	O
@@ -42977,6 +43334,7 @@ chciałam	O
 teraz	O
 po	O
 prostu	O
+
 zrobić	O
 przelew	COMMA
 a	O
@@ -42990,6 +43348,7 @@ będę	O
 jakby	O
 na	O
 mailu	COMMA
+
 to	O
 mogłaby	O
 pani	O
@@ -43008,15 +43367,25 @@ miała	O
 już	O
 z	O
 głowy	QUESTION
+
 mhm	PERIOD
+
 dobrze	PERIOD
+
 mhm	PERIOD
+
 tak	PERIOD
+
 tak	PERIOD
+
 mhm	PERIOD
+
 dobrze	PERIOD
+
 tak	PERIOD
+
 tak	PERIOD
+
 okej	PERIOD
 dziękuję	O
 bardzo	PERIOD
@@ -43027,9 +43396,13 @@ złotych	O
 dwadzieścia	O
 siedem	O
 groszy	PERIOD
+
 mhm	PERIOD
+
 mhm	PERIOD
+
 dobrze	PERIOD
+
 nie	COMMA
 to	O
 już	O
@@ -43061,6 +43434,7 @@ to	O
 już	O
 po	O
 niedzieli	O
+
 dziękuję	O
 również	COMMA
 życzę	O
@@ -43068,6 +43442,7 @@ miłego	O
 weekendu	COMMA
 do	O
 widzenia	PERIOD
+
 na	O
 kwiatkowska	COMMA
 sieć	O
@@ -43076,12 +43451,15 @@ w	O
 czym	O
 mogę	O
 pomóc	QUESTION
+
 mhm	COMMA
 dobrz	ELLIPSIS
+
 dobrze	COMMA
 już	O
 to	O
 sprawdzam	PERIOD
+
 poprosiłabym	ELLIPSIS
 a	COMMA
 imię	COMMA
@@ -43103,7 +43481,9 @@ je	O
 pani	O
 na	O
 umowie	PERIOD
+
 mhm	PERIOD
+
 dziękuję	O
 pani	O
 bardzo	PERIOD
@@ -43119,10 +43499,12 @@ irysowa	COMMA
 tak	QUESTION
 zgadza	O
 się	QUESTION
+
 dobrze	COMMA
 dziękuję	O
 pani	O
 bardzo	PERIOD
+
 i	O
 już	O
 sprawdzam	COMMA
@@ -43132,6 +43514,7 @@ dzieje	O
 z	O
 tymi	O
 fakturami	COMMA
+
 czy	O
 one	O
 faktycznie	O
@@ -43146,6 +43529,7 @@ wyjaśnić	PERIOD
 proszę	O
 o	O
 chwilę	PERIOD
+
 dobrze	PERIOD
 proszę	O
 pani	COMMA
@@ -43153,8 +43537,10 @@ z	O
 tego	COMMA
 co	O
 widzę	COMMA
+
 wysyłaliśmy	O
 fakturę	O
+
 czwartego	O
 maja	O
 i	O
@@ -43170,6 +43556,7 @@ nie	O
 przyszła	O
 ta	O
 faktura	QUESTION
+
 to	O
 znaczy	COMMA
 z	O
@@ -43193,6 +43580,7 @@ w	O
 formie	O
 takiej	O
 listowej	PERIOD
+
 więc	O
 rozumiem	COMMA
 że	O
@@ -43211,7 +43599,9 @@ nie	O
 ma	O
 też	COMMA
 tak	QUESTION
+
 mhm	PERIOD
+
 dobrze	PERIOD
 proszę	O
 pani	COMMA
@@ -43239,6 +43629,7 @@ były	O
 jakieś	O
 zmiany	O
 ostatnio	O
+
 z	O
 umową	COMMA
 ale	O
@@ -43251,10 +43642,12 @@ z	O
 powrotem	O
 te	O
 faktury	O
+
 no	O
 w	O
 formie	O
 mailowej	O
+
 i	O
 wygeneruję	O
 do	O
@@ -43266,6 +43659,7 @@ jeżeli	O
 ona	O
 nie	O
 dotarła	PERIOD
+
 tylko	O
 proszę	O
 powiedzieć	PERIOD
@@ -43297,6 +43691,7 @@ jest	O
 u	O
 nas	O
 systemie	QUESTION
+
 dobrze	PERIOD
 to	O
 w	O
@@ -43307,6 +43702,7 @@ to	O
 sprawdzam	PERIOD
 tak	PERIOD
 aktywowałam	O
+
 i	COMMA
 proszę	O
 pani	COMMA
@@ -43322,6 +43718,7 @@ otrzymać	O
 od	O
 nas	O
 maila	O
+
 z	O
 tą	O
 fakturą	PERIOD
@@ -43354,7 +43751,9 @@ dostać	O
 tą	O
 fakturę	COMMA
 no	O
+
 ale	ELLIPSIS
+
 no	O
 nie	O
 jestem	O
@@ -43374,6 +43773,7 @@ zadziało	COMMA
 że	O
 te	O
 faktury	O
+
 nie	O
 były	O
 do	O
@@ -43402,7 +43802,9 @@ prostu	O
 proszę	O
 o	O
 telefon	PERIOD
+
 mhm	PERIOD
+
 jasne	COMMA
 oczywiście	PERIOD
 już	O
@@ -43419,11 +43821,13 @@ to	O
 jest	O
 numer	O
 rachunku	O
+
 do	ELLIPSIS
 ten	O
 techniczny	O
 do	O
 spłaty	PERIOD
+
 kwota	O
 faktury	O
 z	O
@@ -43440,6 +43844,7 @@ i	O
 dwadzieścia	O
 siedem	O
 groszy	PERIOD
+
 i	O
 numer	O
 konta	O
@@ -43451,27 +43856,34 @@ jest	O
 tak	PERIOD
 siedemdziesiąt	O
 dziewięć	PERIOD
+
 jedenaście	COMMA
 czterdzieści	PERIOD
+
 dwa	O
 tysiące	O
 cztery	PERIOD
+
 cztery	O
 zera	O
 będą	O
 teraz	PERIOD
+
 zero	COMMA
 dwa	COMMA
 trzydzieści	O
 siedem	PERIOD
+
 zero	COMMA
 osiem	COMMA
 siedemdziesiąt	O
 cztery	PERIOD
+
 dwadzieścia	O
 jeden	COMMA
 osiemdziesiąt	O
 jeden	PERIOD
+
 tak	COMMA
 dokładnie	COMMA
 zgadza	O
@@ -43487,6 +43899,7 @@ przelew	O
 za	O
 tą	O
 fakturę	PERIOD
+
 w	O
 tytule	O
 po	O
@@ -43505,10 +43918,12 @@ to	O
 faktura	O
 za	O
 kwiecień	COMMA
+
 ta	O
 która	O
 jest	O
 uregulowania	PERIOD
+
 czy	O
 na	O
 ten	O
@@ -43525,9 +43940,13 @@ jeszcze	O
 jakoś	O
 mogłabym	O
 pomóc	QUESTION
+
 mhm	PERIOD
+
 jasne	PERIOD
+
 mhm	PERIOD
+
 oczywiście	PERIOD
 to	O
 w	O
@@ -43544,8 +43963,10 @@ weekendu	O
 i	O
 do	O
 usłyszenia	PERIOD
+
 dzień	O
 dob	ELLIPSIS
+
 darkowska	PERIOD
 no	O
 wie	O
@@ -43573,23 +43994,30 @@ mojej	O
 reklamacji	PERIOD
 to	O
 trochę	ELLIPSIS
+
 niezbyt	COMMA
 dla	O
 lojalnego	O
 klienta	COMMA
 dobrze	O
 wygląda	PERIOD
+
 no	O
 dwa	O
 tygodnie	O
 temu	PERIOD
+
 mhm	PERIOD
+
 na	O
 mojego	O
 męża	PERIOD
+
 michał	O
 darkowski	PERIOD
+
 mhm	PERIOD
+
 wie	O
 pani	COMMA
 ja	O
@@ -43606,6 +44034,7 @@ tak	O
 dalej	COMMA
 no	COMMA
 no	ELLIPSIS
+
 no	O
 nie	PERIOD
 nie	O
@@ -43625,6 +44054,7 @@ tygodnie	COMMA
 powiedzmy	COMMA
 dzisiaj	O
 mija	PERIOD
+
 a	O
 nic	O
 do	O
@@ -43632,7 +44062,9 @@ tej	O
 pory	O
 nie	O
 przyszło	PERIOD
+
 mhm	PERIOD
+
 no	O
 niemożliwe	COMMA
 no	PERIOD
@@ -43648,6 +44080,7 @@ ej	O
 kwoty	O
 na	O
 fakturze	PERIOD
+
 to	O
 jest	O
 prawie	O
@@ -43664,6 +44097,7 @@ było	O
 czyimś	O
 błędem	COMMA
 tak	QUESTION
+
 jeszcze	O
 to	O
 jest	O
@@ -43675,11 +44109,13 @@ bardzo	O
 zmieniło	O
 się	O
 zużycie	PERIOD
+
 z	O
 miesiąca	O
 na	O
 miesiąc	COMMA
 nie	QUESTION
+
 no	O
 ale	O
 to	O
@@ -43705,11 +44141,15 @@ dotąd	O
 pisma	O
 nie	O
 dostałam	PERIOD
+
 dobrze	PERIOD
+
 mhm	PERIOD
+
 no	COMMA
 dobra	COMMA
 no	PERIOD
+
 i	O
 może	COMMA
 może	COMMA
@@ -43719,14 +44159,18 @@ powołam	O
 na	O
 panią	COMMA
 dobra	QUESTION
+
 dobrze	PERIOD
+
 no	COMMA
 no	COMMA
 no	PERIOD
+
 dobrze	COMMA
 to	O
 tak	O
 zrobię	PERIOD
+
 nie	COMMA
 nie	PERIOD
 no	O
@@ -43737,12 +44181,16 @@ szybko	O
 się	O
 to	O
 załat	ELLIPSIS
+
 dziękuję	PERIOD
+
 do	O
 widzenia	PERIOD
+
 wzajemnie	COMMA
 do	O
 widzenia	PERIOD
+
 dzień	O
 dobry	COMMA
 karolina	O
@@ -43753,11 +44201,13 @@ w	O
 czym	O
 mogę	O
 pomóc	QUESTION
+
 a	O
 kiedy	O
 składała	O
 pani	O
 reklamację	QUESTION
+
 proszę	O
 dać	O
 mi	O
@@ -43766,12 +44216,14 @@ zaraz	COMMA
 zaraz	O
 to	O
 wyjaśnimy	PERIOD
+
 a	O
 na	O
 kogo	O
 została	O
 zawarta	O
 umowa	QUESTION
+
 tak	COMMA
 a	O
 mogę	O
@@ -43781,7 +44233,9 @@ imię	O
 i	O
 nazwisko	O
 męża	QUESTION
+
 dobrze	PERIOD
+
 i	O
 to	O
 mąż	O
@@ -43790,13 +44244,16 @@ właścicielem	O
 tej	O
 umowy	COMMA
 tak	QUESTION
+
 dziękuję	O
 bardzo	O
 w	O
 takim	O
 razie	PERIOD
+
 aha	COMMA
 dobrze	PERIOD
+
 w	O
 takim	O
 razie	O
@@ -43817,6 +44274,7 @@ jeszcze	O
 nie	O
 otrzymała	COMMA
 tak	QUESTION
+
 dobrze	COMMA
 to	O
 już	O
@@ -43824,6 +44282,7 @@ chwileczkę	COMMA
 w	O
 takim	O
 razie	PERIOD
+
 ja	COMMA
 ja	O
 już	O
@@ -43832,6 +44291,7 @@ pani	O
 przeczytam	O
 po	O
 prostu	PERIOD
+
 po	O
 analizie	O
 materiałów	O
@@ -43843,6 +44303,7 @@ z	O
 odpowiednią	O
 komórkę	O
 merytoryczną	O
+
 wyjaśniamy	COMMA
 że	O
 stany	O
@@ -43860,12 +44321,15 @@ maja	O
 podpisaną	O
 przez	O
 pana	ELLIPSIS
+
 darkowskiego	PERIOD
+
 tutaj	O
 nie	O
 stwierdzono	O
 żadnych	O
 nieprawidłowości	PERIOD
+
 dobrze	COMMA
 proszę	O
 napisać	O
@@ -43881,6 +44345,7 @@ decyzji	O
 na	O
 adres	O
 energetyka	ELLIPSIS
+
 tak	COMMA
 oczywiście	PERIOD
 otrzyma	O
@@ -43897,9 +44362,11 @@ tą	COMMA
 z	O
 tą	O
 decyzją	PERIOD
+
 w	O
 tym	O
 momencie	ELLIPSIS
+
 tak	COMMA
 jak	O
 mówiłam	PERIOD
@@ -43909,12 +44376,14 @@ napisanie	O
 maila	O
 z	O
 odwołaniem	ELLIPSIS
+
 od	O
 tej	O
 decyzji	O
 na	O
 adres	O
 energetyka	ELLIPSIS
+
 małpa	O
 energia	O
 kropka	O
@@ -43924,6 +44393,7 @@ pani	O
 zaznaczyć	COMMA
 że	ELLIPSIS
 słucham	QUESTION
+
 dobrze	COMMA
 może	O
 się	O
@@ -43957,12 +44427,14 @@ o	O
 ponowne	O
 rozpatrzenie	O
 sprawy	PERIOD
+
 czy	O
 mogę	O
 jeszcze	O
 pani	O
 jakoś	O
 pomóc	QUESTION
+
 dobrze	PERIOD
 w	O
 takim	O
@@ -43974,6 +44446,7 @@ i	O
 miłego	O
 dnia	PERIOD
 pozdrawiam	PERIOD
+
 dzień	O
 dob	COMMA
 karolina	O
@@ -43984,6 +44457,7 @@ w	O
 czym	O
 mogę	O
 pomóc	QUESTION
+
 tak	COMMA
 czy	O
 chodzi	O
@@ -43994,12 +44468,14 @@ z	O
 którego	O
 pani	O
 dzwoni	QUESTION
+
 rozumiem	PERIOD
 prosiłabym	O
 jeszcze	O
 o	O
 hasło	O
 abonenckie	PERIOD
+
 a	O
 czy	ELLIPSIS
 jest	O
@@ -44008,6 +44484,7 @@ właścicielem	O
 tego	O
 numeru	COMMA
 tak	QUESTION
+
 dobrze	COMMA
 w	O
 takim	O
@@ -44019,23 +44496,28 @@ pesel	O
 i	O
 adres	O
 zameldowania	PERIOD
+
 sto	O
 sześćdziesiąt	O
 cztery	COMMA
 dobrze	PERIOD
+
 i	O
 adres	O
 zameldowania	O
 jeszcze	O
 bym	O
 prosiła	PERIOD
+
 dobrze	PERIOD
+
 wygląda	O
 na	O
 to	COMMA
 że	O
 to	O
 konto	ELLIPSIS
+
 zaraz	COMMA
 zaraz	COMMA
 chwileczkę	ELLIPSIS
@@ -44048,6 +44530,7 @@ mi	O
 się	O
 tam	O
 zaczytać	PERIOD
+
 tak	COMMA
 konto	O
 zostało	O
@@ -44073,12 +44556,14 @@ wszystkiego	O
 dwanaście	O
 miesięcy	O
 wstecz	PERIOD
+
 musi	O
 się	O
 pani	O
 jakby	O
 ponownie	O
 zarejestrować	PERIOD
+
 na	O
 naszej	O
 stronie	O
@@ -44092,6 +44577,7 @@ postępować	O
 zgodnie	O
 z	O
 instrukcjami	PERIOD
+
 dobrze	COMMA
 czy	O
 mogę	O
@@ -44099,6 +44585,7 @@ jeszcze	O
 pani	O
 jakoś	O
 pomóc	QUESTION
+
 no	O
 zazwyczaj	O
 jest	O
@@ -44115,6 +44602,7 @@ się	O
 zmieniło	COMMA
 to	O
 też	ELLIPSIS
+
 proszę	COMMA
 proszę	O
 mi	COMMA
@@ -44132,21 +44620,31 @@ jest	O
 co	O
 był	O
 wcześniej	PERIOD
+
 dobrze	PERIOD
+
 to	O
 poproszę	PERIOD
+
 domagala	COMMA
+
 tak	PERIOD
+
 domagala	COMMA
 tak	QUESTION
 kropka	ELLIPSIS
+
 ha	QUESTION
+
 tak	ELLIPSIS
+
 małpa	O
 gmail	O
 kropka	O
 com	PERIOD
+
 dobrze	PERIOD
+
 ja	O
 w	O
 takim	O
@@ -44161,6 +44659,7 @@ otrzyma	O
 pani	O
 link	O
 aktywacyjny	PERIOD
+
 po	O
 wejściu	COMMA
 po	O
@@ -44172,17 +44671,21 @@ będzie	O
 utworzyć	O
 nowe	O
 hasło	PERIOD
+
 czy	O
 mogę	O
 pani	O
 jeszcze	O
 jakoś	O
 pomóc	QUESTION
+
 dziękuję	O
 bardzo	COMMA
 pozdrawiam	PERIOD
+
 do	O
 usłyszenia	PERIOD
+
 dzień	O
 dobry	COMMA
 z	O
@@ -44202,14 +44705,19 @@ na	O
 swoje	O
 konto	O
 internetowe	PERIOD
+
 tak	PERIOD
+
 momencik	PERIOD
+
 nie	O
 pamiętam	O
 tego	O
 hasła	PERIOD
+
 tak	COMMA
 tak	PERIOD
+
 numer	O
 pesel	O
 to	O
@@ -44220,27 +44728,33 @@ zero	O
 dwadzieścia	O
 dwa	COMMA
 dziewiętnaście	COMMA
+
 dwa	COMMA
 sto	O
 sześćdziesiąt	O
 cztery	PERIOD
+
 to	O
 będzie	O
 ulica	O
 przedmiejska	O
 jeden	O
 gdańsk	O
+
 czyli	O
 muszę	O
 jakby	O
 zalogować	O
 się	O
 ponownie	QUESTION
+
 czy	O
 zarejestrować	O
 ponownie	QUESTION
+
 dziękuję	COMMA
 rozumiem	PERIOD
+
 czy	O
 ja	O
 muszę	O
@@ -44256,57 +44770,75 @@ który	O
 logowałam	O
 się	O
 wcześniej	QUESTION
+
 czy	O
 z	ELLIPSIS
+
 jakiegokolwiek	O
 innego	QUESTION
+
 to	O
 ja	COMMA
 jeśli	O
 jest	O
 możliwość	COMMA
 chciałabym	O
+
 zmienić	O
 ten	O
 adres	O
 mailowy	O
 na	O
 nowy	PERIOD
+
 domagała	PERIOD
 domagala	COMMA
 bez	O
 polskich	O
 znaków	PERIOD
+
 kropka	O
 ha	O
 małpa	O
 gmail	O
 kropka	O
 com	PERIOD
+
 ha	O
 jak	O
 halina	PERIOD
+
 małpa	O
 gmail	ELLIPSIS
 com	PERIOD
+
 mhm	PERIOD
+
 mhm	PERIOD
+
 mm	ELLIPSIS
+
 dziękuję	O
 bardzo	PERIOD
+
 nie	COMMA
 dziękuję	O
 bardzo	PERIOD
+
 do	O
 widzenia	PERIOD
+
 joanna	O
 kwiatkowska	COMMA
 twoja	O
 energia	COMMA
 pomóc	QUESTION
+
 mhm	PERIOD
+
 roz	ELLIPSIS
 miem	PERIOD
+
 już	COMMA
 oczywiście	O
 postaram	O
@@ -44325,6 +44857,7 @@ hasło	O
 do	O
 tej	O
 usługi	PERIOD
+
 mhm	COMMA
 dziękuję	PERIOD
 i	O
@@ -44333,6 +44866,7 @@ o	O
 hasło	O
 do	O
 usługi	PERIOD
+
 tak	COMMA
 tak	PERIOD
 to	O
@@ -44349,6 +44883,7 @@ je	O
 mieć	O
 na	O
 umowie	PERIOD
+
 mhm	COMMA
 dziękuję	O
 pani	O
@@ -44366,6 +44901,7 @@ się	O
 właśnie	O
 w	O
 systemie	PERIOD
+
 i	O
 też	O
 od	O
@@ -44381,8 +44917,10 @@ sprawdzę	O
 z	O
 czego	O
 wynika	ELLIPSIS
+
 ta	O
 informacja	PERIOD
+
 dziękuję	O
 bardzo	O
 za	O
@@ -44397,6 +44935,7 @@ warunki	O
 umowy	COMMA
 zgadza	O
 się	QUESTION
+
 tak	PERIOD
 i	O
 z	O
@@ -44411,6 +44950,7 @@ jeszcze	O
 do	O
 końca	O
 unieważniona	PERIOD
+
 a	O
 pani	O
 już	O
@@ -44429,13 +44969,16 @@ pani	O
 nie	O
 wykorzystała	COMMA
 została	ELLIPSIS
+
 przepraszam	COMMA
 momencik	PERIOD
 już	O
 tu	O
 sprawdzam	PERIOD
+
 jeszcze	O
 raz	PERIOD
+
 przepraszam	PERIOD
 bo	O
 aj	O
@@ -44448,6 +44991,7 @@ abonamentu	COMMA
 czyli	O
 jednora	ELLIPSIS
 wo	O
+
 wpłaciła	O
 pani	O
 za	O
@@ -44457,6 +45001,7 @@ a	O
 o	ELLIPSIS
 rócz	O
 tego	O
+
 połączenia	O
 głosowe	O
 z	O
@@ -44473,6 +45018,7 @@ infolinię	O
 za	O
 osiem	O
 złotych	ELLIPSIS
+
 i	O
 z	O
 tego	COMMA
@@ -44481,6 +45027,7 @@ tutaj	O
 widzę	COMMA
 po	O
 prostu	ELLIPSIS
+
 no	COMMA
 ta	O
 kwota	O
@@ -44491,6 +45038,7 @@ się	O
 zgadza	COMMA
 jeżeli	O
 pani	ELLIPSIS
+
 pani	O
 twierdzi	COMMA
 że	O
@@ -44501,6 +45049,7 @@ faktura	O
 jest	O
 za	O
 wyso	QUESTION
+
 zależy	O
 na	O
 jaką	O
@@ -44514,7 +45063,9 @@ od	O
 pani	O
 op	ELLIPSIS
 ty	PERIOD
+
 mhm	PERIOD
+
 tak	PERIOD
 i	O
 niestety	O
@@ -44533,8 +45084,10 @@ rata	O
 za	O
 urządzenie	COMMA
 więc	ELLIPSIS
+
 no	O
 niestety	PERIOD
+
 widzę	COMMA
 to	O
 faktycznie	O
@@ -44549,11 +45102,13 @@ przekroczona	O
 w	O
 tym	O
 miesiącu	PERIOD
+
 i	O
 czy	O
 mogę	O
 pani	O
 jeszcze	ELLIPSIS
+
 czy	O
 w	O
 takim	O
@@ -44569,11 +45124,14 @@ mogę	O
 jeszcze	O
 jakoś	O
 pomóc	QUESTION
+
 mhm	PERIOD
+
 dziękuję	O
 również	COMMA
 do	O
 usłyszenia	PERIOD
+
 dzień	O
 dobry	COMMA
 ja	O
@@ -44591,15 +45149,19 @@ jest	O
 za	O
 duży	O
 zdecydowanie	PERIOD
+
 mhm	COMMA
 tak	COMMA
 to	O
 ja	O
 jestem	O
 właścicielem	PERIOD
+
 gabriela	O
 mazurkiewicz	PERIOD
+
 hasło	QUESTION
+
 to	O
 jest	O
 takie	O
@@ -44608,11 +45170,13 @@ tak	QUESTION
 to	ELLIPSIS
 ten	O
 numer	QUESTION
+
 mhm	COMMA
 tak	COMMA
 tak	COMMA
 tak	PERIOD
 dobrze	PERIOD
+
 to	O
 jest	O
 czterdzieści	O
@@ -44620,19 +45184,27 @@ pięć	COMMA
 czterysta	O
 dwadzieścia	O
 siedem	PERIOD
+
 mhm	PERIOD
+
 mhm	PERIOD
+
 bardzo	O
 proszę	PERIOD
+
 tak	COMMA
 tak	PERIOD
+
 aha	PERIOD
+
 to	O
 znaczy	ELLIPSIS
+
 bo	O
 tak	COMMA
 czyli	O
 za	ELLIPSIS
+
 za	O
 to	COMMA
 że	O
@@ -44646,6 +45218,7 @@ jest	O
 pobierana	O
 opłata	COMMA
 tak	QUESTION
+
 aha	COMMA
 no	O
 dobrze	PERIOD
@@ -44675,15 +45248,19 @@ z	O
 tego	O
 wynika	COMMA
 no	PERIOD
+
 no	O
 dobrze	COMMA
 no	O
 to	O
 już	O
 rozumiem	PERIOD
+
 mhm	PERIOD
+
 no	O
 dobrze	PERIOD
+
 no	COMMA
 nie	O
 no	COMMA
@@ -44693,10 +45270,12 @@ razie	O
 wszystko	O
 jest	O
 jasne	PERIOD
+
 no	O
 nic	COMMA
 no	O
 trudno	PERIOD
+
 dobrze	COMMA
 to	O
 ja	O
@@ -44709,6 +45288,7 @@ razie	O
 i	O
 do	O
 usłyszenia	PERIOD
+
 dzień	O
 dobry	COMMA
 maja	O
@@ -44716,6 +45296,7 @@ bilska	O
 z	O
 tej	O
 strony	PERIOD
+
 wyłączono	O
 mi	O
 ostatnio	O
@@ -44725,6 +45306,7 @@ powód	O
 jako	O
 zadłużenie	O
 i	O
+
 chciałam	O
 się	O
 dowiedzieć	COMMA
@@ -44737,16 +45319,20 @@ na	O
 raty	O
 z	O
 powodów	O
+
 problemów	O
 finansowych	PERIOD
+
 numer	O
 klienta	COMMA
 to	O
 jest	ELLIPSIS
+
 a	O
 m	O
 j	O
 osiem	PERIOD
+
 to	O
 jest	O
 adres	O
@@ -44755,10 +45341,12 @@ akacjowa	O
 siedem	COMMA
 siemianowice	O
 śląskie	PERIOD
+
 i	O
 właścicielem	O
 jestem	O
 ja	PERIOD
+
 rozumiem	O
 i	O
 chciałam	O
@@ -44771,7 +45359,9 @@ rozłożyć	O
 jakoś	O
 na	O
 raty	PERIOD
+
 rozumiem	PERIOD
+
 mogłaby	O
 pani	O
 podać	O
@@ -44782,18 +45372,23 @@ jaki	O
 mam	O
 to	O
 wysłać	QUESTION
+
 energetyka	O
+
 małpa	O
 energia	O
 kropka	O
 pl	PERIOD
 dziękuję	O
 bardzo	PERIOD
+
 nie	COMMA
 dziękuję	PERIOD
+
 dziękuję	O
 miłego	O
 dnia	PERIOD
+
 dzień	O
 dobry	COMMA
 karolina	O
@@ -44804,6 +45399,7 @@ w	O
 czym	O
 mogę	O
 pomóc	QUESTION
+
 zaraz	O
 zobacz	ELLIPSIS
 prosiłabym	O
@@ -44812,10 +45408,12 @@ o	O
 pani	O
 numer	O
 klienta	PERIOD
+
 a	O
 m	O
 j	O
 osiem	PERIOD
+
 proszę	O
 mi	O
 powiedzieć	COMMA
@@ -44828,8 +45426,11 @@ kto	O
 jest	O
 właścicielem	O
 umowy	PERIOD
+
 tak	PERIOD
+
 dobrze	PERIOD
+
 proszę	O
 pani	COMMA
 z	O
@@ -44847,6 +45448,7 @@ złotych	O
 dwudziestu	O
 trzech	O
 groszy	PERIOD
+
 żeby	O
 wstrzymać	O
 działania	O
@@ -44856,6 +45458,7 @@ postaci	O
 odłączenia	O
 energii	O
 elektrycznej	PERIOD
+
 no	COMMA
 w	O
 tej	COMMA
@@ -44882,6 +45485,7 @@ tę	O
 sytuację	COMMA
 że	O
 są	PERIOD
+
 no	COMMA
 domyślam	O
 się	ELLIPSIS
@@ -44907,20 +45511,24 @@ możliwość	O
 spłaty	O
 w	O
 ratach	PERIOD
+
 oczywiście	COMMA
 już	O
 podaję	O
 energetyka	ELLIPSIS
+
 małpa	O
 energia	O
 kropka	O
 pl	PERIOD
+
 czy	O
 mogę	O
 pani	O
 jeszcze	O
 jakoś	O
 pomóc	QUESTION
+
 dobrze	COMMA
 w	O
 takim	O
@@ -44931,3 +45539,4 @@ dnia	O
 i	O
 do	O
 usłyszenia	PERIOD
+

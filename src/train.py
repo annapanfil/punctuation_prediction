@@ -14,6 +14,7 @@ import datetime
 from model import DeepPunctuation, DeepPunctuationCRF
 from config import *
 import augmentation
+from test import test
 
 
 torch.multiprocessing.set_sharing_strategy('file_system')   # https://github.com/pytorch/pytorch/issues/11201
@@ -51,9 +52,9 @@ if args.language == 'english':
                            token_style=token_style, is_train=False)
     test_set = [val_set, test_set_ref, test_set_asr]
 elif args.language == 'polish':
-    train_set = Dataset(os.path.join(args.data_path, 'pl/train_allpunct'), tokenizer=tokenizer, sequence_len=sequence_len,
+    train_set = Dataset(os.path.join(args.data_path, 'pl/train_small'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=True, augment_rate=ar, augment_type=aug_type)
-    val_set = Dataset(os.path.join(args.data_path, 'pl/val_allpunct'), tokenizer=tokenizer, sequence_len=sequence_len,
+    val_set = Dataset(os.path.join(args.data_path, 'pl/val_small'), tokenizer=tokenizer, sequence_len=sequence_len,
                         token_style=token_style, is_train=False)
     test_set = [val_set]
 else:
@@ -69,6 +70,8 @@ train_loader = torch.utils.data.DataLoader(train_set, **data_loader_params)
 val_loader = torch.utils.data.DataLoader(val_set, **data_loader_params)
 test_loaders = [torch.utils.data.DataLoader(x, **data_loader_params) for x in test_set]
 
+print("Dataloaders created")
+
 # Model
 device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
 if args.use_crf:
@@ -78,6 +81,8 @@ else:
 deep_punctuation.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(deep_punctuation.parameters(), lr=args.lr, weight_decay=args.decay)
+
+print("Model created")
 
 def validate(data_loader):
     """
@@ -111,75 +116,18 @@ def validate(data_loader):
     return correct/total, val_loss/num_iteration
 
 
-def test(data_loader):
-    """
-    :return: precision[numpy array], recall[numpy array], f1 score [numpy array], accuracy, confusion matrix
-    length of arrays is 1 + n_punctuation, in format e.g. 
-    [1. → for no punct   0.1 → for period    0.02325581 → for comma    0.04651163 → for question mark    0.04166667 → for all punctuation signs (excluding no punctuation)]
-    """
-    num_iteration = 0
-    deep_punctuation.eval()
-    # +1 for overall result
-    tp = np.zeros(1+len(punctuation_dict), dtype=int)
-    fp = np.zeros(1+len(punctuation_dict), dtype=int)
-    fn = np.zeros(1+len(punctuation_dict), dtype=int)
-    cm = np.zeros((len(punctuation_dict), len(punctuation_dict)), dtype=int)
-    support = np.zeros(len(punctuation_dict), dtype=int)
-    correct = 0
-    total = 0
-    with torch.no_grad():
-        for x, y, att, y_mask in tqdm(data_loader, desc='test'):
-            x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
-            y_mask = y_mask.view(-1)
-            if args.use_crf:
-                y_predict = deep_punctuation(x, att, y)
-                y_predict = y_predict.view(-1)
-                y = y.view(-1)
-            else:
-                y_predict = deep_punctuation(x, att)
-                y = y.view(-1)
-                y_predict = y_predict.view(-1, y_predict.shape[2])
-                y_predict = torch.argmax(y_predict, dim=1).view(-1)
-            num_iteration += 1
-            y_mask = y_mask.view(-1)
-            correct += torch.sum(y_mask * (y_predict == y).long()).item()
-            total += torch.sum(y_mask).item()
-            for i in range(y.shape[0]):
-                if y_mask[i] == 0:
-                    # we can ignore this because we know there won't be any punctuation in this position
-                    # since we created this position due to padding or sub-word tokenization
-                    continue
-                cor = y[i]
-                prd = y_predict[i]
-                if cor == prd:
-                    tp[cor] += 1
-                else:
-                    fn[cor] += 1
-                    fp[prd] += 1
-                cm[cor][prd] += 1
-                support[cor] += 1
-    # ignore first index which is for no punctuation
-    tp[-1] = np.sum(tp[1:])
-    fp[-1] = np.sum(fp[1:])
-    fn[-1] = np.sum(fn[1:])
-    precision = tp/(tp+fp)
-    recall = tp/(tp+fn)
-    f1 = 2 * precision * recall / (precision + recall)
-
-    return precision, recall, f1, correct/total, cm, support
-
-
 def train():
     best_val_acc = 0
 
-    try:
-        _ = os.environ['MLFLOW_TRACKING_USERNAME']
-        _ = os.environ['MLFLOW_TRACKING_PASSWORD']
-        mlflow.set_tracking_uri('https://dagshub.com/annapanfil/punctuation_prediction.mlflow')
-        print("Using DagsHub MLflow server https://dagshub.com/annapanfil/punctuation_prediction.mlflow")
-    except KeyError:
-        mlflow.set_tracking_uri("http://localhost:5000")
-        print("Using local MLflow server http://localhost:5000")
+    if ml_log:
+        try:
+            _ = os.environ['MLFLOW_TRACKING_USERNAME']
+            _ = os.environ['MLFLOW_TRACKING_PASSWORD']
+            mlflow.set_tracking_uri('https://dagshub.com/annapanfil/punctuation_prediction.mlflow')
+            print("Using DagsHub MLflow server https://dagshub.com/annapanfil/punctuation_prediction.mlflow")
+        except KeyError:
+            mlflow.set_tracking_uri("http://localhost:5000")
+            print("Using local MLflow server http://localhost:5000")
         
     
     mlflow.set_experiment("FirstIteration")
@@ -253,7 +201,7 @@ def train():
             mlflow.pytorch.log_model(deep_punctuation, "models")
 
         for loader in test_loaders:
-            precision, recall, f1, accuracy, cm, support = test(loader)
+            precision, recall, f1, accuracy, cm, support = test(loader, deep_punctuation, device, args)
             final_scoring = 0
             for punct, i in list(punctuation_dict.items())[1:]: # skip no punctuation
                 final_scoring += np.nan_to_num(support[i] * f1[i])
