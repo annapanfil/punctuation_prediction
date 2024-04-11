@@ -194,7 +194,7 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
                 mlflow.log_metric("Final Scoring", final_scoring, step=epoch)
 
                 # plot 
-                cm_img = sns.heatmap(cm, annot=True, cmap="coolwarm", xticklabels=punctuation_dict.keys(), yticklabels=punctuation_dict.keys())
+                cm_img = sns.heatmap(cm, annot=True, cmap="coolwarm", xticklabels=punctuation_dict.keys(), yticklabels=punctuation_dict.keys(), fmt='d')
                 cm_img.set_xlabel("correct")
                 cm_img.set_ylabel("predicted")
                 mlflow.log_figure(cm_img.get_figure(), "confusion_matrix.png")

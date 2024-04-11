@@ -43,6 +43,8 @@ For basic training of the model for Polish language run the following command
 python src/train.py --pretrained-model=herbert-base --language=polish 
 ```
 
+Add `--log=true` for logging in mlflow. In order to save you need to  either set run mlflow server locally on port 8080 (`mlflow server --host 127.0.0.1 --port 8080`) or set MLFLOW_TRACKING_USERNAME and MLFLOW_TRACKING_PASSWORD to log to [Dagshub](https://dagshub.com/annapanfil/punctuation_prediction.mlflow)
+
 #### Supported models
 `bert-base-uncased` for english
 `herbert-base` for polish
@@ -76,8 +78,15 @@ Trained models can be tested on processed data using `test` module to prepare re
 
 For example, to test the best preforming English model run following command
 ```bash
-python src/test.py --pretrained-model=roberta-large --lstm-dim=-1 --use-crf=False --data-path=data/test
---weight-path=weights/roberta-large-en.pt --sequence-length=256 --save-path=out
+python src/test.py --pretrained-model=roberta-large --lstm-dim=-1 --use-crf=False --data-path=data/test/test_en.txt
+--weight-path=weights/roberta-large-en.pt --sequence-length=256 
 ```
 Please provide corresponding arguments for `pretrained-model`, `lstm-dim`, `use-crf` that were used during training the
-model. This will run test for all data available in `data-path` directory.
+model.
+
+To test a model saved in mlflow artifacts on Dagshub run the following command:
+```bash
+    python3 src/test.py --run-id=58b6208c3f4c4d9eab209e82241e2a0b --data-path="data/pl/val" --sequence-length=256
+```
+It will get other parameters from the mlflow run.
+

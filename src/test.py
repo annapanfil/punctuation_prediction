@@ -8,6 +8,7 @@ from dataset import Dataset
 from model import DeepPunctuation, DeepPunctuationCRF
 from config import *
 
+
 def test(data_loader, deep_punctuation, device, args):
     """
     :return: precision[numpy array], recall[numpy array], f1 score [numpy array], accuracy, confusion matrix
@@ -65,42 +66,47 @@ def test(data_loader, deep_punctuation, device, args):
 
     return precision, recall, f1, correct/total, cm, support
 
-def run(model_save_path, deep_punctuation, test_loaders):
-    deep_punctuation.load_state_dict(torch.load(model_save_path))
-    for i in range(len(test_loaders)):
-        precision, recall, f1, accuracy, cm, support = test(test_loaders[i], deep_punctuation)
-        log = test_files[i] + '\n' + 'Precision: ' + str(precision) + '\n' + 'Recall: ' + str(recall) + '\n' + \
-            'F1 score: ' + str(f1) + '\n' + 'Accuracy:' + str(accuracy) + '\n' + 'Confusion Matrix' + str(cm) + '\n'
-        print(log)
-
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Punctuation restoration test')
     parser.add_argument('--cuda', default=True, type=lambda x: (str(x).lower() == 'true'), help='use cuda if available')
-    parser.add_argument('--pretrained-model', default='roberta-large', type=str, help='pretrained language model')
+
+    parser.add_argument('--data-path', default='data/pl/val', type=str, help='path to test dataset')
+
+    parser.add_argument('--run-id', default='', type=str, help='run id from mlflow to get model from')
     parser.add_argument('--lstm-dim', default=-1, type=int,
                         help='hidden dimension in LSTM layer, if -1 is set equal to hidden dimension in language model')
-    parser.add_argument('--use-crf', default=False, type=lambda x: (str(x).lower() == 'true'),
-                        help='whether to use CRF layer or not')
-    parser.add_argument('--data-path', default='data/test', type=str, help='path to test datasets')
-    parser.add_argument('--weight-path', default='out/weights.pt', type=str, help='model weight path')
     parser.add_argument('--sequence-length', default=256, type=int,
                         help='sequence length to use when preparing dataset (default 256)')
-    parser.add_argument('--batch-size', default=8, type=int, help='batch size (default: 8)')
-    parser.add_argument('--save-path', default='out/', type=str, help='model and log save directory')
 
+    parser.add_argument('--weight-path', default='out/weights.pt', type=str, help='model weight path')
+    parser.add_argument('--pretrained-model', default='roberta-large', type=str, help='pretrained language model')
+    parser.add_argument('--use-crf', default=False, type=lambda x: (str(x).lower() == 'true'),
+                        help='whether to use CRF layer or not')
+    parser.add_argument('--batch-size', default=8, type=int, help='batch size (default: 8)')
+
+    parser.add_argument('--visualize-cm', default=True, type=lambda x: (str(x).lower() == 'true'), help="visualize confusion matrix")
+    
     args = parser.parse_args()
+    
+    if args.run_id:
+        import mlflow
+        mlflow.set_tracking_uri('https://dagshub.com/annapanfil/punctuation_prediction.mlflow')
+        print("Using DagsHub MLflow server https://dagshub.com/annapanfil/punctuation_prediction.mlflow")
+    
+        run = mlflow.get_run(args.run_id)
+        args.pretrained_model = run.data.params["Base model"]
+        args.batch_size = int(run.data.params["Batch Size"])
+        args.use_crf = True if run.data.params["Use CRF"] == "True" else False
 
     # tokenizer
     tokenizer = AutoTokenizer.from_pretrained(MODELS[args.pretrained_model]["tokenizer_name"])
     token_style = MODELS[args.pretrained_model]["token_style"]
 
-    test_files = os.listdir(args.data_path)
-    test_set = []
-    for file in test_files:
-        test_set.append(Dataset(os.path.join(args.data_path, file), tokenizer=tokenizer, sequence_len=args.sequence_length,
-                                token_style=token_style, is_train=False))
+    
+    test_set = Dataset(args.data_path, tokenizer=tokenizer, sequence_len=args.sequence_length,
+                                token_style=token_style, is_train=False)
 
     # Data Loaders
     data_loader_params = {
@@ -109,17 +115,36 @@ if __name__ == "__main__":
         'num_workers': 0
     }
 
-    test_loaders = [torch.utils.data.DataLoader(x, **data_loader_params) for x in test_set]
+    test_loader = torch.utils.data.DataLoader(test_set, **data_loader_params)
 
-    # logs
-    model_save_path = args.weight_path
 
     # Model
     device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
-    if args.use_crf:
-        deep_punctuation = DeepPunctuationCRF(args.pretrained_model, freeze_bert=False, lstm_dim=args.lstm_dim)
-    else:
-        deep_punctuation = DeepPunctuation(args.pretrained_model, freeze_bert=False, lstm_dim=args.lstm_dim)
-    deep_punctuation.to(device)
 
-    run(model_save_path, deep_punctuation, test_loaders, device, args)
+    if args.run_id:
+        model = mlflow.pytorch.load_model(f'runs:/{args.run_id}/models')
+        model.to(device)
+    
+    else:
+        model_save_path = args.weight_path
+
+        if args.use_crf:
+            model = DeepPunctuationCRF(args.pretrained_model, freeze_bert=False, lstm_dim=args.lstm_dim)
+        else:
+            model = DeepPunctuation(args.pretrained_model, freeze_bert=False, lstm_dim=args.lstm_dim)
+        model.to(device)
+
+        model.load_state_dict(torch.load(model_save_path))
+
+
+precision, recall, f1, accuracy, cm, support = test(test_loader, model, device, args)
+
+print(f"Precision: {precision}\nRecall: {recall}\nF1: {f1}\nAccuracy: {accuracy}\nSupport: {support}\n{cm}")
+
+if args.visualize_cm:
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    cm_img = sns.heatmap(cm, annot=True, cmap="coolwarm", xticklabels=punctuation_dict.keys(), yticklabels=punctuation_dict.keys(), fmt='d')
+    cm_img.set_xlabel("correct")
+    cm_img.set_ylabel("predicted")
+    plt.show()
