@@ -1,6 +1,25 @@
 import os
 import re
 
+PUNCT_MAPPING = {'?': '?',
+                 '.': '.',
+                 ',': ',',
+ 
+                 '!': '!',
+                 '…': '…',
+                 '-': '-',
+                 ':': ":",
+                 ';': '.',
+                 } # default is a dot
+
+PUNCT_NAMES = {'.': "PERIOD",
+               ',': "COMMA",
+               '?': "QUESTION",
+               "!": "EXCLAMATION",
+               "-": "DASH",
+               ":": "COLON",
+               "…": "ELLIPSIS"}
+
 
 def split_words_and_punctuation(text: str) -> tuple:
     # @return elements – list of words and punctuation signs
@@ -65,27 +84,6 @@ def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_n
         f.write("\n")
 
     print("Saved to " + out_fname)
-
-
-PUNCT_MAPPING = {'?': '?',
-                 '.': '.',
-                 ',': ',',
- 
-                 '!': '!',
-                 '…': '…',
-                 '-': '-',
-                 ':': ":",
-                 ';': '.',
-                 } # default is a dot
-
-PUNCT_NAMES = {'.': "PERIOD",
-               ',': "COMMA",
-               '?': "QUESTION",
-               "!": "EXCLAMATION",
-               "-": "DASH",
-               ":": "COLON",
-               "…": "ELLIPSIS"}
-
 
 def merge_files(filenames, out_filename):
     if os.path.exists(out_filename):

@@ -39,6 +39,8 @@ punctuation_dict = {
     "COLON": 6, 
     "ELLIPSIS": 7}
 
+punctuation_map = {0: '', 1: ',', 2: '.', 3: '?', 4: '!', 5: '-', 6: ':', 7: '...'}
+
 
 # pretrained model name: (model_name, tokenizer_name, output dimension, token style)
 MODELS = {

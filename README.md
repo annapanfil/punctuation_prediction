@@ -62,16 +62,9 @@ text already contains punctuation they are removed before inference.
 
 Example script for Polish:
 ```bash
-python src/inference.py --pretrained-model=herbert-base --weight-path=out/weights.pt --language=pl --in-file=data/test_pl.txt --out-file=data/test_pl_out.txt
+python3 src/inference.py --in-file="data/test_pl" --run-id=58b6208c3f4c4d9eab209e82241e2a0b --sequence-length=256
 ```
-This should create the text file with following output:
-```text
-Tolkien drew on a wide array of influences including language, Christianity, mythology, including the Norse Völsunga saga, archaeology, especially at the Temple of Nodens, ancient and modern literature and personal experience. He was inspired primarily by his profession, philology. his work centred on the study of Old English literature, especially Beowulf, and he acknowledged its importance to his writings. 
-```
-
-Please note that *Comma* includes commas, colons and dashes, *Period* includes full stops, exclamation marks 
-and semicolons and *Question* is just question marks. 
-
+It will get other parameters from the mlflow run.
 
 ## Test
 Trained models can be tested on processed data using `test` module to prepare result.

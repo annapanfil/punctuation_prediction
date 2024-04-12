@@ -122,8 +122,7 @@ if __name__ == "__main__":
     device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
 
     if args.run_id:
-        model = mlflow.pytorch.load_model(f'runs:/{args.run_id}/models')
-        model.to(device)
+        model = mlflow.pytorch.load_model(f'runs:/{args.run_id}/models',  map_location=device)
     
     else:
         model_save_path = args.weight_path

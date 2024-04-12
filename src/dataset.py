@@ -4,7 +4,7 @@ from augmentation import *
 import numpy as np
 
 
-def parse_data(file_path, tokenizer, sequence_len, token_style):
+def parse_data(file_path, tokenizer, sequence_len, token_style, is_inference=False):
     """
     :param file_path: text file path that contains tokens and punctuations separated by tab in lines.
                       It can also contain new lines in the end of each document
@@ -23,7 +23,7 @@ def parse_data(file_path, tokenizer, sequence_len, token_style):
             # add beginning of sequence token
             x = [TOKEN_IDX[token_style]['START_SEQ']]
             y = [0]
-            y_mask = [1]  # which positions we need to consider while evaluating i.e., ignore pad or sub tokens
+            y_mask = [0] if is_inference else [1]  # which positions we need to consider while evaluating i.e., ignore pad or sub tokens
 
             # loop through words until we have required sequence length or new line is encountered
             # -1 because we will have a special end of sequence token at the end
@@ -54,7 +54,10 @@ def parse_data(file_path, tokenizer, sequence_len, token_style):
                     idx += 1
             x.append(TOKEN_IDX[token_style]['END_SEQ'])
             y.append(0)
-            y_mask.append(1)
+            if not is_inference:
+                y_mask.append(1)
+            else:
+                y_mask.append(0)
 
             # add padding if sequence length is not reached
             if len(x) < sequence_len:
