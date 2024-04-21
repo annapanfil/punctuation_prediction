@@ -78,14 +78,15 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
 
     with mlflow.start_run():
         if args.log:
-            mlflow.set_tag('mlflow.runName', f'{args.pretrained_model}_{args.data_variation}_{args.name}')
-            mlflow.log_param("Number of Epochs", args.epoch)
-            mlflow.log_param("Learning Rate", args.lr)
-            mlflow.log_param("Batch Size", args.batch_size)
-            mlflow.log_param("Language", args.language)
-            mlflow.log_param("Decay", args.decay)
-            mlflow.log_param("Use CRF", args.use_crf)
+            mlflow.set_tag('mlflow.runName', f'{args.pretrained_model}_{args.name}')
             mlflow.log_param("Base model", args.pretrained_model)
+            mlflow.log_param("LSTM", args.lstm)
+            mlflow.log_param("LSTM Dimension", args.lstm_dim)
+            mlflow.log_param("Freeze bert", args.freeze_bert)
+            mlflow.log_param("Epochs", args.epoch)
+            mlflow.log_param("Learning Rate", args.lr)
+            mlflow.log_param("Decay", args.decay)
+            mlflow.log_param("Batch Size", args.batch_size)
 
         for epoch in range(args.epoch):
             train_loss = 0.0
@@ -195,7 +196,7 @@ if __name__ == '__main__':
     if args.use_crf:
         deep_punctuation = DeepPunctuationCRF(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
     else:
-        deep_punctuation = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
+        deep_punctuation = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
     deep_punctuation.to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(deep_punctuation.parameters(), lr=args.lr, weight_decay=args.decay)
@@ -213,7 +214,7 @@ if __name__ == '__main__':
             mlflow.set_tracking_uri("http://localhost:8080")
             print("Using local MLflow server http://localhost:8080.\nMake sure you have mlflow server running (mlflow server --host 127.0.0.1 --port 8080).")
         
-    mlflow.set_experiment("FirstIteration")
+    mlflow.set_experiment("LSTM and freezing BERT")
 
     print(f"training {args.pretrained_model}_{args.data_variation}_{args.name}")
     train(args, deep_punctuation, device, train_loader, val_loader, test_loaders, criterion)

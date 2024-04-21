@@ -5,9 +5,10 @@ from torchcrf import CRF
 
 
 class DeepPunctuation(nn.Module):
-    def __init__(self, pretrained_model, freeze_bert=False, lstm_dim=-1):
+    def __init__(self, pretrained_model, freeze_bert=False, lstm="bi", lstm_dim=-1):
         super(DeepPunctuation, self).__init__()
         self.output_dim = len(punctuation_dict)
+        self.has_lstm = lstm != "none"
         self.bert_layer = AutoModel.from_pretrained(MODELS[pretrained_model]["model_name"])
         # Freeze bert layers
         if freeze_bert:
@@ -18,7 +19,10 @@ class DeepPunctuation(nn.Module):
             hidden_size = bert_dim
         else:
             hidden_size = lstm_dim
-        self.lstm = nn.LSTM(input_size=bert_dim, hidden_size=hidden_size, num_layers=1, bidirectional=True)
+
+        if lstm != "none":
+            bidirectional = True if lstm == "bi" else False
+            self.lstm = nn.LSTM(input_size=bert_dim, hidden_size=hidden_size, num_layers=1, bidirectional=True)
         self.linear = nn.Linear(in_features=hidden_size*2, out_features=len(punctuation_dict))
 
     def forward(self, x, attn_masks):
@@ -28,7 +32,8 @@ class DeepPunctuation(nn.Module):
         x = self.bert_layer(x, attention_mask=attn_masks)[0]
         # (B, N, E) -> (N, B, E)
         x = torch.transpose(x, 0, 1)
-        x, (_, _) = self.lstm(x)
+        if self.has_lstm:
+            x, (_, _) = self.lstm(x)
         # (N, B, E) -> (B, N, E)
         x = torch.transpose(x, 0, 1)
         x = self.linear(x)

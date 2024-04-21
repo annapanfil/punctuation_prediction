@@ -86,6 +86,7 @@ if __name__ == "__main__":
     parser.add_argument('--data-path', default='data/pl/val', type=str, help='path to test dataset')
 
     parser.add_argument('--run-id', default='', type=str, help='run id from mlflow to get model from')
+    parser.add_argument('--lstm', default="bi", type=str, help='lstm type (bi, uni or none)')
     parser.add_argument('--lstm-dim', default=-1, type=int,
                         help='hidden dimension in LSTM layer, if -1 is set equal to hidden dimension in language model')
     parser.add_argument('--sequence-length', default=256, type=int,
@@ -141,7 +142,7 @@ if __name__ == "__main__":
         if args.use_crf:
             model = DeepPunctuationCRF(args.pretrained_model, freeze_bert=False, lstm_dim=args.lstm_dim)
         else:
-            model = DeepPunctuation(args.pretrained_model, freeze_bert=False, lstm_dim=args.lstm_dim)
+            model = DeepPunctuation(args.pretrained_model, freeze_bert=False, lstm=args.lstm, lstm_dim=args.lstm_dim)
         model.to(device)
 
         model.load_state_dict(torch.load(model_save_path))

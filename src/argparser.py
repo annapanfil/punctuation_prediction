@@ -15,6 +15,7 @@ def parse_arguments():
     parser.add_argument('--pretrained-model', default='roberta-large', type=str, help='pretrained language model')
     parser.add_argument('--freeze-bert', default=False, type=lambda x: (str(x).lower() == 'true'),
                         help='Freeze BERT layers or not')
+    parser.add_argument('--lstm', default="bi", type=str, help='lstm type (bi, uni or none)')
     parser.add_argument('--lstm-dim', default=-1, type=int,
                         help='hidden dimension in LSTM layer, if -1 is set equal to hidden dimension in language model')
     parser.add_argument('--use-crf', default=False, type=lambda x: (str(x).lower() == 'true'),
@@ -34,7 +35,6 @@ def parse_arguments():
     parser.add_argument('--batch-size', default=8, type=int, help='batch size (default: 8)')
     parser.add_argument('--epoch', default=10, type=int, help='total epochs (default: 10)')
 
-    parser.add_argument('--save-path', default='out/', type=str, help='model and log save directory')
     parser.add_argument('--log', default=True, type=lambda x: (str(x).lower() == 'true'), help='save logs to mlflow. If it is true you need to either set MLFLOW_TRACKING_USERNAME and MLFLOW_TRACKING_PASSWORD or run mlflow server locally on port 8080') 
 
     args = parser.parse_args()
