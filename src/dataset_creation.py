@@ -1,5 +1,6 @@
 import os
 import re
+import argparse
 
 PUNCT_MAPPING = {'?': '?',
                  '.': '.',
@@ -9,7 +10,6 @@ PUNCT_MAPPING = {'?': '?',
                  '…': '…',
                  '-': '-',
                  ':': ":",
-                 ';': '.',
                  } # default is a dot
 
 PUNCT_NAMES = {'.': "PERIOD",
@@ -58,7 +58,7 @@ def limit_punctuation_signs(elements: list, punctuation_mask: list, punct_mappin
     return elements
 
 
-def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_names: dict):
+def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_names: dict, newlines: bool):
     ### save in format of the alam-etal-2020-punctuation code
     ### i.e. word in lowercase, tab, punctuation sign name (e.g. "PERIOD" or "O")
     # @param out_fname – path of the output file
@@ -81,7 +81,8 @@ def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_n
             else:
                 f.write("O\n")
         
-        f.write("\n")
+        if newlines:
+            f.write("\n")
 
     print("Saved to " + out_fname)
 
@@ -100,11 +101,19 @@ def merge_files(filenames, out_filename):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Punctuation restoration test')
+    parser.add_argument('--newlines', default=False, type=lambda x: (str(x).lower() == 'true'), help='use cuda if available')    
+    args = parser.parse_args()
+
     # train and dev data
     for file_path in ["poleval2021/train", "poleval2021/test-A", "poleval2022/train", "poleval2022/dev-0"]: 
         with open(os.path.join("data", "raw", file_path, "expected.tsv"), 'r', encoding='utf-8') as f:
             lines = [line for line in f.read().split('\n') if line.strip()]
-        text = "\n".join(lines)
+        
+        if args.newlines:
+            text = "\n".join(lines)
+        else:
+            text = " ".join(lines)
         text = text.replace("...", "…")
 
         elements, punctuation_mask = split_words_and_punctuation(text)
@@ -113,7 +122,7 @@ if __name__ == "__main__":
         os.makedirs("data/pl", exist_ok=True)
         norm_path = os.path.normpath(file_path)
         out_fname = os.path.join("data", "pl", norm_path.split(os.sep)[1] + "_" + norm_path.split(os.sep)[0][-4:]+"_allpunct")
-        save_to_file(out_fname, elements, punctuation_mask, PUNCT_NAMES)
+        save_to_file(out_fname, elements, punctuation_mask, PUNCT_NAMES, args.newlines)
     
     merge_files(["data/pl/train_2021_allpunct", "data/pl/train_2022_allpunct"], "data/pl/train_allpunct")
     merge_files(["data/pl/test-A_2021_allpunct", "data/pl/dev-0_2022_allpunct"], "data/pl/val_allpunct")
