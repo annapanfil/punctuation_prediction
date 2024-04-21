@@ -9,7 +9,7 @@ from model import DeepPunctuation, DeepPunctuationCRF
 from config import *
 
 
-def test(data_loader, deep_punctuation, device, args):
+def test(data_loader, deep_punctuation, device, args, desc="test", criterion=torch.nn.CrossEntropyLoss()):
     """
     :return: precision[numpy array], recall[numpy array], f1 score [numpy array], accuracy, confusion matrix
     length of arrays is 1 + n_punctuation, in format e.g. 
@@ -25,19 +25,24 @@ def test(data_loader, deep_punctuation, device, args):
     support = np.zeros(len(punctuation_dict), dtype=int)
     correct = 0
     total = 0
+    val_loss = 0
+
     with torch.no_grad():
-        for x, y, att, y_mask in tqdm(data_loader, desc='test'):
+        for x, y, att, y_mask in tqdm(data_loader, desc=desc):
             x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
             y_mask = y_mask.view(-1)
             if args.use_crf:
                 y_predict = deep_punctuation(x, att, y)
+                loss = deep_punctuation.log_likelihood(x, att, y)
                 y_predict = y_predict.view(-1)
                 y = y.view(-1)
             else:
                 y_predict = deep_punctuation(x, att)
                 y = y.view(-1)
                 y_predict = y_predict.view(-1, y_predict.shape[2])
+                loss = criterion(y_predict, y)
                 y_predict = torch.argmax(y_predict, dim=1).view(-1)
+            val_loss += loss.item()
             num_iteration += 1
             y_mask = y_mask.view(-1)
             correct += torch.sum(y_mask * (y_predict == y).long()).item()
@@ -64,7 +69,13 @@ def test(data_loader, deep_punctuation, device, args):
     recall = np.nan_to_num(tp/(tp+fn))
     f1 = np.nan_to_num(2 * precision * recall / (precision + recall))
 
-    return precision, recall, f1, correct/total, cm, support
+    final_scoring = 0
+    for punct, i in list(punctuation_dict.items())[1:]: # skip no punctuation
+        final_scoring += np.nan_to_num(support[i] * f1[i])
+        
+    final_scoring /= sum(support[1:])
+
+    return precision, recall, f1, cm, support, final_scoring, loss
 
 
 if __name__ == "__main__":
@@ -136,14 +147,16 @@ if __name__ == "__main__":
         model.load_state_dict(torch.load(model_save_path))
 
 
-precision, recall, f1, accuracy, cm, support = test(test_loader, model, device, args)
+    precision, recall, f1, cm, support, final_scoring, loss = test(test_loader, model, device, args)
 
-print(f"Precision: {precision}\nRecall: {recall}\nF1: {f1}\nAccuracy: {accuracy}\nSupport: {support}\n{cm}")
+    print(f"\t\t{punctuation_dict.values()} all_punctuation\nPrecision: {precision}\nRecall: {recall}\nF1 score: {f1}")
+    print("Final score:", final_scoring)
+    print('Confusion Matrix', str(cm))
 
-if args.visualize_cm:
-    import seaborn as sns
-    import matplotlib.pyplot as plt
-    cm_img = sns.heatmap(cm, annot=True, cmap="coolwarm", xticklabels=punctuation_dict.keys(), yticklabels=punctuation_dict.keys(), fmt='d')
-    cm_img.set_xlabel("correct")
-    cm_img.set_ylabel("predicted")
-    plt.show()
+    if args.visualize_cm:
+        import seaborn as sns
+        import matplotlib.pyplot as plt
+        cm_img = sns.heatmap(cm, annot=True, cmap="coolwarm", xticklabels=punctuation_dict.keys(), yticklabels=punctuation_dict.keys(), fmt='d')
+        cm_img.set_xlabel("correct")
+        cm_img.set_ylabel("predicted")
+        plt.show()
