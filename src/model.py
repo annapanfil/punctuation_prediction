@@ -15,15 +15,16 @@ class DeepPunctuation(nn.Module):
             for p in self.bert_layer.parameters():
                 p.requires_grad = False
         bert_dim = MODELS[pretrained_model]["output_dimension"]
-        if lstm_dim == -1:
+        if lstm_dim == -1 or lstm == "none":
             hidden_size = bert_dim
         else:
             hidden_size = lstm_dim
 
         if lstm != "none":
             bidirectional = True if lstm == "bi" else False
-            self.lstm = nn.LSTM(input_size=bert_dim, hidden_size=hidden_size, num_layers=1, bidirectional=True)
-        self.linear = nn.Linear(in_features=hidden_size*2, out_features=len(punctuation_dict))
+            self.lstm = nn.LSTM(input_size=bert_dim, hidden_size=hidden_size, num_layers=1, bidirectional=bidirectional)
+        in_features = hidden_size*2 if lstm == "bi" else hidden_size
+        self.linear = nn.Linear(in_features=in_features, out_features=len(punctuation_dict))
 
     def forward(self, x, attn_masks):
         if len(x.shape) == 1:
