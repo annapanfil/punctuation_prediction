@@ -214,7 +214,7 @@ if __name__ == '__main__':
             mlflow.set_tracking_uri("http://localhost:8080")
             print("Using local MLflow server http://localhost:8080.\nMake sure you have mlflow server running (mlflow server --host 127.0.0.1 --port 8080).")
         
-    mlflow.set_experiment("LSTM and freezing BERT")
+        mlflow.set_experiment(args.experiment_name)
 
     print(f"training {args.pretrained_model}_{args.data_variation}_{args.name}")
     train(args, deep_punctuation, device, train_loader, val_loader, test_loaders, criterion)

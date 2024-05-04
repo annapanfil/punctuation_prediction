@@ -4,6 +4,7 @@ import argparse
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Punctuation restoration')
     parser.add_argument('--name', default='', type=str, help='name of run')
+    parser.add_argument('--experiment-name', default='', type=str, help='name of experiment in mlflow')
     parser.add_argument('--data-path', default='data/', type=str, help='path to train/dev/test datasets')
     parser.add_argument('--data-variation', default='', type=str, help='variation of dataset to use')
     parser.add_argument('--language', default='english', type=str,
