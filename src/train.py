@@ -125,10 +125,12 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
 
                 total += torch.sum(y_mask).item()
 
+            # metrics after each epoch
             train_loss /= train_iteration
             print('epoch: {}, Train loss: {}, Train accuracy: {}'.format(epoch, train_loss, correct / total))
 
             _, _, _, _, _, val_score, val_loss = test(val_loader, deep_punctuation, device, args, "eval", criterion)
+            _, _, _, _, _, train_score, _ = test(train_loader, deep_punctuation, device, args, "eval", criterion)
 
             print('epoch: {}, Val loss: {}, Val score: {}'.format(epoch, val_loss, val_score))
             if val_score > best_val_score:
@@ -136,6 +138,8 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
                 best_model_state = deep_punctuation.state_dict()
 
             if args.log:
+                mlflow.log_metric("Train score", train_score, step=epoch)
+                mlflow.log_metric("Train Loss", train_loss, step=epoch)
                 mlflow.log_metric("Validation score", val_score, step=epoch)
                 mlflow.log_metric("Validation Loss", val_loss, step=epoch)
 
@@ -145,6 +149,7 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
         if args.log:
             mlflow.pytorch.log_model(deep_punctuation, "models")
 
+        # metrics for final model
         for loader in test_loaders:
             precision, recall, f1, cm, support, final_scoring, loss = test(loader, deep_punctuation, device, args)
 
