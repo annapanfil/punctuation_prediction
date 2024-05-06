@@ -61,6 +61,9 @@ def test(data_loader, deep_punctuation, device, args, desc="test", criterion=tor
                     fp[prd] += 1
                 cm[cor][prd] += 1
                 support[cor] += 1
+
+    val_loss /= num_iteration
+
     # ignore first index which is for no punctuation
     tp[-1] = np.sum(tp[1:])
     fp[-1] = np.sum(fp[1:])
@@ -75,7 +78,7 @@ def test(data_loader, deep_punctuation, device, args, desc="test", criterion=tor
         
     final_scoring /= sum(support[1:])
 
-    return precision, recall, f1, cm, support, final_scoring, loss
+    return precision, recall, f1, cm, support, final_scoring, val_loss
 
 
 if __name__ == "__main__":

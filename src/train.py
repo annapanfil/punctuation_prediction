@@ -87,6 +87,7 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
             mlflow.log_param("Learning Rate", args.lr)
             mlflow.log_param("Decay", args.decay)
             mlflow.log_param("Batch Size", args.batch_size)
+            mlflow.log_param("Sequence Length", args.sequence_length)
 
         for epoch in range(args.epoch):
             train_loss = 0.0
