@@ -13,7 +13,7 @@ def parse_arguments():
     parser.add_argument('--cuda', default=True, type=lambda x: (str(x).lower() == 'true'), help='use cuda if available')
     parser.add_argument('--seed', default=1, type=int, help='random seed')
     
-    parser.add_argument('--pretrained-model', default='roberta-large', type=str, help='pretrained language model')
+    parser.add_argument('--pretrained-model', default='polish-roberta', type=str, help='pretrained language model')
     parser.add_argument('--freeze-bert', default=False, type=lambda x: (str(x).lower() == 'true'),
                         help='Freeze BERT layers or not')
     parser.add_argument('--lstm', default="bi", type=str, help='lstm type (bi, uni or none)')
@@ -23,6 +23,8 @@ def parse_arguments():
                         help='whether to use CRF layer or not')
     parser.add_argument('--sequence-length', default=256, type=int,
                         help='sequence length to use when preparing dataset (default 256)')
+    parser.add_argument('--use-lora', default=False, type=lambda x: (str(x).lower() == 'true'),
+                        help='whether to use LoRA or not')
     
     parser.add_argument('--augment-rate', default=0., type=float, help='token augmentation probability')
     parser.add_argument('--augment-type', default='all', type=str, help='which augmentation to use')

@@ -2,6 +2,7 @@ import os
 import torch
 import numpy as np
 import mlflow
+from peft import LoraConfig, get_peft_model, TaskType
 import seaborn as sns
 from torch.utils import data
 import torch.nn as nn
@@ -200,12 +201,29 @@ if __name__ == '__main__':
     # Model
     device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
     if args.use_crf:
-        deep_punctuation = DeepPunctuationCRF(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
+        model = DeepPunctuationCRF(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
     else:
-        deep_punctuation = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
-    deep_punctuation.to(device)
+        model = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
+    
+    print(model)
+    model.to(device)
+
+    if args.use_lora:
+        lora_config = LoraConfig(
+            r=16,
+            lora_alpha=32,
+            target_modules=["key", "query", "value", "dense"],
+            lora_dropout=0.05,
+            bias="none",
+            task_type=TaskType.TOKEN_CLS
+        )
+
+        model = get_peft_model(model, lora_config)
+
+        print("% trainable params after LoRA:", model.print_trainable_parameters())
+
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(deep_punctuation.parameters(), lr=args.lr, weight_decay=args.decay)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.decay)
 
     print("Model created")
 
@@ -223,4 +241,4 @@ if __name__ == '__main__':
         mlflow.set_experiment(args.experiment_name)
 
     print(f"training {args.pretrained_model}_{args.data_variation}_{args.name}")
-    train(args, deep_punctuation, device, train_loader, val_loader, test_loaders, criterion)
+    train(args, model, device, train_loader, val_loader, test_loaders, criterion)
