@@ -19,18 +19,10 @@ def parse_arguments():
     parser.add_argument('--lstm', default="bi", type=str, help='lstm type (bi, uni or none)')
     parser.add_argument('--lstm-dim', default=-1, type=int,
                         help='hidden dimension in LSTM layer, if -1 is set equal to hidden dimension in language model')
-    parser.add_argument('--use-crf', default=False, type=lambda x: (str(x).lower() == 'true'),
-                        help='whether to use CRF layer or not')
     parser.add_argument('--sequence-length', default=256, type=int,
                         help='sequence length to use when preparing dataset (default 256)')
     parser.add_argument('--use-lora', default=False, type=lambda x: (str(x).lower() == 'true'),
                         help='whether to use LoRA or not')
-    
-    parser.add_argument('--augment-rate', default=0., type=float, help='token augmentation probability')
-    parser.add_argument('--augment-type', default='all', type=str, help='which augmentation to use')
-    parser.add_argument('--sub-style', default='unk', type=str, help='replacement strategy for substitution augment')
-    parser.add_argument('--alpha-sub', default=0.4, type=float, help='augmentation rate for substitution')
-    parser.add_argument('--alpha-del', default=0.4, type=float, help='augmentation rate for deletion')
 
     parser.add_argument('--lr', default=5e-6, type=float, help='learning rate')
     parser.add_argument('--decay', default=0, type=float, help='weight decay (default: 0)')

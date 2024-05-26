@@ -5,7 +5,7 @@ import numpy as np
 
 import argparse
 from dataset import Dataset
-from model import DeepPunctuation, DeepPunctuationCRF
+from model import DeepPunctuation
 from config import *
 
 
@@ -31,17 +31,11 @@ def test(data_loader, deep_punctuation, device, args, desc="test", criterion=tor
         for x, y, att, y_mask in tqdm(data_loader, desc=desc):
             x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
             y_mask = y_mask.view(-1)
-            if args.use_crf:
-                y_predict = deep_punctuation(x, att, y)
-                loss = deep_punctuation.log_likelihood(x, att, y)
-                y_predict = y_predict.view(-1)
-                y = y.view(-1)
-            else:
-                y_predict = deep_punctuation(x, att)
-                y = y.view(-1)
-                y_predict = y_predict.view(-1, y_predict.shape[2])
-                loss = criterion(y_predict, y)
-                y_predict = torch.argmax(y_predict, dim=1).view(-1)
+            y_predict = deep_punctuation(x, att)
+            y = y.view(-1)
+            y_predict = y_predict.view(-1, y_predict.shape[2])
+            loss = criterion(y_predict, y)
+            y_predict = torch.argmax(y_predict, dim=1).view(-1)
             val_loss += loss.item()
             num_iteration += 1
             y_mask = y_mask.view(-1)
@@ -96,9 +90,7 @@ if __name__ == "__main__":
                         help='sequence length to use when preparing dataset (default 256)')
 
     parser.add_argument('--weight-path', default='out/weights.pt', type=str, help='model weight path')
-    parser.add_argument('--pretrained-model', default='roberta-large', type=str, help='pretrained language model')
-    parser.add_argument('--use-crf', default=False, type=lambda x: (str(x).lower() == 'true'),
-                        help='whether to use CRF layer or not')
+    parser.add_argument('--pretrained-model', default='polish-roberta', type=str, help='pretrained language model')
     parser.add_argument('--batch-size', default=8, type=int, help='batch size (default: 8)')
 
     parser.add_argument('--visualize-cm', default=True, type=lambda x: (str(x).lower() == 'true'), help="visualize confusion matrix")
@@ -113,7 +105,6 @@ if __name__ == "__main__":
         run = mlflow.get_run(args.run_id)
         args.pretrained_model = run.data.params["Base model"]
         args.batch_size = int(run.data.params["Batch Size"])
-        args.use_crf = True if run.data.params["Use CRF"] == "True" else False
 
     # tokenizer
     tokenizer = AutoTokenizer.from_pretrained(MODELS[args.pretrained_model]["tokenizer_name"])
@@ -121,7 +112,7 @@ if __name__ == "__main__":
 
     
     test_set = Dataset(args.data_path, tokenizer=tokenizer, sequence_len=args.sequence_length,
-                                token_style=token_style, is_train=False)
+                                token_style=token_style)
 
     # Data Loaders
     data_loader_params = {
@@ -141,11 +132,7 @@ if __name__ == "__main__":
     
     else:
         model_save_path = args.weight_path
-
-        if args.use_crf:
-            model = DeepPunctuationCRF(args.pretrained_model, freeze_bert=False, lstm_dim=args.lstm_dim)
-        else:
-            model = DeepPunctuation(args.pretrained_model, freeze_bert=False, lstm=args.lstm, lstm_dim=args.lstm_dim)
+        model = DeepPunctuation(args.pretrained_model, freeze_bert=False, lstm=args.lstm, lstm_dim=args.lstm_dim)
         model.to(device)
 
         model.load_state_dict(torch.load(model_save_path))

@@ -11,9 +11,8 @@ from tqdm import tqdm
 
 from argparser import parse_arguments
 from dataset import Dataset
-from model import DeepPunctuation, DeepPunctuationCRF
+from model import DeepPunctuation
 from config import *
-import augmentation
 from test import test
 
 
@@ -24,40 +23,30 @@ def get_data_loaders(args, tokenizer):
         train_set = Dataset(os.path.join(args.data_path, 'en/train2012'), 
                             tokenizer=tokenizer, 
                             sequence_len=args.sequence_length,
-                            token_style=token_style, 
-                            is_train=True, 
-                            augment_rate=args.augment_rate, 
-                            augment_type=args.augment_type)
+                            token_style=token_style)
         val_set = Dataset(os.path.join(args.data_path, 'en/dev2012'), 
                           tokenizer=tokenizer, 
                           sequence_len=args.sequence_length,
-                          token_style=token_style,
-                          is_train=False)
+                          token_style=token_style)
         test_set_ref = Dataset(os.path.join(args.data_path, 'en/test2011'), 
                                tokenizer=tokenizer, 
                                sequence_len=args.sequence_length,
-                               token_style=token_style,
-                               is_train=False)
+                               token_style=token_style)
         test_set_asr = Dataset(os.path.join(args.data_path, 'en/test2011asr'), 
                                tokenizer=tokenizer, 
                                sequence_len=args.sequence_length,
-                               token_style=token_style, 
-                               is_train=False)
+                               token_style=token_style)
         test_set = [val_set, test_set_ref, test_set_asr]
 
     elif args.language == 'polish':
         train_set = Dataset(os.path.join(args.data_path, f'pl/train{"_" + args.data_variation if args.data_variation != "" else ""}'),
                             tokenizer=tokenizer, 
                             sequence_len=args.sequence_length,
-                            token_style=token_style, 
-                            is_train=True,
-                            augment_rate=args.augment_rate,
-                            augment_type=args.augment_type)
+                            token_style=token_style)
         val_set = Dataset(os.path.join(args.data_path, f'pl/val{"_" + args.data_variation if args.data_variation != "" else ""}'),
                             tokenizer=tokenizer,
                             sequence_len=args.sequence_length,
-                            token_style=token_style,
-                            is_train=False)
+                            token_style=token_style)
         test_set = [val_set]
     else:
         raise ValueError('Incorrect language argument for Dataset')
@@ -100,19 +89,13 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
             for x, y, att, y_mask in tqdm(train_loader, desc='train'):
                 x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
                 y_mask = y_mask.view(-1)
-                if args.use_crf:
-                    loss = deep_punctuation.log_likelihood(x, att, y)
-                    # y_predict = deep_punctuation(x, att, y)
-                    # y_predict = y_predict.view(-1)
-                    y = y.view(-1)
-                else:
-                    y_predict = deep_punctuation(x, att)
-                    y_predict = y_predict.view(-1, y_predict.shape[2])
-                    y = y.view(-1)
-                    loss = criterion(y_predict, y)
-                    y_predict = torch.argmax(y_predict, dim=1).view(-1)
+                y_predict = deep_punctuation(x, att)
+                y_predict = y_predict.view(-1, y_predict.shape[2])
+                y = y.view(-1)
+                loss = criterion(y_predict, y)
+                y_predict = torch.argmax(y_predict, dim=1).view(-1)
 
-                    correct += torch.sum(y_mask * (y_predict == y).long()).item()
+                correct += torch.sum(y_mask * (y_predict == y).long()).item()
 
                 optimizer.zero_grad()
                 train_loss += loss.item()
@@ -188,11 +171,6 @@ if __name__ == '__main__':
 
     # tokenizer
     tokenizer = AutoTokenizer.from_pretrained(MODELS[args.pretrained_model]["tokenizer_name"])
-    
-    augmentation.tokenizer = tokenizer
-    augmentation.sub_style = args.sub_style
-    augmentation.alpha_sub = args.alpha_sub
-    augmentation.alpha_del = args.alpha_del
 
     # data loaders
     train_loader, val_loader, test_loaders = get_data_loaders(args, tokenizer)
@@ -200,18 +178,15 @@ if __name__ == '__main__':
 
     # Model
     device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
-    if args.use_crf:
-        model = DeepPunctuationCRF(args.pretrained_model, freeze_bert=args.freeze_bert, lstm_dim=args.lstm_dim)
-    else:
-        model = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
+    model = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
     
     print(model)
     model.to(device)
 
     if args.use_lora:
         lora_config = LoraConfig(
-            r=16,
-            lora_alpha=32,
+            r=128,
+            lora_alpha=256,
             target_modules=["key", "query", "value", "dense"],
             lora_dropout=0.05,
             bias="none",
@@ -220,7 +195,7 @@ if __name__ == '__main__':
 
         model = get_peft_model(model, lora_config)
 
-        print("% trainable params after LoRA:", model.print_trainable_parameters())
+        model.print_trainable_parameters()
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.decay)

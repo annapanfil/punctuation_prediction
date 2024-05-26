@@ -1,6 +1,5 @@
 import torch
 from config import *
-from augmentation import *
 import numpy as np
 
 
@@ -70,16 +69,13 @@ def parse_data(file_path, tokenizer, sequence_len, token_style, is_inference=Fal
 
 
 class Dataset(torch.utils.data.Dataset):
-    def __init__(self, files, tokenizer, sequence_len, token_style, is_train=False, augment_rate=0.1,
-                 augment_type='substitute'):
+    def __init__(self, files, tokenizer, sequence_len, token_style):
         """
 
         :param files: single file or list of text files containing tokens and punctuations separated by tab in lines
         :param tokenizer: tokenizer that will be used to further tokenize word for BERT like models
         :param sequence_len: length of each sequence
         :param token_style: For getting index of special tokens in config.TOKEN_IDX
-        :param augment_rate: token augmentation rate when preparing data
-        :param is_train: if false do not apply augmentation
         """
         if isinstance(files, list):
             self.data = []
@@ -88,49 +84,16 @@ class Dataset(torch.utils.data.Dataset):
         else:
             self.data = parse_data(files, tokenizer, sequence_len, token_style)
         self.sequence_len = sequence_len
-        self.augment_rate = augment_rate
         self.token_style = token_style
-        self.is_train = is_train
-        self.augment_type = augment_type
 
     def __len__(self):
         return len(self.data)
-
-    def _augment(self, x, y, y_mask):
-        x_aug = []
-        y_aug = []
-        y_mask_aug = []
-        for i in range(len(x)):
-            r = np.random.rand()
-            if r < self.augment_rate:
-                AUGMENTATIONS[self.augment_type](x, y, y_mask, x_aug, y_aug, y_mask_aug, i, self.token_style)
-            else:
-                x_aug.append(x[i])
-                y_aug.append(y[i])
-                y_mask_aug.append(y_mask[i])
-
-        if len(x_aug) > self.sequence_len:
-            # len increased due to insert
-            x_aug = x_aug[0:self.sequence_len]
-            y_aug = y_aug[0:self.sequence_len]
-            y_mask_aug = y_mask_aug[0:self.sequence_len]
-        elif len(x_aug) < self.sequence_len:
-            # len decreased due to delete
-            x_aug = x_aug + [TOKEN_IDX[self.token_style]['PAD'] for _ in range(self.sequence_len - len(x_aug))]
-            y_aug = y_aug + [0 for _ in range(self.sequence_len - len(y_aug))]
-            y_mask_aug = y_mask_aug + [0 for _ in range(self.sequence_len - len(y_mask_aug))]
-
-        attn_mask = [1 if token != TOKEN_IDX[self.token_style]['PAD'] else 0 for token in x]
-        return x_aug, y_aug, attn_mask, y_mask_aug
 
     def __getitem__(self, index):
         x = self.data[index][0]
         y = self.data[index][1]
         attn_mask = self.data[index][2]
         y_mask = self.data[index][3]
-
-        if self.is_train and self.augment_rate > 0:
-            x, y, attn_mask, y_mask = self._augment(x, y, y_mask)
 
         x = torch.tensor(x)
         y = torch.tensor(y)
