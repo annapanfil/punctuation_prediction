@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 from argparser import parse_arguments
 from dataset import Dataset
-from model import DeepPunctuation
+from model import DeepPunctuation, DeepPunctuationWithPauses
 from config import *
 from test import test
 
@@ -23,30 +23,36 @@ def get_data_loaders(args, tokenizer):
         train_set = Dataset(os.path.join(args.data_path, 'en/train2012'), 
                             tokenizer=tokenizer, 
                             sequence_len=args.sequence_length,
-                            token_style=token_style)
+                            token_style=token_style,
+                            use_durations=args.use_durations)
         val_set = Dataset(os.path.join(args.data_path, 'en/dev2012'), 
                           tokenizer=tokenizer, 
                           sequence_len=args.sequence_length,
-                          token_style=token_style)
+                          token_style=token_style,
+                          use_durations=args.use_durations)
         test_set_ref = Dataset(os.path.join(args.data_path, 'en/test2011'), 
                                tokenizer=tokenizer, 
                                sequence_len=args.sequence_length,
-                               token_style=token_style)
+                               token_style=token_style,
+                               use_durations=args.use_durations)
         test_set_asr = Dataset(os.path.join(args.data_path, 'en/test2011asr'), 
                                tokenizer=tokenizer, 
                                sequence_len=args.sequence_length,
-                               token_style=token_style)
+                               token_style=token_style,
+                               use_durations=args.use_durations)
         test_set = [val_set, test_set_ref, test_set_asr]
 
     elif args.language == 'polish':
         train_set = Dataset(os.path.join(args.data_path, f'pl/train{"_" + args.data_variation if args.data_variation != "" else ""}'),
                             tokenizer=tokenizer, 
                             sequence_len=args.sequence_length,
-                            token_style=token_style)
+                            token_style=token_style,
+                            use_durations=args.use_durations)
         val_set = Dataset(os.path.join(args.data_path, f'pl/val{"_" + args.data_variation if args.data_variation != "" else ""}'),
                             tokenizer=tokenizer,
                             sequence_len=args.sequence_length,
-                            token_style=token_style)
+                            token_style=token_style,
+                            use_durations=args.use_durations)
         test_set = [val_set]
     else:
         raise ValueError('Incorrect language argument for Dataset')
@@ -86,10 +92,16 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
             total = 0
             best_model_state = deep_punctuation.state_dict()
             deep_punctuation.train()
-            for x, y, att, y_mask in tqdm(train_loader, desc='train'):
+            for x, y, att, y_mask, durations in tqdm(train_loader, desc='train'):
                 x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
                 y_mask = y_mask.view(-1)
-                y_predict = deep_punctuation(x, att)
+                
+                if args.use_durations:
+                    durations = durations.to(device)
+                    y_predict = deep_punctuation(x, att, pause_durations=durations)
+                else:
+                    y_predict = deep_punctuation(x, att)
+                
                 y_predict = y_predict.view(-1, y_predict.shape[2])
                 y = y.view(-1)
                 loss = criterion(y_predict, y)
@@ -178,7 +190,10 @@ if __name__ == '__main__':
 
     # Model
     device = torch.device('cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu')
-    model = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
+    if args.use_durations:
+        model = DeepPunctuationWithPauses(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
+    else:
+        model = DeepPunctuation(args.pretrained_model, freeze_bert=args.freeze_bert, lstm=args.lstm, lstm_dim=args.lstm_dim)
     
     print(model)
     model.to(device)

@@ -23,6 +23,8 @@ def parse_arguments():
                         help='sequence length to use when preparing dataset (default 256)')
     parser.add_argument('--use-lora', default=False, type=lambda x: (str(x).lower() == 'true'),
                         help='whether to use LoRA or not')
+    parser.add_argument('--use-durations', default=False, type=lambda x: (str(x).lower() == 'true'),
+                        help="whether to use pauses' duration")
 
     parser.add_argument('--lr', default=5e-6, type=float, help='learning rate')
     parser.add_argument('--decay', default=0, type=float, help='weight decay (default: 0)')

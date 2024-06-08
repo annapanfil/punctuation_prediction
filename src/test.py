@@ -28,10 +28,16 @@ def test(data_loader, deep_punctuation, device, args, desc="test", criterion=tor
     val_loss = 0
 
     with torch.no_grad():
-        for x, y, att, y_mask in tqdm(data_loader, desc=desc):
+        for x, y, att, y_mask, durations in tqdm(data_loader, desc=desc):
             x, y, att, y_mask = x.to(device), y.to(device), att.to(device), y_mask.to(device)
             y_mask = y_mask.view(-1)
-            y_predict = deep_punctuation(x, att)
+
+            if args.use_durations:
+                durations = durations.to(device)
+                y_predict = deep_punctuation(x, att, pause_durations=durations)
+            else:
+                y_predict = deep_punctuation(x, att)
+            
             y = y.view(-1)
             y_predict = y_predict.view(-1, y_predict.shape[2])
             loss = criterion(y_predict, y)
@@ -112,7 +118,7 @@ if __name__ == "__main__":
 
     
     test_set = Dataset(args.data_path, tokenizer=tokenizer, sequence_len=args.sequence_length,
-                                token_style=token_style)
+                                token_style=token_style, use_durations=False)
 
     # Data Loaders
     data_loader_params = {
