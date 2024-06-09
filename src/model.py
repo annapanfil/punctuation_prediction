@@ -93,8 +93,6 @@ class DeepPunctuationWithPauses(nn.Module):
         if token_type_ids is None:
             token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=input_ids.device)
 
-    
-
         # BERT 
         token_embeddings = self.bert.embeddings.word_embeddings(input_ids)
         position_ids = torch.arange(input_ids.size(1), dtype=torch.long, device=input_ids.device)
@@ -124,8 +122,8 @@ class DeepPunctuationWithPauses(nn.Module):
         if self.has_lstm:
             output = torch.transpose(output, 0, 1)
             output, (_, _) = self.lstm(output)
+            output = torch.transpose(output, 0, 1)
         
-        output = torch.transpose(output, 0, 1)
         output = self.linear(output)
         
         return output

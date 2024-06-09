@@ -213,6 +213,16 @@ if __name__ == '__main__':
         model.print_trainable_parameters()
 
     criterion = nn.CrossEntropyLoss()
+
+    # if args.use_durations:
+    #     ll_params = model.linear_layer.parameters()
+    #     params_except_linear = [param for name, param in model.named_parameters() if 'linear_layer' not in name]
+
+    #     optimizer = torch.optim.Adam([
+    #                 {'params': params_except_linear, 'lr': args.lr},
+    #                 {'params': ll_params, 'lr': 0.001}
+    #             ], weight_decay=args.decay)
+    # else:
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.decay)
 
     print("Model created")
