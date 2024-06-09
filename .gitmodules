@@ -1,6 +1,7 @@
 [submodule "data"]
 	path = data/raw/poleval2022
-	url = git@github.com:poleval/2022-punctuation-prediction.git
+	url = git@github.com:poleval/2022-punctuation-prediction-secret.git
 [submodule "2021-punctuation-restoration"]
 	path = data/raw/poleval2021
 	url = git@github.com:poleval/2021-punctuation-restoration.git
+	branch = secret

@@ -5,6 +5,7 @@ import mlflow
 from peft import LoraConfig, get_peft_model, TaskType
 import seaborn as sns
 from torch.utils import data
+from torch.utils.data import random_split
 import torch.nn as nn
 import torch.multiprocessing
 from tqdm import tqdm
@@ -17,6 +18,15 @@ from test import test
 
 
 def get_data_loaders(args, tokenizer):
+    ### Get train, val and test dataloaders
+    # In polish, when the test flag is set, the train and val sets are combined and split into 95% train and 5% val and test is used as test set
+    # Otherwise, the train and val sets are separate and test is used as val set
+    # @param args: arguments from argparser
+    # @param tokenizer: tokenizer to use for tokenizing the text
+    #
+    # @return train_loader, val_loader, test_loaders: data loaders for train, val and test sets
+    ###
+
     token_style = MODELS[args.pretrained_model]["token_style"]
 
     if args.language == 'english':
@@ -43,17 +53,36 @@ def get_data_loaders(args, tokenizer):
         test_set = [val_set, test_set_ref, test_set_asr]
 
     elif args.language == 'polish':
-        train_set = Dataset(os.path.join(args.data_path, f'pl/train{"_" + args.data_variation if args.data_variation != "" else ""}'),
-                            tokenizer=tokenizer, 
-                            sequence_len=args.sequence_length,
-                            token_style=token_style,
-                            use_durations=args.use_durations)
-        val_set = Dataset(os.path.join(args.data_path, f'pl/val{"_" + args.data_variation if args.data_variation != "" else ""}'),
+        if args.test:
+            trainval_set = Dataset(os.path.join(args.data_path, f'pl/trainval{"_" + args.data_variation if args.data_variation != "" else ""}'),
+                                tokenizer=tokenizer,
+                                sequence_len=args.sequence_length,
+                                token_style=token_style,
+                                use_durations=args.use_durations)
+
+            # Split the dataset to have val set to make sure the model is learning well
+            train_size = int(0.95 * len(trainval_set))  
+            val_size = len(trainval_set) - train_size 
+            train_set, val_set = random_split(trainval_set, [train_size, val_size])
+            
+            test_set = [Dataset(os.path.join(args.data_path, f'pl/test{"_" + args.data_variation if args.data_variation != "" else ""}'),
                             tokenizer=tokenizer,
                             sequence_len=args.sequence_length,
                             token_style=token_style,
-                            use_durations=args.use_durations)
-        test_set = [val_set]
+                            use_durations=args.use_durations)]
+
+        else:
+            train_set = Dataset(os.path.join(args.data_path, f'pl/train{"_" + args.data_variation if args.data_variation != "" else ""}'),
+                                tokenizer=tokenizer, 
+                                sequence_len=args.sequence_length,
+                                token_style=token_style,
+                                use_durations=args.use_durations)
+            val_set = Dataset(os.path.join(args.data_path, f'pl/val{"_" + args.data_variation if args.data_variation != "" else ""}'),
+                                tokenizer=tokenizer,
+                                sequence_len=args.sequence_length,
+                                token_style=token_style,
+                                use_durations=args.use_durations)
+            test_set = [val_set]
     else:
         raise ValueError('Incorrect language argument for Dataset')
 
@@ -70,6 +99,18 @@ def get_data_loaders(args, tokenizer):
     return train_loader, val_loader, test_loaders
 
 def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders, criterion):
+    ### Train the model and optionally log the results in mlflow
+    # @param args: arguments from argparser
+    # @param deep_punctuation: model to train
+    # @param device: device to use for training
+    # @param train_loader: data loader for training set
+    # @param val_loader: data loader for validation set
+    # @param test_loaders: data loaders for test sets
+    # @param criterion: loss function
+    #
+    # @return: None
+    ###
+
     best_val_score = 0
 
     with mlflow.start_run():
@@ -124,24 +165,26 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
 
             # metrics after each epoch
             train_loss /= train_iteration
-            print('epoch: {}, Train loss: {}, Train accuracy: {}'.format(epoch, train_loss, correct / total))
 
             _, _, _, _, _, val_score, val_loss = test(val_loader, deep_punctuation, device, args, "eval", criterion)
-            _, _, _, _, _, train_score, _ = test(train_loader, deep_punctuation, device, args, "eval", criterion)
-
-            print('epoch: {}, Val loss: {}, Val score: {}'.format(epoch, val_loss, val_score))
+            precision, recall, f1, _, _, train_score, _ = test(train_loader, deep_punctuation, device, args, "eval", criterion)
+            
+            print(f'epoch: {epoch}, Train loss: {train_loss}, Train score: {train_score}, Val loss: {val_loss}, Val score: {val_score}')
             if val_score > best_val_score:
                 best_val_score = val_score
                 best_model_state = deep_punctuation.state_dict()
 
             if args.log:
-                mlflow.log_metric("Train score", train_score, step=epoch)
+                mlflow.log_metric("Train score", train_score, step=epoch) # final scoring (weighted F1 score)
                 mlflow.log_metric("Train Loss", train_loss, step=epoch)
                 mlflow.log_metric("Validation score", val_score, step=epoch)
                 mlflow.log_metric("Validation Loss", val_loss, step=epoch)
+                for punct, i in punctuation_dict.items():
+                    mlflow.log_metric(f"Precision_{punct}", precision[i], step=epoch)
+                    mlflow.log_metric(f"Recall_{punct}", recall[i], step=epoch)
+                    mlflow.log_metric(f"F1_{punct}", f1[i], step=epoch)
 
-
-        print('Best validation score:', best_val_score)
+        print('Best validation score:', best_val_score, "------------------------------")
         deep_punctuation.load_state_dict(best_model_state)
         if args.log:
             mlflow.pytorch.log_model(deep_punctuation, "models")
@@ -170,7 +213,6 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
 
 
 if __name__ == '__main__':
-
     torch.multiprocessing.set_sharing_strategy('file_system')   # https://github.com/pytorch/pytorch/issues/11201
 
     args = parse_arguments()

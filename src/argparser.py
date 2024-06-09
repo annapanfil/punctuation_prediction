@@ -9,6 +9,7 @@ def parse_arguments():
     parser.add_argument('--data-variation', default='', type=str, help='variation of dataset to use')
     parser.add_argument('--language', default='english', type=str,
                         help='language, available options are english and polish')
+    parser.add_argument('--test', default=False, type=lambda x: (str(x).lower() == 'true'), help='train on train and val, test on test. Only for polish')
     
     parser.add_argument('--cuda', default=True, type=lambda x: (str(x).lower() == 'true'), help='use cuda if available')
     parser.add_argument('--seed', default=1, type=int, help='random seed')

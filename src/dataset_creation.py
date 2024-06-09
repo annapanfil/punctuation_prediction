@@ -26,7 +26,7 @@ def split_words_and_punctuation(text: str) -> tuple:
     # @return elements – list of words and punctuation signs
     # @return punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
 
-    excluded_signs = '\%\+\"\*\/\\=$€\(\)\[\]\'@·;'
+    excluded_signs = '\%\+\"\*\/\\=$€\(\)\[\]\'@·;&'
     word_signs = f"[\w{excluded_signs}]+"
     punctuation_signs = f"(?![\s{excluded_signs}])\W|…"
     elements = re.compile(rf"{punctuation_signs}|{word_signs}|\n").findall(text) # alfanumeric or non-alphanumeric characters (punctuation)
@@ -224,12 +224,16 @@ def create_durations_file(original_split, split_name, prefix=""):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Punctuation restoration test')
     parser.add_argument('--newlines', default=False, type=lambda x: (str(x).lower() == 'true'), help='add new line after each statement in the output file')    
-    parser.add_argument('--durations', default=False, type=lambda x: (str(x).lower() == 'true'), help='create file with durations of pauses between words')    
+    parser.add_argument('--durations', default=False, type=lambda x: (str(x).lower() == 'true'), help='create file with durations of pauses between words for poleval2022 train and dev-0 sets')    
+    parser.add_argument('--secret-tests', default=False, type=lambda x: (str(x).lower() == 'true'), help='create files with secret tests')
 
     args = parser.parse_args()
 
-    # train and dev data
-    for file_path in ["poleval2021/train", "poleval2021/test-A", "poleval2022/train", "poleval2022/dev-0"]: 
+    file_paths = ["poleval2021/train", "poleval2021/test-A", "poleval2022/train", "poleval2022/dev-0"]
+    if args.secret_tests:
+        file_paths += ["poleval2021/test-B", "poleval2021/test-C", "poleval2021/test-D", "poleval2022/test-A", "poleval2022/test-B"] 
+
+    for file_path in file_paths: 
         with open(os.path.join("data", "raw", file_path, "expected.tsv"), 'r', encoding='utf-8') as f:
             lines = [line for line in f.read().split('\n') if line.strip()]
         
@@ -244,7 +248,7 @@ if __name__ == "__main__":
 
         os.makedirs("data/pl", exist_ok=True)
         norm_path = os.path.normpath(file_path)
-        split_name = "val" if norm_path.split(os.sep)[1] in ("dev-0", "test-A") else norm_path.split(os.sep)[1]
+        split_name = "val" if norm_path.split(os.sep)[1] in ("dev-0", "2021/test-A") else norm_path.split(os.sep)[1]
 
         out_fname = os.path.join("data", "pl", split_name + "_" + norm_path.split(os.sep)[0][-4:]+"_allpunct")
         nlines = save_to_file(out_fname, elements, punctuation_mask, PUNCT_NAMES, args.newlines)
@@ -256,3 +260,6 @@ if __name__ == "__main__":
     
     merge_files(["data/pl/train_2021_allpunct", "data/pl/train_2022_allpunct"], "data/pl/train_allpunct")
     merge_files(["data/pl/val_2021_allpunct", "data/pl/val_2022_allpunct"], "data/pl/val_allpunct")
+    if args.secret_tests:
+        merge_files(["data/pl/test-B_2021_allpunct", "data/pl/test-C_2021_allpunct", "data/pl/test-D_2021_allpunct", "data/pl/test-A_2022_allpunct", "data/pl/test-B_2022_allpunct"], "data/pl/test_allpunct")
+        merge_files(["data/pl/train_allpunct", "data/pl/val_allpunct"], "data/pl/trainval_allpunct")
