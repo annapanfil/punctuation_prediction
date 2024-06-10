@@ -23,8 +23,12 @@ PUNCT_NAMES = {'.': "PERIOD",
 
 
 def split_words_and_punctuation(text: str) -> tuple:
+    ### split text into words and punctuation signs
+    # @param text – text to split
+    #
     # @return elements – list of words and punctuation signs
     # @return punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
+    ###
 
     excluded_signs = '\%\+\"\*\/\\=$€\(\)\[\]\'@·;&'
     word_signs = f"[\w{excluded_signs}]+"
@@ -45,7 +49,13 @@ def split_words_and_punctuation(text: str) -> tuple:
 
 def limit_punctuation_signs(elements: list, punctuation_mask: list, punct_mapping: dict, verb=False) -> list:
     ### replace rare punctuation signs with these learned by model
+    # @param elements – list of words and punctuation signs
+    # @param punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
+    # @param punct_mapping – dictionary with punctuation signs and their names
+    # @param verb – if True, print unknown punctuation signs
+    #
     # @return elements – list of words and changed punctuation signs (!but it's also modified in place!)
+    ###
 
     for i, (element, mask) in enumerate(zip(elements, punctuation_mask)):
         if mask == 1:
@@ -66,6 +76,8 @@ def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_n
     # @param elements – list of words and punctuation signs
     # @param punctuation_mask – list of 0s and 1s, where 0 indicates word and 1 indicates punctuation sign
     # @param punct_names – dictionary with punctuation signs and their names
+    #
+    # @return number of lines in the file
 
     with open(out_fname, 'w') as f:
         nlines = 0
@@ -93,7 +105,11 @@ def save_to_file(out_fname: str, elements: list, punctuation_mask: list, punct_n
 
     return nlines
 
-def merge_files(filenames, out_filename):
+def merge_files(filenames: list, out_filename: str):
+    ### merge files into one
+    # @param filenames – list of files to merge
+    # @param out_filename – name of the output file
+    ###
     if os.path.exists(out_filename):
         print(f"removing {out_filename}")
         os.remove(out_filename)
@@ -107,6 +123,13 @@ def merge_files(filenames, out_filename):
         
 
 def get_lines_poleval2022(split, verb=False, prefix=""):
+    ### get lines from the poleval2022 dataset
+    # @param split – name of the split in the dataset
+    # @param verb – if True, print number of sentences and audio files
+    # @param prefix – path to the data directory
+    #
+    # @return list of sentences, list of sentences with timestamps, list of timestamps in form "beginning-end"
+    ###
     with open(prefix + "data/raw/poleval2022/" + split + "/in.tsv", 'r') as f:
         lines = [line for line in f.read().split('\n') if line.strip()]
         lines = [line.split("\t") for line in lines]
@@ -127,6 +150,8 @@ def get_pause_durations(timestamps, texts, path, limit=None):
     # @param timestamps – list of timestamps in the format "beginning-end"
     # @param texts – list of texts
     # @param path – path to the created dataset file
+    #
+    # @return words, their interpunction, and pause durations
     ###
 
     timestamps = [item for sublist in timestamps for item in sublist]
@@ -201,6 +226,13 @@ def get_pause_durations(timestamps, texts, path, limit=None):
     return words_old, interpunction, durations
 
 def create_durations_file(original_split, split_name, prefix=""):
+    ### Get durations of pauses between words from the dataset, normalize them (min-max) and save to a file
+    # @param original_split – name of the split in the original dataset
+    # @param split_name – name of the split in the created dataset
+    # @param prefix – path to the created dataset file
+    #
+    # @return length of the file
+    ###
     texts, _, timestamps = get_lines_poleval2022(original_split)
     _, _, durations = get_pause_durations(timestamps, texts, f"{prefix}data/pl/{split_name}_2022_allpunct", limit = 5000)
 
@@ -234,6 +266,7 @@ if __name__ == "__main__":
         file_paths += ["poleval2021/test-B", "poleval2021/test-C", "poleval2021/test-D", "poleval2022/test-A", "poleval2022/test-B"] 
 
     for file_path in file_paths: 
+        # get data
         with open(os.path.join("data", "raw", file_path, "expected.tsv"), 'r', encoding='utf-8') as f:
             lines = [line for line in f.read().split('\n') if line.strip()]
         
@@ -246,9 +279,10 @@ if __name__ == "__main__":
         elements, punctuation_mask = split_words_and_punctuation(text)
         elements = limit_punctuation_signs(elements, punctuation_mask, PUNCT_MAPPING, verb=True)
 
+        # save
         os.makedirs("data/pl", exist_ok=True)
         norm_path = os.path.normpath(file_path)
-        split_name = "val" if norm_path.split(os.sep)[1] in ("dev-0", "2021/test-A") else norm_path.split(os.sep)[1]
+        split_name = "val" if  "dev-0" in file_path or "2021/test-A" in file_path else norm_path.split(os.sep)[1]
 
         out_fname = os.path.join("data", "pl", split_name + "_" + norm_path.split(os.sep)[0][-4:]+"_allpunct")
         nlines = save_to_file(out_fname, elements, punctuation_mask, PUNCT_NAMES, args.newlines)
