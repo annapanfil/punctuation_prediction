@@ -166,8 +166,8 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
             # metrics after each epoch
             train_loss /= train_iteration
 
-            _, _, _, _, _, val_score, val_loss = test(val_loader, deep_punctuation, device, args, "eval", criterion)
-            precision, recall, f1, _, _, train_score, _ = test(train_loader, deep_punctuation, device, args, "eval", criterion)
+            precision, recall, f1, _, _, val_score, val_loss = test(val_loader, deep_punctuation, device, args, "eval", criterion)
+            _, _, _, _, _, train_score, _ = test(train_loader, deep_punctuation, device, args, "eval", criterion)
             
             print(f'epoch: {epoch}, Train loss: {train_loss}, Train score: {train_score}, Val loss: {val_loss}, Val score: {val_score}')
             if val_score > best_val_score:
@@ -179,10 +179,11 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
                 mlflow.log_metric("Train Loss", train_loss, step=epoch)
                 mlflow.log_metric("Validation score", val_score, step=epoch)
                 mlflow.log_metric("Validation Loss", val_loss, step=epoch)
-                for punct, i in punctuation_dict.items():
-                    mlflow.log_metric(f"Precision_{punct}", precision[i], step=epoch)
-                    mlflow.log_metric(f"Recall_{punct}", recall[i], step=epoch)
-                    mlflow.log_metric(f"F1_{punct}", f1[i], step=epoch)
+                if not args.test:
+                    for punct, i in punctuation_dict.items():
+                        mlflow.log_metric(f"Precision_{punct}", precision[i], step=epoch)
+                        mlflow.log_metric(f"Recall_{punct}", recall[i], step=epoch)
+                        mlflow.log_metric(f"F1_{punct}", f1[i], step=epoch)
 
         print('Best validation score:', best_val_score, "------------------------------")
         deep_punctuation.load_state_dict(best_model_state)
@@ -207,7 +208,7 @@ def train(args, deep_punctuation, device, train_loader, val_loader, test_loaders
                 cm_img.set_ylabel("predicted")
                 mlflow.log_figure(cm_img.get_figure(), "confusion_matrix.png")
                 
-            print(f"\t\t{punctuation_dict.values()} all_punctuation\nPrecision: {precision}\nRecall: {recall}\nF1 score: {f1}")
+            print(f"\t\t{punctuation_dict.values()} all_punctuation\nPrecision: {precision}\nRecall: {recall}\nF1 score: {f1}\nSupport: {support}")
             print("Final score:", final_scoring)
             print('Confusion Matrix', str(cm))
 

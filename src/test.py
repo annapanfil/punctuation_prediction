@@ -7,7 +7,7 @@ import argparse
 from dataset import Dataset
 from model import DeepPunctuation
 from config import *
-
+from sklearn.metrics import f1_score
 
 def test(data_loader, deep_punctuation, device, args, desc="test", criterion=torch.nn.CrossEntropyLoss()):
     """
@@ -37,7 +37,7 @@ def test(data_loader, deep_punctuation, device, args, desc="test", criterion=tor
                 y_predict = deep_punctuation(x, att, pause_durations=durations)
             else:
                 y_predict = deep_punctuation(x, att)
-            
+
             y = y.view(-1)
             y_predict = y_predict.view(-1, y_predict.shape[2])
             loss = criterion(y_predict, y)
@@ -61,10 +61,13 @@ def test(data_loader, deep_punctuation, device, args, desc="test", criterion=tor
                     fp[prd] += 1
                 cm[cor][prd] += 1
                 support[cor] += 1
+        sklearn_f1 = f1_score(y[y_mask==1].numpy(), y_predict[y_mask==1].numpy(), average=None)
 
     val_loss /= num_iteration
 
-    # ignore first index which is for no punctuation
+    # print("sklearn f1", f1_score(y.view(-1).cpu().numpy(), torch.argmax(y_predict.view(-1, y_predict.shape[2]), dim=1).cpu().numpy(), average=None))
+
+    # ignore first index which is for no punctuation in final tp, fp, fn
     tp[-1] = np.sum(tp[1:])
     fp[-1] = np.sum(fp[1:])
     fn[-1] = np.sum(fn[1:])
@@ -72,11 +75,14 @@ def test(data_loader, deep_punctuation, device, args, desc="test", criterion=tor
     recall = np.nan_to_num(tp/(tp+fn))
     f1 = np.nan_to_num(2 * precision * recall / (precision + recall))
 
+    print(f1, sklearn_f1, sep = '\n')
+
     final_scoring = 0
     for punct, i in list(punctuation_dict.items())[1:]: # skip no punctuation
         final_scoring += np.nan_to_num(support[i] * f1[i])
         
     final_scoring /= sum(support[1:])
+
 
     return precision, recall, f1, cm, support, final_scoring, val_loss
 
